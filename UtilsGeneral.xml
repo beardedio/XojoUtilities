@@ -337,7 +337,13 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function VersionInfoStringRB(MultiLine As Boolean = False) As String</SourceLine>
    <SourceLine>Dim s As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#if RBVersion &lt; 2013 Then</SourceLine>
    <SourceLine>s = "Built with: Realbasic " + RBVersionString</SourceLine>
+   <SourceLine>#else</SourceLine>
+   <SourceLine>s = "Built with: Xojo " + XojoVersionString</SourceLine>
+   <SourceLine>#endif</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>if MultiLine Then</SourceLine>
    <SourceLine>s = s + EndOfLine</SourceLine>
    <SourceLine>End if</SourceLine>
