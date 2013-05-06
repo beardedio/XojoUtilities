@@ -1,0 +1,1081 @@
+<?xml version="1.0"?>
+<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Module" ID="2104973703">
+ <ObjName>UtilsArray</ObjName>
+ <ObjContainerID>1865486656</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Total</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Total(Extends arr() As Integer) As Integer</SourceLine>
+   <SourceLine>// Return the total sum of the items in the array.</SourceLine>
+   <SourceLine>Dim item, out As Integer</SourceLine>
+   <SourceLine>for each item in arr</SourceLine>
+   <SourceLine>out = out + item</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Total</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Total(Extends arr() As Double) As Double</SourceLine>
+   <SourceLine>// Return the total sum of the items in the array.</SourceLine>
+   <SourceLine>Dim item, out As Double</SourceLine>
+   <SourceLine>for each item in arr</SourceLine>
+   <SourceLine>out = out + item</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Max</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Max(Extends arr() As Integer) As Integer</SourceLine>
+   <SourceLine>// Return the greatest of the items in the array, or 0 for an empty array.</SourceLine>
+   <SourceLine>Dim index, ub As Integer</SourceLine>
+   <SourceLine>Dim out As Integer</SourceLine>
+   <SourceLine>ub = UBound(arr)</SourceLine>
+   <SourceLine>if ub &gt;= 0 then</SourceLine>
+   <SourceLine>out = arr(0)</SourceLine>
+   <SourceLine>for index = 1 to ub</SourceLine>
+   <SourceLine>if arr(index) &gt; out then out = arr(index)</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Max</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Max(Extends arr() As Double) As Double</SourceLine>
+   <SourceLine>// Return the greatest of the items in the array, or 0 for an empty array.</SourceLine>
+   <SourceLine>Dim index, ub As Integer</SourceLine>
+   <SourceLine>Dim out As Double</SourceLine>
+   <SourceLine>ub = UBound(arr)</SourceLine>
+   <SourceLine>if ub &gt;= 0 then</SourceLine>
+   <SourceLine>out = arr(0)</SourceLine>
+   <SourceLine>for index = 1 to ub</SourceLine>
+   <SourceLine>if arr(index) &gt; out then out = arr(index)</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Min</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Min(Extends arr() As Integer) As Integer</SourceLine>
+   <SourceLine>// Return the least of the items in the array, or 0 for an empty array.</SourceLine>
+   <SourceLine>Dim index, ub As Integer</SourceLine>
+   <SourceLine>Dim out As Integer</SourceLine>
+   <SourceLine>ub = UBound(arr)</SourceLine>
+   <SourceLine>if ub &gt;= 0 then</SourceLine>
+   <SourceLine>out = arr(0)</SourceLine>
+   <SourceLine>for index = 1 to ub</SourceLine>
+   <SourceLine>if arr(index) &lt; out then out = arr(index)</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Min</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Min(Extends arr() As Double) As Double</SourceLine>
+   <SourceLine>// Return the least of the items in the array, or 0 for an empty array.</SourceLine>
+   <SourceLine>Dim index, ub As Integer</SourceLine>
+   <SourceLine>Dim out As Double</SourceLine>
+   <SourceLine>ub = UBound(arr)</SourceLine>
+   <SourceLine>if ub &gt;= 0 then</SourceLine>
+   <SourceLine>out = arr(0)</SourceLine>
+   <SourceLine>for index = 1 to ub</SourceLine>
+   <SourceLine>if arr(index) &lt; out then out = arr(index)</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Average</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Average(Extends arr() As Integer) As Double</SourceLine>
+   <SourceLine>// Return the arithmetic mean of the values in the array.</SourceLine>
+   <SourceLine>Dim item, sum As Integer</SourceLine>
+   <SourceLine>for each item in arr</SourceLine>
+   <SourceLine>sum = sum + item</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return sum / (UBound(arr) + 1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Average</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Average(Extends arr() As Double) As Double</SourceLine>
+   <SourceLine>// Return the arithmetic mean of the values in the array.</SourceLine>
+   <SourceLine>Dim item, sum As Double</SourceLine>
+   <SourceLine>for each item in arr</SourceLine>
+   <SourceLine>sum = sum + item</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return sum / (UBound(arr) + 1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double</ItemParams>
+  <ItemResult>Double</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Append</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Append(Extends arr() As Integer, arr2() As Integer)</SourceLine>
+   <SourceLine>// Concatenate arr2 to arr.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub2 As Integer = UBound( arr2 )</SourceLine>
+   <SourceLine>if ub2 &lt; 0 then return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim base As Integer = UBound( arr ) + 1</SourceLine>
+   <SourceLine>Redim arr( base + ub2 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub2</SourceLine>
+   <SourceLine>arr( base + index ) = arr2( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer, arr2() As Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Clone</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Clone(Extends arr() As Integer) As Integer()</SourceLine>
+   <SourceLine>// Return an independent copy of this array.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out() As Integer</SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if ub &gt;= 0 then</SourceLine>
+   <SourceLine>Redim out( ub )</SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub</SourceLine>
+   <SourceLine>out( index ) = arr( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer</ItemParams>
+  <ItemResult>Integer()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Concat</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Concat(Extends arr1() As Integer, arr2() As Integer) As Integer()</SourceLine>
+   <SourceLine>// Concatenate arr2 to arr1 and return the result as a new array.</SourceLine>
+   <SourceLine>Dim out() As Integer</SourceLine>
+   <SourceLine>Dim ub1 As Integer = UBound( arr1 )</SourceLine>
+   <SourceLine>Dim ub2 As Integer = UBound( arr2 )</SourceLine>
+   <SourceLine>Redim out( ub1 + ub2 + 1 )</SourceLine>
+   <SourceLine>Dim index, base As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub1</SourceLine>
+   <SourceLine>out( index ) = arr1( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>base = ub1 + 1</SourceLine>
+   <SourceLine>for index = 0 to ub2</SourceLine>
+   <SourceLine>out( base + index ) = arr2( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr1() As Integer, arr2() As Integer</ItemParams>
+  <ItemResult>Integer()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Clone</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Clone(Extends arr() As Double) As Double()</SourceLine>
+   <SourceLine>// Return an independent copy of this array.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out() As Double</SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if ub &gt;= 0 then</SourceLine>
+   <SourceLine>Redim out( ub )</SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub</SourceLine>
+   <SourceLine>out( index ) = arr( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double</ItemParams>
+  <ItemResult>Double()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Clone</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Clone(Extends arr() As String) As String()</SourceLine>
+   <SourceLine>// Return an independent copy of this array.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out() As String</SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if ub &gt;= 0 then</SourceLine>
+   <SourceLine>Redim out( ub )</SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub</SourceLine>
+   <SourceLine>out( index ) = arr( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As String</ItemParams>
+  <ItemResult>String()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Slice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Slice(Extends arr() As String, fromIndex As Integer = 0, toIndex As Integer = 0) As String()</SourceLine>
+   <SourceLine>// Return a subset of the given array.</SourceLine>
+   <SourceLine>// See "Slice Indexing" note.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Note that if fromIndex and toIndex span the entire array, then</SourceLine>
+   <SourceLine>// this function is equivalent to Clone.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine>Dim out() As String</SourceLine>
+   <SourceLine>Dim outbound As Integer = toIndex - fromIndex - 1</SourceLine>
+   <SourceLine>Redim out( outbound )</SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to outbound</SourceLine>
+   <SourceLine>out( index ) = arr( fromIndex + index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As String, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
+  <ItemResult>String()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Slice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Slice(Extends arr() As Double, fromIndex As Integer = 0, toIndex As Integer = 0) As Double()</SourceLine>
+   <SourceLine>// Return a subset of the given array.</SourceLine>
+   <SourceLine>// See "Slice Indexing" note.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Note that if fromIndex and toIndex span the entire array, then</SourceLine>
+   <SourceLine>// this function is equivalent to Clone.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine>Dim out() As Double</SourceLine>
+   <SourceLine>Dim outbound As Integer = toIndex - fromIndex - 1</SourceLine>
+   <SourceLine>Redim out( outbound )</SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to outbound</SourceLine>
+   <SourceLine>out( index ) = arr( fromIndex + index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
+  <ItemResult>Double()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Slice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Slice(Extends arr() As Integer, fromIndex As Integer = 0, toIndex As Integer = 0) As Integer()</SourceLine>
+   <SourceLine>// Return a subset of the given array.</SourceLine>
+   <SourceLine>// See "Slice Indexing" note.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Note that if fromIndex and toIndex span the entire array, then</SourceLine>
+   <SourceLine>// this function is equivalent to Clone.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine>Dim out() As Integer</SourceLine>
+   <SourceLine>Dim outbound As Integer = toIndex - fromIndex - 1</SourceLine>
+   <SourceLine>Redim out( outbound )</SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to outbound</SourceLine>
+   <SourceLine>out( index ) = arr( fromIndex + index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
+  <ItemResult>Integer()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Splice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Splice(Extends arr() As Integer, fromIndex As Integer, toIndex As Integer, arrayToInsert() As Integer, srcFrom As Integer = 0, srcTo As Integer = 0)</SourceLine>
+   <SourceLine>// This function replaces a section (or slice) of the base array with the contents</SourceLine>
+   <SourceLine>// of another array.  The range replaced is specified with from/to indices, which</SourceLine>
+   <SourceLine>// may be negative, in which case they count from the end of the array (just as</SourceLine>
+   <SourceLine>// with the Slice method).  The data to insert comes from arrayToInsert, and is</SourceLine>
+   <SourceLine>// specified in the same way -- by default, this is the entire source array.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim srcub As Integer = UBound( arrayToInsert )</SourceLine>
+   <SourceLine>if srcFrom &lt; 0 then srcFrom = srcub + 1 + srcFrom</SourceLine>
+   <SourceLine>if srcTo &lt;= 0 then srcTo = srcub + 1 + srcTo</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// First, see whether we need to insert or remove items to make room.</SourceLine>
+   <SourceLine>Dim qtyRemoving As Integer = toIndex - fromIndex</SourceLine>
+   <SourceLine>if qtyRemoving &lt; 0 then return</SourceLine>
+   <SourceLine>Dim qtyInserting As Integer = srcTo - srcFrom</SourceLine>
+   <SourceLine>if qtyInserting &lt; 0 then qtyInserting = 0  // this is OK, just removes the dest slice</SourceLine>
+   <SourceLine>Dim roomNeeded As Integer = qtyInserting - qtyRemoving</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Use RemoveSlice to remove any extra space.</SourceLine>
+   <SourceLine>if roomNeeded &lt; 0 then</SourceLine>
+   <SourceLine>arr.RemoveSlice fromIndex, fromIndex - roomNeeded</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Replace or insert values as needed.</SourceLine>
+   <SourceLine>Dim srcPos, destPos As Integer</SourceLine>
+   <SourceLine>destPos = fromIndex</SourceLine>
+   <SourceLine>for srcPos = srcFrom to srcTo - 1</SourceLine>
+   <SourceLine>if destPos &lt; toIndex then</SourceLine>
+   <SourceLine>arr(destPos) = arrayToInsert( srcPos )</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>arr.Insert destPos, arrayToInsert( srcPos )</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>destPos = destPos + 1</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer, fromIndex As Integer, toIndex As Integer, arrayToInsert() As Integer, srcFrom As Integer = 0, srcTo As Integer = 0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RemoveSlice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RemoveSlice(Extends arr() As Integer, fromIndex As Integer = 0, toIndex As Integer = 0)</SourceLine>
+   <SourceLine>// Deletes a portion of the array.</SourceLine>
+   <SourceLine>// See "Slice Indexing" note.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if fromIndex &gt;= toIndex then return  // empty (or invalid) range</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// easy case: deleting the end of the array, we can just redim and be done</SourceLine>
+   <SourceLine>if toIndex - 1 = ub then</SourceLine>
+   <SourceLine>Redim arr( fromIndex - 1 )</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// another easy case: deleting just one element (equivalent to Array.Remove)</SourceLine>
+   <SourceLine>if fromIndex = toIndex - 1 then</SourceLine>
+   <SourceLine>arr.Remove fromIndex</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// harder case: copy the data down, and THEN redim</SourceLine>
+   <SourceLine>Dim dest, src, maxsrc As Integer</SourceLine>
+   <SourceLine>dest = fromIndex</SourceLine>
+   <SourceLine>for src = toIndex to ub</SourceLine>
+   <SourceLine>arr(dest) = arr(src)</SourceLine>
+   <SourceLine>dest = dest + 1</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>Redim arr( dest - 1 )</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RemoveSlice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RemoveSlice(Extends arr() As String, fromIndex As Integer = 0, toIndex As Integer = 0)</SourceLine>
+   <SourceLine>// Deletes a portion of the array.</SourceLine>
+   <SourceLine>// See "Slice Indexing" note.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if fromIndex &gt; toIndex - 1 then return  // empty (or invalid) range</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// easy case: deleting the end of the array, we can just redim and be done</SourceLine>
+   <SourceLine>if toIndex -1 = ub then</SourceLine>
+   <SourceLine>Redim arr( fromIndex - 1 )</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// another easy case: deleting just one element (equivalent to Arary.Remove)</SourceLine>
+   <SourceLine>if fromIndex = toIndex - 1 then</SourceLine>
+   <SourceLine>arr.Remove fromIndex</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// harder case: copy the data down, and THEN redim</SourceLine>
+   <SourceLine>Dim dest, src, maxsrc As Integer</SourceLine>
+   <SourceLine>dest = fromIndex</SourceLine>
+   <SourceLine>for src = toIndex to ub</SourceLine>
+   <SourceLine>arr(dest) = arr(src)</SourceLine>
+   <SourceLine>dest = dest + 1</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>Redim arr( dest - 1 )</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As String, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RemoveSlice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub RemoveSlice(Extends arr() As Double, fromIndex As Integer = 0, toIndex As Integer = 0)</SourceLine>
+   <SourceLine>// Deletes a portion of the array.</SourceLine>
+   <SourceLine>// See "Slice Indexing" note.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if fromIndex &gt; toIndex - 1 then return  // empty (or invalid) range</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// easy case: deleting the end of the array, we can just redim and be done</SourceLine>
+   <SourceLine>if toIndex - 1 = ub then</SourceLine>
+   <SourceLine>Redim arr( fromIndex - 1 )</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// another easy case: deleting just one element (equivalent to Arary.Remove)</SourceLine>
+   <SourceLine>if fromIndex = toIndex - 1 then</SourceLine>
+   <SourceLine>arr.Remove fromIndex</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// harder case: copy the data down, and THEN redim</SourceLine>
+   <SourceLine>Dim dest, src, maxsrc As Integer</SourceLine>
+   <SourceLine>dest = fromIndex</SourceLine>
+   <SourceLine>for src = toIndex to ub</SourceLine>
+   <SourceLine>arr(dest) = arr(src)</SourceLine>
+   <SourceLine>dest = dest + 1</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>Redim arr( dest - 1 )</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Splice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Splice(Extends arr() As String, fromIndex As Integer, toIndex As Integer, arrayToInsert() As String, srcFrom As Integer = 0, srcTo As Integer = 0)</SourceLine>
+   <SourceLine>// This function replaces a section (or slice) of the base array with the contents</SourceLine>
+   <SourceLine>// of another array.  The range replaced is specified with from/to indices, which</SourceLine>
+   <SourceLine>// may be negative, in which case they count from the end of the array (just as</SourceLine>
+   <SourceLine>// with the Slice method).  The data to insert comes from arrayToInsert, and is</SourceLine>
+   <SourceLine>// specified in the same way -- by default, this is the entire source array.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim srcub As Integer = UBound( arrayToInsert )</SourceLine>
+   <SourceLine>if srcFrom &lt; 0 then srcFrom = srcub + 1 + srcFrom</SourceLine>
+   <SourceLine>if srcTo &lt;= 0 then srcTo = srcub + 1 + srcTo</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// First, see whether we need to insert or remove items to make room.</SourceLine>
+   <SourceLine>Dim qtyRemoving As Integer = toIndex - fromIndex</SourceLine>
+   <SourceLine>if qtyRemoving &lt; 0 then return</SourceLine>
+   <SourceLine>Dim qtyInserting As Integer = srcTo - srcFrom</SourceLine>
+   <SourceLine>if qtyInserting &lt; 0 then qtyInserting = 0  // this is OK, just removes the dest slice</SourceLine>
+   <SourceLine>Dim roomNeeded As Integer = qtyInserting - qtyRemoving</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Use RemoveSlice to remove any extra space.</SourceLine>
+   <SourceLine>if roomNeeded &lt; 0 then</SourceLine>
+   <SourceLine>arr.RemoveSlice fromIndex, fromIndex - roomNeeded</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Replace or insert values as needed.</SourceLine>
+   <SourceLine>Dim srcPos, destPos As Integer</SourceLine>
+   <SourceLine>destPos = fromIndex</SourceLine>
+   <SourceLine>for srcPos = srcFrom to srcTo - 1</SourceLine>
+   <SourceLine>if destPos &lt; toIndex then</SourceLine>
+   <SourceLine>arr(destPos) = arrayToInsert( srcPos )</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>arr.Insert destPos, arrayToInsert( srcPos )</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>destPos = destPos + 1</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As String, fromIndex As Integer, toIndex As Integer, arrayToInsert() As String, srcFrom As Integer = 0, srcTo As Integer = 0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Splice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Splice(Extends arr() As Double, fromIndex As Integer, toIndex As Integer, arrayToInsert() As Double, srcFrom As Integer = 0, srcTo As Integer = 0)</SourceLine>
+   <SourceLine>// This function replaces a section (or slice) of the base array with the contents</SourceLine>
+   <SourceLine>// of another array.  The range replaced is specified with from/to indices, which</SourceLine>
+   <SourceLine>// may be negative, in which case they count from the end of the array (just as</SourceLine>
+   <SourceLine>// with the Slice method).  The data to insert comes from arrayToInsert, and is</SourceLine>
+   <SourceLine>// specified in the same way -- by default, this is the entire source array.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( arr )</SourceLine>
+   <SourceLine>if fromIndex &lt; 0 then fromIndex = ub + 1 + fromIndex</SourceLine>
+   <SourceLine>if toIndex &lt;= 0 then toIndex = ub + 1 + toIndex</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim srcub As Integer = UBound( arrayToInsert )</SourceLine>
+   <SourceLine>if srcFrom &lt; 0 then srcFrom = srcub + 1 + srcFrom</SourceLine>
+   <SourceLine>if srcTo &lt;= 0 then srcTo = srcub + 1 + srcTo</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// First, see whether we need to insert or remove items to make room.</SourceLine>
+   <SourceLine>Dim qtyRemoving As Integer = toIndex - fromIndex</SourceLine>
+   <SourceLine>if qtyRemoving &lt; 0 then return</SourceLine>
+   <SourceLine>Dim qtyInserting As Integer = srcTo - srcFrom</SourceLine>
+   <SourceLine>if qtyInserting &lt; 0 then qtyInserting = 0  // this is OK, just removes the dest slice</SourceLine>
+   <SourceLine>Dim roomNeeded As Integer = qtyInserting - qtyRemoving</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Use RemoveSlice to remove any extra space.</SourceLine>
+   <SourceLine>if roomNeeded &lt; 0 then</SourceLine>
+   <SourceLine>arr.RemoveSlice fromIndex, fromIndex - roomNeeded</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Replace or insert values as needed.</SourceLine>
+   <SourceLine>Dim srcPos, destPos As Integer</SourceLine>
+   <SourceLine>destPos = fromIndex</SourceLine>
+   <SourceLine>for srcPos = srcFrom to srcTo - 1</SourceLine>
+   <SourceLine>if destPos &lt; toIndex then</SourceLine>
+   <SourceLine>arr(destPos) = arrayToInsert( srcPos )</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>arr.Insert destPos, arrayToInsert( srcPos )</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>destPos = destPos + 1</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double, fromIndex As Integer, toIndex As Integer, arrayToInsert() As Double, srcFrom As Integer = 0, srcTo As Integer = 0</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Append</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Append(Extends arr() As String, arr2() As String)</SourceLine>
+   <SourceLine>// Concatenate arr2 to arr.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub2 As Integer = UBound( arr2 )</SourceLine>
+   <SourceLine>if ub2 &lt; 0 then return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim base As Integer = UBound( arr ) + 1</SourceLine>
+   <SourceLine>Redim arr( base + ub2 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub2</SourceLine>
+   <SourceLine>arr( base + index ) = arr2( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As String, arr2() As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Append</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Append(Extends arr() As Double, arr2() As Double)</SourceLine>
+   <SourceLine>// Concatenate arr2 to arr.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim ub2 As Integer = UBound( arr2 )</SourceLine>
+   <SourceLine>if ub2 &lt; 0 then return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim base As Integer = UBound( arr ) + 1</SourceLine>
+   <SourceLine>Redim arr( base + ub2 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim index As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub2</SourceLine>
+   <SourceLine>arr( base + index ) = arr2( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double, arr2() As Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Concat</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Concat(Extends arr1() As Double, arr2() As Double) As Double()</SourceLine>
+   <SourceLine>// Concatenate arr2 to arr1 and return the result as a new array.</SourceLine>
+   <SourceLine>Dim out() As Double</SourceLine>
+   <SourceLine>Dim ub1 As Integer = UBound( arr1 )</SourceLine>
+   <SourceLine>Dim ub2 As Integer = UBound( arr2 )</SourceLine>
+   <SourceLine>Redim out( ub1 + ub2 + 1 )</SourceLine>
+   <SourceLine>Dim index, base As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub1</SourceLine>
+   <SourceLine>out( index ) = arr1( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>base = ub1 + 1</SourceLine>
+   <SourceLine>for index = 0 to ub2</SourceLine>
+   <SourceLine>out( base + index ) = arr2( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr1() As Double, arr2() As Double</ItemParams>
+  <ItemResult>Double()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Concat</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Concat(Extends arr1() As String, arr2() As String) As String()</SourceLine>
+   <SourceLine>// Concatenate arr2 to arr1 and return the result as a new array.</SourceLine>
+   <SourceLine>Dim out() As String</SourceLine>
+   <SourceLine>Dim ub1 As Integer = UBound( arr1 )</SourceLine>
+   <SourceLine>Dim ub2 As Integer = UBound( arr2 )</SourceLine>
+   <SourceLine>Redim out( ub1 + ub2 + 1 )</SourceLine>
+   <SourceLine>Dim index, base As Integer</SourceLine>
+   <SourceLine>for index = 0 to ub1</SourceLine>
+   <SourceLine>out( index ) = arr1( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>base = ub1 + 1</SourceLine>
+   <SourceLine>for index = 0 to ub2</SourceLine>
+   <SourceLine>out( base + index ) = arr2( index )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr1() As String, arr2() As String</ItemParams>
+  <ItemResult>String()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Reverse</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Reverse(Extends arr() As String)</SourceLine>
+   <SourceLine>// Reverse the order of the elements in the array, in place.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim low, high, midpoint As Integer</SourceLine>
+   <SourceLine>high = UBound( arr )</SourceLine>
+   <SourceLine>if high &lt; 1 then return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>midpoint = (high + 1) \ 2</SourceLine>
+   <SourceLine>while low &lt; midpoint</SourceLine>
+   <SourceLine>Dim temp As String = arr(low)</SourceLine>
+   <SourceLine>arr(low) = arr(high)</SourceLine>
+   <SourceLine>arr(high) = temp</SourceLine>
+   <SourceLine>low = low + 1</SourceLine>
+   <SourceLine>high = high - 1</SourceLine>
+   <SourceLine>wend</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Reverse</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Reverse(Extends arr() As Double)</SourceLine>
+   <SourceLine>// Reverse the order of the elements in the array, in place.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim low, high, midpoint As Integer</SourceLine>
+   <SourceLine>high = UBound( arr )</SourceLine>
+   <SourceLine>if high &lt; 1 then return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>midpoint = (high + 1) \ 2</SourceLine>
+   <SourceLine>while low &lt; midpoint</SourceLine>
+   <SourceLine>Dim temp As Double = arr(low)</SourceLine>
+   <SourceLine>arr(low) = arr(high)</SourceLine>
+   <SourceLine>arr(high) = temp</SourceLine>
+   <SourceLine>low = low + 1</SourceLine>
+   <SourceLine>high = high - 1</SourceLine>
+   <SourceLine>wend</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Double</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Reverse</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Reverse(Extends arr() As Integer)</SourceLine>
+   <SourceLine>// Reverse the order of the elements in the array, in place.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim low, high, midpoint As Integer</SourceLine>
+   <SourceLine>high = UBound( arr )</SourceLine>
+   <SourceLine>if high &lt; 1 then return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>midpoint = (high + 1) \ 2</SourceLine>
+   <SourceLine>while low &lt; midpoint</SourceLine>
+   <SourceLine>Dim temp As Integer = arr(low)</SourceLine>
+   <SourceLine>arr(low) = arr(high)</SourceLine>
+   <SourceLine>arr(high) = temp</SourceLine>
+   <SourceLine>low = low + 1</SourceLine>
+   <SourceLine>high = high - 1</SourceLine>
+   <SourceLine>wend</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends arr() As Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Note>
+  <ItemName>Change History</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Change History</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2006-01-03:</NoteLine>
+   <NoteLine>- Initial release.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2006-01-16:</NoteLine>
+   <NoteLine>- Changed the meaning of the second slice index on Slice and RemoveSlice,</NoteLine>
+   <NoteLine>   since careful thought about Splice pointed out how the previous meaning was wrong</NoteLine>
+   <NoteLine>   and Guido van Rossum, as usual, was quite right.  See "Slice Indexing" note.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>- Renamed AppendArray to Append (this works fine as of RB2006R1).</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>- Finished the Splice and Append methods.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2006-01-31:</NoteLine>
+   <NoteLine>- Added the Concat method.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>- Added the Reverse method.</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Slice Indexing</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Slice Indexing</NoteLine>
+   <NoteLine>Several of the methods in this module take two indexes to specify a subset</NoteLine>
+   <NoteLine>off an array.  Such a subset is called a "slice" and is involved in methods</NoteLine>
+   <NoteLine>such as RemoveSlice, Slice, and Splice.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>In such cases, the first index specifies the first element in the slice.  It may</NoteLine>
+   <NoteLine>be either an ordinary, non-negative index, in which case 0 means the first</NoteLine>
+   <NoteLine>element of the array, 1 means the second element, and so on.  Or it may be</NoteLine>
+   <NoteLine>a negative number, in which case we count from the end of the array; -1 is</NoteLine>
+   <NoteLine>the last element, -2 is the next-to-last, and so on.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>The second index specifies the element AFTER the last one to be included</NoteLine>
+   <NoteLine>in the slice.  Again this may be positive or negative, but 0 in this case means</NoteLine>
+   <NoteLine>one past the end of the array.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>This indexing scheme seems a bit odd at first (unless you are familiar with</NoteLine>
+   <NoteLine>Python), but it has a lot of advantages.  Suppose you have an array 'a' with</NoteLine>
+   <NoteLine>five elements.  Then you have:</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>  a.Slice(0,0) is the entire array</NoteLine>
+   <NoteLine>  a.Slice(0,-1) is all but the last element</NoteLine>
+   <NoteLine>  a.Slice(1,0) is all but the first element</NoteLine>
+   <NoteLine>  a.Slice(0,2) is the first two elements</NoteLine>
+   <NoteLine>  a.Slice(2,0) is everything except the first two elements</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Indeed, you can generalize and note that a.Slice(0,n).Concat( a.Slice(n,0) )</NoteLine>
+   <NoteLine>always comes out equal to n.  Another advantage is that if you have a loop,</NoteLine>
+   <NoteLine>where either the first index is counting down to 0 or the last index is </NoteLine>
+   <NoteLine>counting up (from negative numbers) to 0, it will do the right thing in the</NoteLine>
+   <NoteLine>boundary cases (i.e. when the counter hits 0).</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>&#32;&#32;</NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

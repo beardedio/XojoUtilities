@@ -1,10 +1,9 @@
-RBUtilities
+Xojo-Utilities
 ===========
 
+A set of utility classes for Xojo / RealBasic licensed under MIT License.
 
-A set of utility classes for RealBasic licensed under MIT License.
-
-The original code for the RBUtilities where written by Joe Strout and can be found at [http://www.strout.net/info/coding/rb/]
+The original code for the Xojo-Utilities where written by Joe Strout and can be found here [http://www.strout.net/info/coding/rb/]
 
 -Past Authors-
 Phil Mobley

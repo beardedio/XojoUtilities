@@ -1,0 +1,1326 @@
+<?xml version="1.0"?>
+<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Module" ID="580764307">
+ <ObjName>UtilsGeneral</ObjName>
+ <ObjContainerID>1865486656</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Read7BitEncodedInt</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Read7BitEncodedInt(Extends bs As BinaryStream) As Int64</SourceLine>
+   <SourceLine>Dim output As Int64</SourceLine>
+   <SourceLine>Dim i As Int64</SourceLine>
+   <SourceLine>Dim b,c, cleanint As UInt8</SourceLine>
+   <SourceLine>Dim more, clean As UInt8</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'#if TargetBigEndian</SourceLine>
+   <SourceLine>'more = &amp;b00000001</SourceLine>
+   <SourceLine>'clean = &amp;b11111110</SourceLine>
+   <SourceLine>'#else</SourceLine>
+   <SourceLine>more = &amp;b10000000</SourceLine>
+   <SourceLine>clean = &amp;b01111111</SourceLine>
+   <SourceLine>'#endif</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = 0</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>b = bs.ReadByte</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>cleanint = Bitwise.BitAnd(b, clean)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>output = output + (cleanint*(128^i))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>c = Bitwise.BitAnd(b, more)</SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Loop Until c &lt;&gt; more</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return output</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends bs As BinaryStream</ItemParams>
+  <ItemResult>Int64</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ReadVBnetString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ReadVBnetString(Extends bs As BinaryStream, Encoding as TextEncoding) As String</SourceLine>
+   <SourceLine>Return bs.Read(bs.Read7BitEncodedInt, Encoding)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends bs As BinaryStream, Encoding as TextEncoding</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Color2Str</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Color2Str(c As color, Alpha As Boolean = False) As string</SourceLine>
+   <SourceLine>Dim s As String</SourceLine>
+   <SourceLine>s = ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If c.Red &lt; 16 Then s = s + "0"</SourceLine>
+   <SourceLine>s = s + Hex(c.Red)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If c.Green &lt; 16 Then s = s + "0"</SourceLine>
+   <SourceLine>s = s + Hex(c.Green)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If c.Blue &lt; 16 Then s = s + "0"</SourceLine>
+   <SourceLine>s = s + Hex(c.Blue)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Alpha Then</SourceLine>
+   <SourceLine>#If RBVersion &gt; 2011.03 Then 'Only Works in 2011.4 or Higher</SourceLine>
+   <SourceLine>// Color String - AARRGGBB</SourceLine>
+   <SourceLine>If c.Alpha &lt; 16 Then s = s + "0"</SourceLine>
+   <SourceLine>s = Hex(c.Alpha) + s</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>c As color, Alpha As Boolean = False</ItemParams>
+  <ItemResult>string</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>FormatTime</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function FormatTime(d As date, Pad As Boolean = False) As String</SourceLine>
+   <SourceLine>Dim S As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If d.Hour &lt;= 12 Then</SourceLine>
+   <SourceLine>If Pad And d.hour &gt; 0 And d.Hour &lt; 10 Then</SourceLine>
+   <SourceLine>S = " " + Str(d.Hour) + ":"</SourceLine>
+   <SourceLine>Elseif d.Hour = 0 Then</SourceLine>
+   <SourceLine>S = "12:"</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>S = Str(d.Hour) + ":"</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>S = S + Format(d.Minute, "00")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If d.Hour &lt;&gt; 12 Then</SourceLine>
+   <SourceLine>S = S + "A"</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>S = S + "P"</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If Pad And d.Hour &lt; 22 Then</SourceLine>
+   <SourceLine>S = " " + Str(d.Hour-12) + ":"</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>S = Str(d.Hour-12) + ":"</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>S = S + Format(d.Minute, "00")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>S = S + "P"</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' Dependig on the font you only need to do this if you dont want a line though the zero</SourceLine>
+   <SourceLine>S = ReplaceAll(S, "0", "O")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return S</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>d As date, Pad As Boolean = False</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PictureToString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PictureToString(p as picture) As string</SourceLine>
+   <SourceLine>// Convert a picture to a string by saving the picture</SourceLine>
+   <SourceLine>// out to a file on disk and then reading in the binary</SourceLine>
+   <SourceLine>// data from that file.</SourceLine>
+   <SourceLine>Dim f As folderItem</SourceLine>
+   <SourceLine>Dim bs As binaryStream</SourceLine>
+   <SourceLine>Dim data As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// save picture to a temporary file</SourceLine>
+   <SourceLine>f = GetTemporaryFolderItem</SourceLine>
+   <SourceLine>f.saveAsPicture(p)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// read the data in from the temp file</SourceLine>
+   <SourceLine>'bs = f.openAsBinaryFile( false )</SourceLine>
+   <SourceLine>bs = BinaryStream.Open(f, False)</SourceLine>
+   <SourceLine>data = bs.read(bs.length)</SourceLine>
+   <SourceLine>bs.close</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// remove temporary file</SourceLine>
+   <SourceLine>f.delete</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// return the binary data</SourceLine>
+   <SourceLine>Return data</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Exception// an exception occurred preventing the conversion</SourceLine>
+   <SourceLine>Return ""</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p as picture</ItemParams>
+  <ItemResult>string</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SplitFilePath</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SplitFilePath(path As String, type As Integer = 0) As String</SourceLine>
+   <SourceLine>Dim j As Integer</SourceLine>
+   <SourceLine>Dim file_path, file_separator, file_name As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>file_separator = "/"</SourceLine>
+   <SourceLine>file_path = file_separator</SourceLine>
+   <SourceLine>file_name = ""</SourceLine>
+   <SourceLine>j = CountFields(path, file_separator) - 1</SourceLine>
+   <SourceLine>While j &gt; 1</SourceLine>
+   <SourceLine>file_path = file_separator + NthField(path, file_separator, j) + file_path</SourceLine>
+   <SourceLine>j = j - 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>file_name = NthField(path, file_separator, CountFields(path, file_separator))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Type = 0 Then</SourceLine>
+   <SourceLine>Return file_path</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return file_name</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>path As String, type As Integer = 0</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Str2Color</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Str2Color(s as string) As color</SourceLine>
+   <SourceLine>If Len(s) = 8 Then</SourceLine>
+   <SourceLine>#If RBVersion &gt; 2011.03 Then 'Only Works in 2011.4 or Higher</SourceLine>
+   <SourceLine>// Color String - AARRGGBB</SourceLine>
+   <SourceLine>Return RGB(Val("&amp;H" + s.Mid(3,2)), Val("&amp;H" + s.Mid(5,2)), Val("&amp;H" + s.Mid(7,2)), Val("&amp;H" + s.Mid(1,2)))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>Return RGB(Val("&amp;H" + s.Mid(1,2)), Val("&amp;H" + s.Mid(3,2)), Val("&amp;H" + s.Mid(5,2)))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>Elseif Len(s) = 6 Then</SourceLine>
+   <SourceLine>Return RGB(Val("&amp;H" + s.Mid(1,2)), Val("&amp;H" + s.Mid(3,2)), Val("&amp;H" + s.Mid(5,2)))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return RGB(0, 0, 0)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s as string</ItemParams>
+  <ItemResult>color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StringToPicture</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StringToPicture(data as string) As picture</SourceLine>
+   <SourceLine>// Convert a string to a picture by saving the binary data</SourceLine>
+   <SourceLine>// to a file on disk and then reading the file as a picture.</SourceLine>
+   <SourceLine>Dim f As folderItem</SourceLine>
+   <SourceLine>Dim bs As binaryStream</SourceLine>
+   <SourceLine>Dim p As picture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// write binary data to temporary file</SourceLine>
+   <SourceLine>f = GetTemporaryFolderItem</SourceLine>
+   <SourceLine>'bs = f.createBinaryFile( "any" )</SourceLine>
+   <SourceLine>bs = BinaryStream.Create(f, True)</SourceLine>
+   <SourceLine>bs.write(data)</SourceLine>
+   <SourceLine>bs.close</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// open the file as a picture</SourceLine>
+   <SourceLine>p = f.openAsPicture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// remove temporary file</SourceLine>
+   <SourceLine>f.delete</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// return the binary data</SourceLine>
+   <SourceLine>Return p</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Exception// an exception occurred preventing the conversion</SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>data as string</ItemParams>
+  <ItemResult>picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>VBInt2Color</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function VBInt2Color(i As Integer) As color</SourceLine>
+   <SourceLine>Dim Mid(2) As Integer</SourceLine>
+   <SourceLine>Dim s As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = Hex(I)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>While Len(s) &lt; 6</SourceLine>
+   <SourceLine>s = "0" + s</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>Mid(0) = Val("&amp;H" + s.Mid(1,2))</SourceLine>
+   <SourceLine>Mid(1) = Val("&amp;H" + s.Mid(3,2))</SourceLine>
+   <SourceLine>Mid(2) = Val("&amp;H" + s.Mid(5,2))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return RGB(Mid(2), Mid(1), Mid(0))</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>i As Integer</ItemParams>
+  <ItemResult>color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>VersionInfoStringRB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function VersionInfoStringRB(MultiLine As Boolean = False) As String</SourceLine>
+   <SourceLine>Dim s As String</SourceLine>
+   <SourceLine>s = "Built with: Realbasic " + RBVersionString</SourceLine>
+   <SourceLine>if MultiLine Then</SourceLine>
+   <SourceLine>s = s + EndOfLine</SourceLine>
+   <SourceLine>End if</SourceLine>
+   <SourceLine>s = s + " Built for: "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#if TargetMacOS Then</SourceLine>
+   <SourceLine>s = s + "Mac "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#if TargetPowerPC then</SourceLine>
+   <SourceLine>s = s + "PowerPC "</SourceLine>
+   <SourceLine>#else</SourceLine>
+   <SourceLine>s = s + "Intel "</SourceLine>
+   <SourceLine>#endif</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#if TargetCocoa then</SourceLine>
+   <SourceLine>s = s + "Cocoa "</SourceLine>
+   <SourceLine>#else</SourceLine>
+   <SourceLine>s = s + "Carbon "</SourceLine>
+   <SourceLine>#endif</SourceLine>
+   <SourceLine>#elseif TargetWin32 Then</SourceLine>
+   <SourceLine>s = s + "Windows "</SourceLine>
+   <SourceLine>#elseif TargetLinux Then</SourceLine>
+   <SourceLine>s = s + "Linux "</SourceLine>
+   <SourceLine>#endif</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#if TargetX86 Then</SourceLine>
+   <SourceLine>s = s + "32bit"</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>s = s + "64bit"</SourceLine>
+   <SourceLine>#Endif</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return S</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>MultiLine As Boolean = False</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Str2Bool</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Str2Bool(s As String) As Boolean</SourceLine>
+   <SourceLine>s = Lowercase(s)</SourceLine>
+   <SourceLine>If s = "false" Or s = "f" Or s = "0" Then</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>UniqueHardwareID</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function UniqueHardwareID() As String</SourceLine>
+   <SourceLine>Dim u As New UUIDMBS</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return u.ValueFormattedString</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>VersionInfoStringApp</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function VersionInfoStringApp(MultiLine As Boolean = False) As String</SourceLine>
+   <SourceLine>Dim s As String</SourceLine>
+   <SourceLine>s = "App: " + App.PropName</SourceLine>
+   <SourceLine>'s = s + " v"+Str(app.MajorVersion)+"."+Str(app.MinorVersion)+"."+Str(app.BugVersion)+" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
+   <SourceLine>s = s + " v"+App.ShortVersion+" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
+   <SourceLine>If MultiLine Then</SourceLine>
+   <SourceLine>s = s + EndOfLine</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>s = s + " Build Date: "+app.BuildDate.ShortDate+" "+App.BuildDate.ShortTime</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return S</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>MultiLine As Boolean = False</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>VersionInfoStringTitle</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function VersionInfoStringTitle() As String</SourceLine>
+   <SourceLine>Dim s As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = App.PropName</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If DebugBuild Then</SourceLine>
+   <SourceLine>s = s + " DEBUG"</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'s = s + " v"+Str(app.MajorVersion)+"."+Str(app.MinorVersion)+"."+Str(app.BugVersion)</SourceLine>
+   <SourceLine>s = s + " v"+App.ShortVersion</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If DebugBuild Then</SourceLine>
+   <SourceLine>s = s +" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
+   <SourceLine>#If TargetCocoa Then</SourceLine>
+   <SourceLine>s = s + " Cocoa"</SourceLine>
+   <SourceLine>#ElseIf TargetCarbon Then</SourceLine>
+   <SourceLine>s = s + " Carbon"</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return S</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LogMsg</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub LogMsg(Type As Integer, s As String)</SourceLine>
+   <SourceLine>Dim d As New Date</SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#if RepeatedMsgReduction Then</SourceLine>
+   <SourceLine>If s = LastLogString Then</SourceLine>
+   <SourceLine>LastLogCount = LastLogCount + 1</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>LastLogString = s</SourceLine>
+   <SourceLine>LastLogCount = 0</SourceLine>
+   <SourceLine>End if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if LastLogCount &gt; 0 Then</SourceLine>
+   <SourceLine>s = "Last Message Repeated "+str(LastLogCount)+" Times"</SourceLine>
+   <SourceLine>if LastLogCount MOD 2 = 1 Then s = s + " "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if LastLogCount &gt; 1 Then</SourceLine>
+   <SourceLine>i = len(DebugLogPrefix+"Last Message Repeated "+str(LastLogCount-1)+" Times"+EndOfLine)+32+((LastLogCount-1) MOD 2)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>DebugLogFile.Length = DebugLogFile.Length - i</SourceLine>
+   <SourceLine>DebugLogFile.Position = DebugLogFile.Length</SourceLine>
+   <SourceLine>DebugLogFile.Flush</SourceLine>
+   <SourceLine>End if</SourceLine>
+   <SourceLine>End if</SourceLine>
+   <SourceLine>#endif</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case Type</SourceLine>
+   <SourceLine>' Only Show on Development Build</SourceLine>
+   <SourceLine>Case LogType0_Debug</SourceLine>
+   <SourceLine>If App.StageCode = 0 Or DebugBuild Then</SourceLine>
+   <SourceLine>s = DebugLogPrefix+"&lt;Debug&gt;   ["+d.SQLDateTime+"] "+s</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>s = ""</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' Only Show on Alpha Build and below</SourceLine>
+   <SourceLine>Case LogType1_Notice</SourceLine>
+   <SourceLine>If App.StageCode &lt; 2 Or DebugBuild Then</SourceLine>
+   <SourceLine>s = DebugLogPrefix+"&lt;Notice&gt;  ["+d.SQLDateTime+"] "+s</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>s = ""</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' Beta Build</SourceLine>
+   <SourceLine>Case LogType2_Error</SourceLine>
+   <SourceLine>s = DebugLogPrefix+"&lt;Error&gt;   ["+d.SQLDateTime+"] "+s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case LogType3_RunTime</SourceLine>
+   <SourceLine>s = DebugLogPrefix+"&lt;RunTime&gt; ["+d.SQLDateTime+"] "+s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if s &lt;&gt; "" Then</SourceLine>
+   <SourceLine>If DebugLogFile &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>DebugLogFile.Write(EndOfLine+s)</SourceLine>
+   <SourceLine>DebugLogFile.Flush</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>System.DebugLog(s)</SourceLine>
+   <SourceLine>End if</SourceLine>
+   <SourceLine>End if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Type As Integer, s As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Init0_DataFolderSetup</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Init0_DataFolderSetup()</SourceLine>
+   <SourceLine>Dim tmpfolder As FolderItem</SourceLine>
+   <SourceLine>Dim logfile As FolderItem</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' TapeCalc(v1.0.0_Build_4)[RB_Ver2011.01]: &lt;Notice&gt; ### App Started ###</SourceLine>
+   <SourceLine>DebugLogPrefix = App.PropName</SourceLine>
+   <SourceLine>DebugLogPrefix = DebugLogPrefix + "(v"+Str(App.MajorVersion)+"."+Str(App.MinorVersion)+"."+Str(App.BugVersion)+"."+str(App.NonReleaseVersion)+")"</SourceLine>
+   <SourceLine>DebugLogPrefix = DebugLogPrefix + "[RB"+Right(Str(RBVersion), Len(Str(RBVersion))-2)+"]: "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Data Folders</SourceLine>
+   <SourceLine>tmpfolder = SpecialFolder.ApplicationData.Child(App.PropCompanyName)</SourceLine>
+   <SourceLine>If Not tmpfolder.Exists Then</SourceLine>
+   <SourceLine>tmpfolder.CreateAsFolder</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>DataFolder = tmpfolder.Child(App.PropName)</SourceLine>
+   <SourceLine>If Not DataFolder.Exists Then</SourceLine>
+   <SourceLine>DataFolder.CreateAsFolder</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>logfile = DataFolder.Child("debug.log")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Setup Logfile if needed</SourceLine>
+   <SourceLine>If App.StageCode &lt; 3 Or DebugBuild Then</SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine>If logfile.Exists Then</SourceLine>
+   <SourceLine>DebugLogFile = BinaryStream.Open(logfile, True)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>DebugLogFile = BinaryStream.Create(logfile, True)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>DebugLogFile.Position = DebugLogFile.Length</SourceLine>
+   <SourceLine>End Try</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>VersionInterger</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function VersionInterger(v As Integer = 4) As Integer</SourceLine>
+   <SourceLine>' Only Show Some of the Version</SourceLine>
+   <SourceLine>' 1 - Major Only</SourceLine>
+   <SourceLine>' 2 - Minor &amp; Up</SourceLine>
+   <SourceLine>' 3 - BugVersion &amp; up</SourceLine>
+   <SourceLine>' 4 - All</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim v1, v2, v3, v4 As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>v1 = Val(NthField(app.ShortVersion, ".", 1))</SourceLine>
+   <SourceLine>If v &gt;= 2 Then</SourceLine>
+   <SourceLine>v2 = Val(NthField(app.ShortVersion, ".", 2))</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>v2 = 0</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>If v &gt;= 3 Then</SourceLine>
+   <SourceLine>v3 = Val(NthField(app.ShortVersion, ".", 3))</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>v3 = 0</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>If v &gt;= 4 Then</SourceLine>
+   <SourceLine>v4 = App.NonReleaseVersion</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>v4 = 0</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'v1 = App.MajorVersion</SourceLine>
+   <SourceLine>'v2 = App.MinorVersion</SourceLine>
+   <SourceLine>'v3 = App.BugVersion</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Val(Str(v1)+Format(v2, "00")+Format(v3, "00")+Format(v4, "0000"))</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>v As Integer = 4</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Bool2Int</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Bool2Int(b As Boolean) As Integer</SourceLine>
+   <SourceLine>If b Then</SourceLine>
+   <SourceLine>Return 1</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return 0</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>b As Boolean</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToPrettyString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToPrettyString(Extends xml as XMLDocument) As String</SourceLine>
+   <SourceLine>Dim pXML As String = ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>pXML = pXML + "&lt;?xml version=""1.0"" encoding=""UTF-8""?&gt;"+EndOfLine</SourceLine>
+   <SourceLine>pXML = pXML + "&lt;xsl:transform version=""1.0"" xmlns:xsl=""http://www.w3.org/1999/XSL/Transform""&gt;"+EndOfLine</SourceLine>
+   <SourceLine>pXML = pXML + "&lt;xsl:output method=""xml"" indent=""yes"" /&gt;"+EndOfLine</SourceLine>
+   <SourceLine>pXML = pXML + "&lt;xsl:template match=""/""&gt;"+EndOfLine</SourceLine>
+   <SourceLine>pXML = pXML + "&lt;xsl:copy-of select=""/"" /&gt;"+EndOfLine</SourceLine>
+   <SourceLine>pXML = pXML + "&lt;/xsl:template&gt;"+EndOfLine</SourceLine>
+   <SourceLine>pXML = pXML + "&lt;/xsl:transform&gt;"+EndOfLine</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return xml.Transform(pXML)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends xml as XMLDocument</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PrimaryMACAddress</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PrimaryMACAddress() As String</SourceLine>
+   <SourceLine>#If TargetMacOS Then</SourceLine>
+   <SourceLine>Return Uppercase(SystemInformationMBS.MACAddressString)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#ElseIf TargetWin32 Then</SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine>Dim n As NetworkInterface</SourceLine>
+   <SourceLine>Dim i, endi As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = 0</SourceLine>
+   <SourceLine>endi = System.NetworkInterfaceCount</SourceLine>
+   <SourceLine>While i &lt; endi</SourceLine>
+   <SourceLine>n = System.GetNetworkInterface(i)</SourceLine>
+   <SourceLine>if n.MACAddress &lt;&gt; "" then Exit While</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Uppercase(n.MACAddress)</SourceLine>
+   <SourceLine>Catch</SourceLine>
+   <SourceLine>Return "AA:BB:CC:DD:EE:FF"</SourceLine>
+   <SourceLine>End Try</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>Return "AA:BB:CC:DD:EE:FF"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>AlwaysOnTop</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub AlwaysOnTop(Extends Win As Window, Set As Boolean)</SourceLine>
+   <SourceLine>#If TargetWin32 Then</SourceLine>
+   <SourceLine>Const SWP_NOSIZE = &amp;H1</SourceLine>
+   <SourceLine>Const SWP_NOMOVE = &amp;H2</SourceLine>
+   <SourceLine>Const HWND_TOPMOST = -1</SourceLine>
+   <SourceLine>Const HWND_NOTOPMOST = -2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function SetWindowPos Lib "user32" (hwnd As WindowPtr, hWndInstertAfter As Integer, _</SourceLine>
+   <SourceLine>x As Integer, y As Integer, cx As Integer, cy As Integer, flags As Integer) As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If set Then</SourceLine>
+   <SourceLine>Call SetWindowPos(Win, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE + SWP_NOSIZE)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Call SetWindowPos(Win, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE + SWP_NOSIZE)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#ElseIf TargetCarbon</SourceLine>
+   <SourceLine>Const kAlertWindowClass = 1</SourceLine>
+   <SourceLine>Const kMovableAlertWindowClass = 2</SourceLine>
+   <SourceLine>Const kModalWindowClass = 3</SourceLine>
+   <SourceLine>Const kMovableModalWindowClass = 4</SourceLine>
+   <SourceLine>Const kFloatingWindowClass = 5</SourceLine>
+   <SourceLine>Const kDocumentWindowClass = 6</SourceLine>
+   <SourceLine>Const kUtilityWindowClass = 8</SourceLine>
+   <SourceLine>Const kHelpWindowClass = 10</SourceLine>
+   <SourceLine>Const kSheetWindowClass = 11</SourceLine>
+   <SourceLine>Const kToolbarWindowClass = 12</SourceLine>
+   <SourceLine>Const kPlainWindowClass = 13</SourceLine>
+   <SourceLine>Const kOverlayWindowClass = 14</SourceLine>
+   <SourceLine>Const kSheetAlertWindowClass = 15</SourceLine>
+   <SourceLine>Const kAltPlainWindowClass =16</SourceLine>
+   <SourceLine>Const kDrawerWindowClass = 20</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'Declare Function SetWindowClass Lib "Carbon" (WindowHandle as Integer, inWindowClass as Integer) as Integer</SourceLine>
+   <SourceLine>'Call SetWindowClass(Win.Handle, kFloatingWindowClass)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'Declare Function SetWindowClass Lib "Carbon" (inWindow as WindowPtr, inWindowClass as Integer) as Integer</SourceLine>
+   <SourceLine>'Call SetWindowClass(Win, kFloatingWindowClass)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#ElseIf TargetCocoa</SourceLine>
+   <SourceLine>Const NSNormalWindowLevel = 0</SourceLine>
+   <SourceLine>Const NSFloatingWindowLevel = 3</SourceLine>
+   <SourceLine>Const NSModalPanelWindowLevel = 8</SourceLine>
+   <SourceLine>Const NSDockWindowLevel = 20</SourceLine>
+   <SourceLine>Const NSMainMenuWindowLevel = 24</SourceLine>
+   <SourceLine>Const NSPopUpMenuWindowLevel = 101</SourceLine>
+   <SourceLine>Const NSScreenSaverWindowLevel = 1001</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Soft Declare Sub NSWindowSetLevel Lib "Cocoa" selector "setLevel:" (windowRef As WindowPtr, level As Integer)</SourceLine>
+   <SourceLine>If set Then</SourceLine>
+   <SourceLine>NSWindowSetLevel(Win, NSFloatingWindowLevel)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>NSWindowSetLevel(Win, NSNormalWindowLevel)</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends Win As Window, Set As Boolean</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LogMsg</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub LogMsg(Type As Integer, err As RuntimeException, s As String)</SourceLine>
+   <SourceLine>s = "("+str(err.ErrorNumber)+") "+err.Message+" ::: "+s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>LogMsg(Type, s)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Type As Integer, err As RuntimeException, s As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>POSIXPath</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function POSIXPath(extends f as FolderItem) As String</SourceLine>
+   <SourceLine>If f Is Nil Then</SourceLine>
+   <SourceLine>Return ""</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If targetMacOS</SourceLine>
+   <SourceLine>If f.Exists Then</SourceLine>
+   <SourceLine>Dim fsRef As MemoryBlock = NewFSRef(f)</SourceLine>
+   <SourceLine>If fsRef Is Nil Then</SourceLine>
+   <SourceLine>Return ""</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim path As New MemoryBlock(1024)</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>Soft Declare Function FSRefMakePath Lib "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon"_</SourceLine>
+   <SourceLine>(ref As Ptr, path As Ptr, maxPathSize As Integer) As  Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim OSStatus As Integer = FSRefMakePath(fsRef, path, path.Size)</SourceLine>
+   <SourceLine>Const pathTooLongErr = -2110</SourceLine>
+   <SourceLine>If OSStatus = 0 Then</SourceLine>
+   <SourceLine>Return DefineEncoding(path.CString(0), Encodings.UTF8)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Elseif OSStatus = pathTooLongErr Then</SourceLine>
+   <SourceLine>path = New MemoryBlock(path.Size + path.Size)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return ""</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If f.Parent &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Return f.Parent.POSIXPath + "/" + f.Name</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return "/" + f.Name</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If targetLinux</SourceLine>
+   <SourceLine>Return f.AbsolutePath</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If targetWin32</SourceLine>
+   <SourceLine>//does such a thing exist for Windows?</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends f as FolderItem</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NewFSRef</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function NewFSRef(f as FolderItem) As MemoryBlock</SourceLine>
+   <SourceLine>If f Is Nil Then</SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Const sizeOfFSRef = 80</SourceLine>
+   <SourceLine>Dim theFSRef As New MemoryBlock(sizeOfFSRef)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim OSErr As Integer</SourceLine>
+   <SourceLine>If f.Parent &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>Soft Declare Function FSMakeFSRefUnicode Lib "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon"_</SourceLine>
+   <SourceLine>(parentPtr As Ptr, nameLength As Integer, name As CString, enc As Integer, outRef As Ptr) As Short</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim parentFSRef As MemoryBlock = NewFSRef(f.Parent)</SourceLine>
+   <SourceLine>Dim itemName As String = ConvertEncoding(f.Name, Encodings.UTF16)</SourceLine>
+   <SourceLine>Const kTextEncodingUnknown = &amp;hffff</SourceLine>
+   <SourceLine>OSErr = FSMakeFSRefUnicode(parentFSRef, Len(itemName), itemName, kTextEncodingUnknown, theFSRef)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Soft Declare Function FSGetVolumeInfo Lib "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon"_</SourceLine>
+   <SourceLine>(Volume As Short, volumeIndex As Integer, actualVolume As Ptr, whichInfo As Integer, info As Ptr, volumeName As Ptr, rootDirectory As Ptr) As Short</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Const kFSVolInfoNone = &amp;h0000</SourceLine>
+   <SourceLine>OSErr = FSGetVolumeInfo(f.MacVRefNum, 0, Nil, kFSVolInfoNone, Nil, Nil, theFSRef)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>If OSErr &lt;&gt; 0 Then</SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Return theFSRef</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>f as FolderItem</ItemParams>
+  <ItemResult>MemoryBlock</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IP2Int</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IP2Int(s As String) As Int64</SourceLine>
+   <SourceLine>Dim i As Int32 = 1</SourceLine>
+   <SourceLine>Dim num As Int64 = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>While i &lt;= 4</SourceLine>
+   <SourceLine>num = num + (Val(NthField(s, ".", i))*(256^(4-i)))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return num</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>Int64</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Int2IP</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Int2IP(num As Int64) As String</SourceLine>
+   <SourceLine>Dim i As Int32 = 1</SourceLine>
+   <SourceLine>Dim s(3) As Int32</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>While i &lt;= 4</SourceLine>
+   <SourceLine>s(i-1) = floor(num/(256^(4-i)))</SourceLine>
+   <SourceLine>num = num - (s(i-1)*(256^(4-i)))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return str(s(0))+"."+str(s(1))+"."+str(s(2))+"."+str(s(3))</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>num As Int64</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SQLQuery</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SQLQuery(Extends db As Database, sql As String) As RecordSet</SourceLine>
+   <SourceLine>Dim rs As RecordSet</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rs = db.SQLSelect(sql)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not db.Error Then</SourceLine>
+   <SourceLine>Return rs</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>LogMsg(LogType2_Error, "DB Error ("+Str(db.ErrorCode)+"): "+db.ErrorMessage+" in sql query ["+sql+"]")</SourceLine>
+   <SourceLine>Break</SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends db As Database, sql As String</ItemParams>
+  <ItemResult>RecordSet</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SQLQuery</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub SQLQuery(Extends db As Database, sql As String)</SourceLine>
+   <SourceLine>db.SQLExecute(sql)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If db.Error Then</SourceLine>
+   <SourceLine>LogMsg(LogType2_Error ,"DB Error ("+Str(db.ErrorCode)+"): "+db.ErrorMessage+" in sql query ["+sql+"]")</SourceLine>
+   <SourceLine>Break</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends db As Database, sql As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SQLEscape</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SQLEscape(Extends db As Database, sql As String) As String</SourceLine>
+   <SourceLine>// Return a version of s ready for use in an SQL statement.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// In other words, we just need to double the apostrophes:</SourceLine>
+   <SourceLine>sql = ReplaceAll(sql, "'", "''" )</SourceLine>
+   <SourceLine>sql = ReplaceAll(sql, "\", "\\" )</SourceLine>
+   <SourceLine>Return sql</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends db As Database, sql As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PopUpCellChoices</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PopUpCellChoices(extends lb As Listbox, row As Integer, column As Integer, choices() As String, celltags() As String) As Boolean</SourceLine>
+   <SourceLine>// Pop up the menu of choices for this cell.  If the user picks one,</SourceLine>
+   <SourceLine>// store it in that cell and return True.  Otherwise, return False.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim menu As New MenuItem</SourceLine>
+   <SourceLine>For Each choice As String In choices</SourceLine>
+   <SourceLine>If choice = "-" Then</SourceLine>
+   <SourceLine>menu.Append New MenuItem(MenuItem.TextSeparator)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Dim item As New MenuItem(choice)</SourceLine>
+   <SourceLine>menu.Append item</SourceLine>
+   <SourceLine>If choice = lb.Cell(row, column) Then item.Checked = True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim choice As MenuItem = menu.PopUp</SourceLine>
+   <SourceLine>If choice Is Nil Then Return False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>lb.Cell(row, column) = choice.Text</SourceLine>
+   <SourceLine>lb.CellTag(row, column) = celltags(choices.IndexOf(choice.Text))</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends lb As Listbox, row As Integer, column As Integer, choices() As String, celltags() As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>FontAvailable</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function FontAvailable(FontName As String) As Boolean</SourceLine>
+   <SourceLine>Dim i, n as Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>n = FontCount-1</SourceLine>
+   <SourceLine>For i = 0 to n</SourceLine>
+   <SourceLine>If Font(i) = FontName Then</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>FontName As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Property>
+  <ItemName>DataFolder</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DataFolder As FolderItem</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DataFolder As FolderItem</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>DebugLogFile</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DebugLogFile As BinaryStream</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DebugLogFile As BinaryStream</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>DebugLogPrefix</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>DebugLogPrefix As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>DebugLogPrefix As String</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>LastLogString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastLogString As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastLogString As String</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>LastLogCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>LastLogCount As UInt64</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>LastLogCount As UInt64 = 0</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>RepeatedSpaces</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>RepeatedSpaces As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>RepeatedSpaces As Integer = 0</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>RepeatedSpaces</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>PIE</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>PIE</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>3.14159265358979323846264338327950</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>LogType0_Debug</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>LogType0_Debug</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>0</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>LogType1_Notice</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>LogType1_Notice</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>1</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>LogType2_Error</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>LogType2_Error</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>2</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>LogType3_RunTime</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>LogType3_RunTime</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>3</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>IndentXML</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>IndentXML</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef><Hex bytes="248">3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554462D38223F3E0D3C78736C3A7472616E73666F726D2076657273696F6E3D22312E302220786D6C6E733A78736C3D22687474703A2F2F7777772E77332E6F72672F313939392F58534C2F5472616E73666F726D223E0D093C78736C3A6F7574707574206D6574686F643D22786D6C2220696E64656E743D2279657322202F3E0D093C78736C3A74656D706C617465206D617463683D222F223E0D09093C78736C3A636F70792D6F662073656C6563743D222F22202F3E0D093C2F78736C3A74656D706C6174653E0D3C2F78736C3A7472616E73666F726D3E</Hex></ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>RepeatedMsgReduction</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>RepeatedMsgReduction</ItemName>
+  <ItemType>3</ItemType>
+  <ItemDef>True</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+</block>
+</RBProject>
