@@ -1,0 +1,393 @@
+<?xml version="1.0"?>
+<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Module" ID="708504040">
+ <ObjName>PictureBlock</ObjName>
+ <ObjContainerID>0</ObjContainerID>
+ <IsClass>1</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>DrawInto</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawInto(g As Graphics)</SourceLine>
+   <SourceLine>Dim subx, suby, subw, subh As Integer</SourceLine>
+   <SourceLine>Dim Aspect As Double</SourceLine>
+   <SourceLine>Dim p As Picture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>p = image</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If p = Nil Then Exit Sub</SourceLine>
+   <SourceLine>If p.Width &lt; 1 Or p.Height &lt; 1 Then Exit Sub</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g = g.Clip(x, y, Width, Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Aspect = p.Width/p.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>subx = 0</SourceLine>
+   <SourceLine>suby = 0</SourceLine>
+   <SourceLine>subw = Width</SourceLine>
+   <SourceLine>subh = Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case ScaleMode</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>If Width / Aspect &gt; Height Then</SourceLine>
+   <SourceLine>subw = Width</SourceLine>
+   <SourceLine>subh = Width / Aspect</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>subw = Height * Aspect</SourceLine>
+   <SourceLine>subh = Height</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>subx = (Width - subw)/2</SourceLine>
+   <SourceLine>suby = (Height - subh)/2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 1</SourceLine>
+   <SourceLine>If Width / Aspect &lt; Height Then</SourceLine>
+   <SourceLine>subw = Width</SourceLine>
+   <SourceLine>subh = Width / Aspect</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>subw = Height * Aspect</SourceLine>
+   <SourceLine>subh = Height</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>subx = (Width - subw)/2</SourceLine>
+   <SourceLine>suby = (Height - subh)/2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>subx = 0</SourceLine>
+   <SourceLine>suby = 0</SourceLine>
+   <SourceLine>subw = Width</SourceLine>
+   <SourceLine>subh = Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 3</SourceLine>
+   <SourceLine>subx = (Width - p.Width)/2</SourceLine>
+   <SourceLine>suby = (Height - p.Height)/2</SourceLine>
+   <SourceLine>subw = p.Width</SourceLine>
+   <SourceLine>subh = p.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case Vert</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>Suby = 0</SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>Suby = Height - p.Height</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case Horz</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>Subx = 0</SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>Subx = Width - p.Width</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.DrawPicture(p, subx, suby, subw, subh, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>g As Graphics</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Property>
+  <ItemName>Height</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Height As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Height As Integer = -1</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>Horz</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Horz As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Horz As Integer = 1</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>Vert</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Vert As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Vert As Integer = 1</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>Width</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Width As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Width As Integer = -1</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>X</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>X As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>X As Integer = 0</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>Y</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Y As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Y As Integer = 0</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>ScaleMode</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>ScaleMode As Integer</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>ScaleMode As Integer = 0</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>Image</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Image As Picture</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>Image As Picture</ItemDeclaration>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Height</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>-1</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Horz</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>1</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Vert</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>1</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Width</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>-1</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>X</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Y</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>ScaleMode</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>image</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>Picture</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>HorzCenter</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>HorzCenter</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>1</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>HorzLeft</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>HorzLeft</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>0</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>HorzRight</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>HorzRight</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>2</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>VertBottom</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>VertBottom</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>2</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>VertMiddle</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>VertMiddle</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>1</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>VertTop</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>VertTop</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>0</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>ScaleFillScreen</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>ScaleFillScreen</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>0</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>ScaleFitToScreen</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>ScaleFitToScreen</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>1</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>ScaleStrechToScreen</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>ScaleStrechToScreen</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>2</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>ScaleDisable</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>ScaleDisable</ItemName>
+  <ItemType>2</ItemType>
+  <ItemDef>3</ItemDef>
+  <ItemFlags>0</ItemFlags>
+ </Constant>
+</block>
+</RBProject>

@@ -1,0 +1,2519 @@
+<?xml version="1.0"?>
+<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Module" ID="1567812713">
+ <ObjName>UtilsGraphic</ObjName>
+ <ObjContainerID>1865486656</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Gray</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Gray(x As Integer = 128) As Color</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This is a function similar to RGB(), HSV() and CMY(), but only takes a single value</SourceLine>
+   <SourceLine>'    to create a Gray color.  </SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This is more of a conveniance function, and may cost more CPU time than using </SourceLine>
+   <SourceLine>'    the regular RGB() function.  You should only use this function if you write a </SourceLine>
+   <SourceLine>'    single calculation that needs to be applied to all three parts of RGB, and don't store</SourceLine>
+   <SourceLine>'    the result in another local variable.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return RGB(x, x, x)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>x As Integer = 128</ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsGray</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsGray(Extends c As Color, tolerance As Double = 0.0) As Boolean</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Tests to see if a Color is gray (within a percentage defined by "tolerance")</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If c.Saturation &lt;= tolerance Then </SourceLine>
+   <SourceLine>Return True </SourceLine>
+   <SourceLine>Else </SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends c As Color, tolerance As Double = 0.0</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsGray</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsGray(p As Picture, tolerance As Double = 0.0) As Boolean</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Tests to see if a Picture is gray (within a percentage defined by "tolerance")</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function loops through all of the pixels in the picture and will return FALSE</SourceLine>
+   <SourceLine>'    as soon as the first pixel is determined to be outside of the tolerance.  Only</SourceLine>
+   <SourceLine>'    Pictures which evaluate as TRUE will have all pixels compared.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim g As Graphics</SourceLine>
+   <SourceLine>Dim x, y, xMax, yMax As Integer</SourceLine>
+   <SourceLine>Dim r As RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Determine if we can use Graphics (fast) or RGBSurface (faster)</SourceLine>
+   <SourceLine>If (p.Depth &gt;= 16) And Not (p.RGBSurface Is Nil) Then</SourceLine>
+   <SourceLine>r = p.RGBSurface</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>g = p.Graphics</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = p.Width - 1</SourceLine>
+   <SourceLine>yMax = p.Height - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not (r Is Nil) Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>If (r.Pixel(x, y).Saturation &gt; tolerance) Then Return False</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>If (g.Pixel(x, y).Saturation &gt; tolerance) Then Return False</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, tolerance As Double = 0.0</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>HexValue</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function HexValue(Extends c As Color) As String</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns a string with the color formated in its web Hex format like FFFFFF.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    The variant string value formats a color as "&amp;h000000", so we take advantage of </SourceLine>
+   <SourceLine>'    that feature and clean up the output so that it is standard web format.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim v As Variant = c</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Right(v, 6)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends c As Color</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Copy</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Copy(Extends p As Picture, force32Bit As Boolean = False) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Since you often want to modify copies of pictures, this function makes</SourceLine>
+   <SourceLine>'    it easy to create a new picture that duplicates the pixel values of the </SourceLine>
+   <SourceLine>'    original picture.  </SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    To make this function compatible with masks, we need to do a little</SourceLine>
+   <SourceLine>'    extra work to extract the RGB data from the Mask.  We need to first</SourceLine>
+   <SourceLine>'    make a new picture to contain a copy of the mask.  Then we need to</SourceLine>
+   <SourceLine>'    clear the mask in the *original* picture by filling the mask with black.</SourceLine>
+   <SourceLine>'    Yes, this modifies the original, but we have no choice and we will</SourceLine>
+   <SourceLine>'    restore the mask at the end of the function.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Please note that this function does not currently duplicate the Object2D</SourceLine>
+   <SourceLine>'    instead, the same Object2D classes are linked to the copied picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim mask As Picture</SourceLine>
+   <SourceLine>Dim gOriginalMask As Graphics</SourceLine>
+   <SourceLine>Dim copy As Picture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil      // there is nothing to do, so return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim hasMask As Boolean = p.HasMask</SourceLine>
+   <SourceLine>If hasMask Then</SourceLine>
+   <SourceLine>mask = NewPicture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
+   <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)      // copy the mask</SourceLine>
+   <SourceLine>gOriginalMask = p.Mask.Graphics      // get direct graphics object for speed</SourceLine>
+   <SourceLine>gOriginalMask.ForeColor = &amp;c000000          // clear with black</SourceLine>
+   <SourceLine>gOriginalMask.FillRect(0, 0, gOriginalMask.Width, gOriginalMask.Height)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now we create the new picture copy object and draw 'p'</SourceLine>
+   <SourceLine>If force32Bit Then</SourceLine>
+   <SourceLine>copy = NewPicture(p.Width, p.Height, 32)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>copy = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>copy.Graphics.DrawPicture(p, 0, 0)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If hasMask Then    // draw the mask</SourceLine>
+   <SourceLine>copy.Mask.Graphics.DrawPicture(mask, 0, 0)</SourceLine>
+   <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0)      // restore the original mask to 'p'</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now copy other variables of "p"</SourceLine>
+   <SourceLine>copy.HorizontalResolution = p.HorizontalResolution</SourceLine>
+   <SourceLine>copy.VerticalResolution = p.VerticalResolution</SourceLine>
+   <SourceLine>copy.Objects = p.Objects</SourceLine>
+   <SourceLine>copy.Transparent = p.Transparent</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends p As Picture, force32Bit As Boolean = False</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Darken</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Darken(p As Picture, opacity As Double) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function creates a dark version of a picture such as you</SourceLine>
+   <SourceLine>'    would see for a button that is being clicked.  This function</SourceLine>
+   <SourceLine>'    creates this effect by overlaying a partly transparent black picture</SourceLine>
+   <SourceLine>'    on top of the duplicated picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    The picture 'trans' is defined as Static so that it can be cached to</SourceLine>
+   <SourceLine>'    reduce the overhead for frequent calls to the function.  To be</SourceLine>
+   <SourceLine>'    compatible with REALbasic 5.5 and earlier, change this to DIM.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil      // nothing to do, so return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Static trans As Picture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (trans Is Nil) Then</SourceLine>
+   <SourceLine>trans = NewPicture(1, 1, 32)</SourceLine>
+   <SourceLine>trans.Graphics.Pixel(0, 0) = &amp;c000000</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim temp As Picture = p.Copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>trans.Mask.Graphics.Pixel(0, 0) = Gray(255 * (1.0 - opacity))</SourceLine>
+   <SourceLine>temp.Graphics.DrawPicture(trans, 0, 0, temp.Width, temp.Height, 0, 0, 1, 1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return temp</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, opacity As Double</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Lighten</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Lighten(p As Picture, opacity As Double) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function creates a lightened version of a picture such as you</SourceLine>
+   <SourceLine>'    would see for a button that is being disabled.  This function</SourceLine>
+   <SourceLine>'    creates this effect by overlaying a partly transparent white picture</SourceLine>
+   <SourceLine>'    on top of the duplicated picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    The picture 'trans' is defined as Static so that it can be cached to</SourceLine>
+   <SourceLine>'    reduce the overhead for frequent calls to the function.  To be</SourceLine>
+   <SourceLine>'    compatible with REALbasic 5.5 and earlier, change this to DIM.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil      // nothing to do, so return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Static trans As Picture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (trans Is Nil) Then</SourceLine>
+   <SourceLine>trans = NewPicture(1, 1, 32)</SourceLine>
+   <SourceLine>trans.Graphics.Pixel(0, 0) = &amp;cFFFFFF</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim temp As Picture = p.Copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>trans.Mask.Graphics.Pixel(0, 0) = Gray(255 * (1.0 - opacity))</SourceLine>
+   <SourceLine>temp.Graphics.DrawPicture(trans, 0, 0, temp.Width, temp.Height, 0, 0, 1, 1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return temp</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, opacity As Double</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Blend</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Blend(top As Color, base As Color, opacity As Double) As Color</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function blends two Color values and has a similar effect as blending a picture</SourceLine>
+   <SourceLine>'    with a mask.  The opacity parameter refers to the transparency value of the "top" </SourceLine>
+   <SourceLine>'    pixel... and works very similar to Photoshop's transparency.  The max is 1.0 and is </SourceLine>
+   <SourceLine>'    fully opaque, whereas 0.0 is fully transparent.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    NOTE: the function overhead is too high to make this effective in a loop (see Gradiant)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns the blended Color.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (opacity &gt; 1.0) Then opacity = 1.0</SourceLine>
+   <SourceLine>Dim inver As Double = 1.0 - opacity</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return RGB( _</SourceLine>
+   <SourceLine>(top.Red * opacity) + (base.Red * inver), _</SourceLine>
+   <SourceLine>(top.Green * opacity) + (base.Green * inver), _</SourceLine>
+   <SourceLine>(top.Blue * opacity) + (base.Blue * inver) _</SourceLine>
+   <SourceLine>)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>top As Color, base As Color, opacity As Double</ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Multiply</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Multiply(top As Color, base As Color, opacity As Double = 1.0) As Color</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function blends two Color values by "multiplying" their perceived values  </SourceLine>
+   <SourceLine>'    and is very common in traditional graphics applications.   This function has the</SourceLine>
+   <SourceLine>'    opposite effect of the Screen() function.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    The opacity parameter refers to the transparency value of the "top" pixel... and </SourceLine>
+   <SourceLine>'    works very similar to Photoshop's transparency.  The max is 1.0 and is fully opaque, </SourceLine>
+   <SourceLine>'    whereas 0.0 is fully transparent.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    NOTE: the function overhead is too high to make this effective in a loop (see Gradiant)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns the blended Color.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (opacity &lt; 1.0) Then</SourceLine>
+   <SourceLine>Return CMY( _</SourceLine>
+   <SourceLine>Min(base.Cyan + top.Cyan, 1.0), _</SourceLine>
+   <SourceLine>Min(base.Magenta + top.Magenta, 1.0), _</SourceLine>
+   <SourceLine>Min(base.Yellow + top.Yellow, 1.0) _</SourceLine>
+   <SourceLine>)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return CMY( _</SourceLine>
+   <SourceLine>Min(base.Cyan + (top.Cyan * opacity), 1.0), _</SourceLine>
+   <SourceLine>Min(base.Magenta + (top.Magenta * opacity), 1.0), _</SourceLine>
+   <SourceLine>Min(base.Yellow + (top.Yellow * opacity), 1.0) _</SourceLine>
+   <SourceLine>)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>top As Color, base As Color, opacity As Double = 1.0</ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Screen</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Screen(top As Color, base As Color, opacity As Double = 1.0) As Color</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function blends two Color values by "screening" their perceived values</SourceLine>
+   <SourceLine>'    and is very common in traditional graphics applications.   This function has the</SourceLine>
+   <SourceLine>'    opposite effect of the Multiply() function.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    The opacity parameter refers to the transparency value of the "top" pixel... and</SourceLine>
+   <SourceLine>'    works very similar to Photoshop's transparency.  The max is 1.0 and is fully opaque,</SourceLine>
+   <SourceLine>'    whereas 0.0 is fully transparent.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    NOTE: the function overhead is too high to make this effective in a loop (see Gradiant)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns the blended Color.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (opacity &lt; 1.0) Then</SourceLine>
+   <SourceLine>Return RGB( _</SourceLine>
+   <SourceLine>Min(base.Red + top.Red, 255), _</SourceLine>
+   <SourceLine>Min(base.Green + top.Green, 255), _</SourceLine>
+   <SourceLine>Min(base.Blue + top.Blue, 255) _</SourceLine>
+   <SourceLine>)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return RGB( _</SourceLine>
+   <SourceLine>Min(base.Red + (top.Red * opacity), 255), _</SourceLine>
+   <SourceLine>Min(base.Green + (top.Green * opacity), 255), _</SourceLine>
+   <SourceLine>Min(base.Blue + (top.Blue * opacity), 255) _</SourceLine>
+   <SourceLine>)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>top As Color, base As Color, opacity As Double = 1.0</ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Gradiant</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Gradiant(front As Color, back As Color, elements As Integer) As Color()</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function returns an array of colors (size of elements) smoothly blended from two </SourceLine>
+   <SourceLine>'    original source colors.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    For blending only a single pair of colors, use the Blend() function instead.</SourceLine>
+   <SourceLine>'    </SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim grad(0) As Color</SourceLine>
+   <SourceLine>Dim f(2) As Integer</SourceLine>
+   <SourceLine>Dim b(2) As Integer</SourceLine>
+   <SourceLine>Dim r, i As Double</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If elements &lt;= 0 Then</SourceLine>
+   <SourceLine>// cannot return an empty array, so return blended color</SourceLine>
+   <SourceLine>grad(0) = Blend(front, back, 0.5)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// prefetch the individual color parts</SourceLine>
+   <SourceLine>f(0) = front.Red</SourceLine>
+   <SourceLine>f(1) = front.Green</SourceLine>
+   <SourceLine>f(2) = front.Blue</SourceLine>
+   <SourceLine>b(0) = back.Red</SourceLine>
+   <SourceLine>b(1) = back.Green</SourceLine>
+   <SourceLine>b(2) = back.Blue</SourceLine>
+   <SourceLine>Redim grad(elements)</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For k As Integer = 0 To elements</SourceLine>
+   <SourceLine>r = (k * 1.0) / elements</SourceLine>
+   <SourceLine>i  = 1.0 - r</SourceLine>
+   <SourceLine>grad(k) = RGB((f(0) * r) + (b(0) * i), (f(1) * r) + (b(1) * i), (f(2) * r) + (b(2) * i))</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return grad</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>front As Color, back As Color, elements As Integer</ItemParams>
+  <ItemResult>Color()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Desaturate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Desaturate(Extends c As Color) As Color</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function returns a grayscale color based on the luminosity of the source color</SourceLine>
+   <SourceLine>'    and uses the same formula as Luminance().</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim x As Integer = ((c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return RGB(x, x, x)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends c As Color</ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>YUV</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function YUV(Y As Integer, U As Integer, V As Integer) As Color</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    YUV is a colorspace most commonly used in video.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Y is the luminance (absolute white to absolute black), U is the blending between</SourceLine>
+   <SourceLine>'    blue and yellow, and V is the blending between red and cyan.  The human eye is </SourceLine>
+   <SourceLine>'    less sensitive to colour variations than to intensity variations. YUV allows the </SourceLine>
+   <SourceLine>'    encoding of luminance (Y) information at full bandwidth and chrominance (UV) </SourceLine>
+   <SourceLine>'    information at reduced bandwidth.  Another advantage is that YUV provides is</SourceLine>
+   <SourceLine>'    that the Luminance component provides a very good grayscale resprentation of </SourceLine>
+   <SourceLine>'    the color... with several functions in GraphicUtils dependant on this colorspace.</SourceLine>
+   <SourceLine>'    </SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim R, G, B As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>R = Y + (1.4075 * (V - 128))</SourceLine>
+   <SourceLine>G = Y - (0.3455 * (U - 128) - (0.7169 * (V - 128)))</SourceLine>
+   <SourceLine>B = Y + (1.7790 * (U - 128))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return RGB(R, G, B)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Y As Integer, U As Integer, V As Integer</ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ChromaU</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ChromaU(Extends c As Color) As Integer</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns the "U" component of YUV</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return ((c.red * -0.169) + (c.green * -0.332) + (c.blue * 0.500)) + 128.0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends c As Color</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ChromaV</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ChromaV(Extends c As Color) As Integer</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns the "V" component of YUV</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return ((c.red * 0.500) + (c.green * -0.419) + (c.blue * -0.0813)) + 128.0</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends c As Color</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Luminance</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Luminance(Extends c As Color) As Integer</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns the "Y" component of YUV</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return ((c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends c As Color</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Desaturate</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Desaturate(p As Picture) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function converts the picture into perceptual grayscale by using the same </SourceLine>
+   <SourceLine>'    formula as the Luminance() function.</SourceLine>
+   <SourceLine>'    </SourceLine>
+   <SourceLine>'    Returns a desaturated copy of "p".</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim copy As Picture = p.Copy</SourceLine>
+   <SourceLine>Dim g As Graphics</SourceLine>
+   <SourceLine>Dim r As RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim x, y, xMax, yMax, k As Integer</SourceLine>
+   <SourceLine>Dim c As Color</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Determine if we can use Graphics (fast) or RGBSurface (faster)</SourceLine>
+   <SourceLine>If (copy.Depth &gt;= 16) And Not (copy.RGBSurface Is Nil) Then</SourceLine>
+   <SourceLine>r = copy.RGBSurface</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>g = copy.Graphics</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = p.Width - 1</SourceLine>
+   <SourceLine>yMax = p.Height - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// prefer to use RGBSurface, but if it is not then fall back to Graphics</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not (r Is Nil) Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = r.Pixel(x, y)</SourceLine>
+   <SourceLine>k = ((c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114))</SourceLine>
+   <SourceLine>r.Pixel(x, y) = RGB(k, k, k)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = g.Pixel(x, y)</SourceLine>
+   <SourceLine>k = ((c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114))</SourceLine>
+   <SourceLine>g.Pixel(x, y) = RGB(k, k, k)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Invert</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Invert(p As Picture) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Inverts all pixels in a Picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns a copy of "p", which will be a different color depth if p.Depth &lt;= 8.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim copy As Picture</SourceLine>
+   <SourceLine>Dim r As RGBSurface</SourceLine>
+   <SourceLine>Dim k, cmap(255) As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p.Depth &lt; 16) Then copy = p.Copy(True) Else copy = p.Copy</SourceLine>
+   <SourceLine>r = copy.RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For k = 0 To 255</SourceLine>
+   <SourceLine>cmap(k) = BitwiseXor(k, &amp;hFF)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not (r Is Nil) Then r.Transform(cmap)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>HasMask</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function HasMask(Extends p As Picture) As Boolean</SourceLine>
+   <SourceLine>Return Not (p.mask(false) = nil)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends p As Picture</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>InvertMask</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function InvertMask(p As Picture) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Inverts all pixels in a Picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns a copy of "p", which will be a different color depth if p.Depth &lt;= 8.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim copy As Picture</SourceLine>
+   <SourceLine>Dim r As RGBSurface</SourceLine>
+   <SourceLine>Dim k, cmap(255) As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p.Depth &lt; 16) Then copy = p.Copy(True) Else copy = p.Copy</SourceLine>
+   <SourceLine>r = copy.Mask.RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For k = 0 To 255</SourceLine>
+   <SourceLine>cmap(k) = BitwiseXor(k, &amp;hFF)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not (r Is Nil) Then r.Transform(cmap)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ContrastBW</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ContrastBW(Extends c As Color) As Color</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns either Black or White depending on which color provides the best</SourceLine>
+   <SourceLine>'    contrast compared with "c".</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (c.Luminance &lt; 128) Then</SourceLine>
+   <SourceLine>Return &amp;cFFFFFF</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return &amp;c000000</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends c As Color</ItemParams>
+  <ItemResult>Color</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Scale</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Scale(p As Picture, w As Integer, h As Integer) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function creates a Scale copy of the original "p".</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns a Picture which is exactly the size "w" and "h".  If you want to scale a</SourceLine>
+   <SourceLine>'    picture proportionally, use the ScaleWithin() function.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim mask As Picture</SourceLine>
+   <SourceLine>Dim gOriginalMask As Graphics</SourceLine>
+   <SourceLine>Dim copy As Picture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil      // there is nothing to do, so return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If p.HasMask Then</SourceLine>
+   <SourceLine>mask = NewPicture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
+   <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)      // copy the mask</SourceLine>
+   <SourceLine>gOriginalMask = p.Mask.Graphics      // get direct graphics object for speed</SourceLine>
+   <SourceLine>gOriginalMask.ForeColor = &amp;c000000          // clear with black</SourceLine>
+   <SourceLine>gOriginalMask.FillRect(0, 0, gOriginalMask.Width, gOriginalMask.Height)</SourceLine>
+   <SourceLine>copy = NewPicture(w, h, 32)                         // create new picture size of "w" and "h"</SourceLine>
+   <SourceLine>copy.Graphics.DrawPicture(p, 0, 0, w, h, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>copy.Mask.Graphics.DrawPicture(mask, 0, 0, w, h, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0)      // restore the original mask to 'p'</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>copy = NewPicture(w, h, 32)                         // create new picture size of "w" and "h"</SourceLine>
+   <SourceLine>copy.Graphics.DrawPicture(p, 0, 0, w, h, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now copy other variables of "p"</SourceLine>
+   <SourceLine>copy.HorizontalResolution = p.HorizontalResolution</SourceLine>
+   <SourceLine>copy.VerticalResolution = p.VerticalResolution</SourceLine>
+   <SourceLine>copy.Objects = p.Objects</SourceLine>
+   <SourceLine>copy.Transparent = p.Transparent</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, w As Integer, h As Integer</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ScaleWithin</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ScaleWithin(p As Picture, w As Integer, h As Integer) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function creates a Scale copy of the original "p".</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns a Picture which is would fit within the bounds "w" and "h".  If you want to </SourceLine>
+   <SourceLine>'    scale a picture to be exactly "w" and "h", use the Scale() function instead.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim mask As Picture</SourceLine>
+   <SourceLine>Dim gOriginalMask As Graphics</SourceLine>
+   <SourceLine>Dim copy As Picture</SourceLine>
+   <SourceLine>Dim ratio As Double</SourceLine>
+   <SourceLine>Dim wFit, hFit As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil      // there is nothing to do, so return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>ratio = Min(h / p.Height, w / p.Width)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>wFit = p.Width * ratio</SourceLine>
+   <SourceLine>hFit = p.Height * ratio</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If p.HasMask Then</SourceLine>
+   <SourceLine>mask = NewPicture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
+   <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)      // copy the mask</SourceLine>
+   <SourceLine>gOriginalMask = p.Mask.Graphics              // get direct graphics object for speed</SourceLine>
+   <SourceLine>gOriginalMask.ForeColor = &amp;c000000          // clear with black</SourceLine>
+   <SourceLine>gOriginalMask.FillRect(0, 0, gOriginalMask.Width, gOriginalMask.Height)</SourceLine>
+   <SourceLine>copy = NewPicture(wFit, hFit, 32)                 // create new picture size of "wFit" and "hFit"</SourceLine>
+   <SourceLine>copy.Graphics.DrawPicture(p, 0, 0, wFit, hFit, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>copy.Mask.Graphics.DrawPicture(mask, 0, 0, wFit, hFit, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0)      // restore the original mask to 'p'</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>copy = NewPicture(wFit, hFit, 32)                // create new picture size of "w" and "h"</SourceLine>
+   <SourceLine>copy.Graphics.DrawPicture(p, 0, 0, wFit, hFit, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now copy other variables of "p"</SourceLine>
+   <SourceLine>copy.HorizontalResolution = p.HorizontalResolution</SourceLine>
+   <SourceLine>copy.VerticalResolution = p.VerticalResolution</SourceLine>
+   <SourceLine>copy.Objects = p.Objects</SourceLine>
+   <SourceLine>copy.Transparent = p.Transparent</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, w As Integer, h As Integer</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>FlipHorizontal</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function FlipHorizontal(p As Picture) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function flips the picture in the horizontal direction, but does not change</SourceLine>
+   <SourceLine>'    the size of the picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim hasMask As Boolean = p.HasMask      // cache result</SourceLine>
+   <SourceLine>Dim copy As Picture = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>Dim g, gOriginalMask As Graphics</SourceLine>
+   <SourceLine>Dim mask As Picture</SourceLine>
+   <SourceLine>Dim x, xMax As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If hasMask Then</SourceLine>
+   <SourceLine>mask = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)</SourceLine>
+   <SourceLine>gOriginalMask = p.Mask.Graphics</SourceLine>
+   <SourceLine>gOriginalMask.ForeColor = &amp;c000000</SourceLine>
+   <SourceLine>gOriginalMask.FillRect(0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = p.Width - 1</SourceLine>
+   <SourceLine>g = copy.Graphics</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Copy 1 pixel wide strips of the original picture into the new picture</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>g.DrawPicture(p, x, 0, 1, g.Height, (xMax - x), 0, 1, g.Height)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// If there is a mask, we need to do the same thing</SourceLine>
+   <SourceLine>If hasMask Then</SourceLine>
+   <SourceLine>g = copy.Mask.Graphics</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>g.DrawPicture(mask, x, 0, 1, g.Height, (xMax - x), 0, 1, g.Height)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>// restore old mask</SourceLine>
+   <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now copy other variables of "p"</SourceLine>
+   <SourceLine>copy.HorizontalResolution = p.HorizontalResolution</SourceLine>
+   <SourceLine>copy.VerticalResolution = p.VerticalResolution</SourceLine>
+   <SourceLine>copy.Objects = p.Objects</SourceLine>
+   <SourceLine>copy.Transparent = p.Transparent</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>FlipVertical</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function FlipVertical(p As Picture) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function flips the picture in the vertical direction, but does not change</SourceLine>
+   <SourceLine>'    the size of the picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim hasMask As Boolean = p.HasMask      // cache result</SourceLine>
+   <SourceLine>Dim copy As Picture = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>Dim g, gOriginalMask As Graphics</SourceLine>
+   <SourceLine>Dim mask As Picture</SourceLine>
+   <SourceLine>Dim y, yMax As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If hasMask Then</SourceLine>
+   <SourceLine>mask = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)</SourceLine>
+   <SourceLine>gOriginalMask = p.Mask.Graphics</SourceLine>
+   <SourceLine>gOriginalMask.ForeColor = &amp;c000000</SourceLine>
+   <SourceLine>gOriginalMask.FillRect(0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>yMax = p.Height - 1</SourceLine>
+   <SourceLine>g = copy.Graphics</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Copy 1 pixel wide strips of the original picture into the new picture</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>g.DrawPicture(p, 0, y, g.Width, 1, 0, (yMax - y), g.Width, 1)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// If there is a mask, we need to do the same thing</SourceLine>
+   <SourceLine>If hasMask Then</SourceLine>
+   <SourceLine>g = copy.Mask.Graphics</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>g.DrawPicture(mask, 0, y, g.Width, 1, 0, (yMax - y), g.Width, 1)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>// restore old mask</SourceLine>
+   <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now copy other variables of "p"</SourceLine>
+   <SourceLine>copy.HorizontalResolution = p.HorizontalResolution</SourceLine>
+   <SourceLine>copy.VerticalResolution = p.VerticalResolution</SourceLine>
+   <SourceLine>copy.Objects = p.Objects</SourceLine>
+   <SourceLine>copy.Transparent = p.Transparent</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Rotate180</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Rotate180(p As Picture) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function rotates the picture 180 degrees, but does not change the size </SourceLine>
+   <SourceLine>'    of the picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim copy As Picture = p.Copy</SourceLine>
+   <SourceLine>Dim x, xMax, y, yMid, yMax, yRow As Integer</SourceLine>
+   <SourceLine>Dim g As Graphics</SourceLine>
+   <SourceLine>Dim r As RGBSurface</SourceLine>
+   <SourceLine>Dim c As Color</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = p.Width - 1</SourceLine>
+   <SourceLine>yMid = (p.Height \ 2) - 1</SourceLine>
+   <SourceLine>yMax = p.Height - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Determine if we can use Graphics (fast) or RGBSurface (faster)</SourceLine>
+   <SourceLine>If (p.Depth &gt;= 16) And Not (p.RGBSurface Is Nil) Then</SourceLine>
+   <SourceLine>r = copy.RGBSurface</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>g = copy.Graphics</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Loop through each pixel on the top half and store it on the bottom half the "copy"</SourceLine>
+   <SourceLine>// picture.  If p.Width is an odd number then the center row must be treated separately.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not (r Is Nil) Then        // the RGBSurface version</SourceLine>
+   <SourceLine>For y = 0 To yMid</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>yRow = yMax - y</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = r.Pixel(x, y)</SourceLine>
+   <SourceLine>r.Pixel(x, y) = r.Pixel(xMax - x, yRow)</SourceLine>
+   <SourceLine>r.Pixel(xMax - x, yRow) = c</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>If (p.Height Mod 2) = 1 Then</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>yRow = p.Height \ 2</SourceLine>
+   <SourceLine>For x = xMax \ 2 DownTo 0      // only do half of the center row</SourceLine>
+   <SourceLine>c = r.Pixel(x, yRow)</SourceLine>
+   <SourceLine>r.Pixel(x, yRow) = r.Pixel(xMax - x, yRow)</SourceLine>
+   <SourceLine>r.Pixel(xMax - x, yRow) = c</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Else        // the Graphics version</SourceLine>
+   <SourceLine>For y = 0 To yMid</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>yRow = yMax - y</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = g.Pixel(x, y)</SourceLine>
+   <SourceLine>g.Pixel(x, y) = g.Pixel(xMax - x, yRow)</SourceLine>
+   <SourceLine>g.Pixel(xMax - x, yRow) = c</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>If (p.Height Mod 2) = 1 Then</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>yRow = p.Height \ 2</SourceLine>
+   <SourceLine>For x = xMax \ 2 DownTo 0      // only do half of the center row</SourceLine>
+   <SourceLine>c = g.Pixel(x, yRow)</SourceLine>
+   <SourceLine>g.Pixel(x, yRow) = g.Pixel(xMax - x, yRow)</SourceLine>
+   <SourceLine>g.Pixel(xMax - x, yRow) = c</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// If there is a mask, we need to do the same thing as above</SourceLine>
+   <SourceLine>If p.HasMask Then</SourceLine>
+   <SourceLine>// Determine if we can use Graphics (fast) or RGBSurface (faster)</SourceLine>
+   <SourceLine>If (p.Mask.Depth &gt;= 16) And Not (p.Mask.RGBSurface Is Nil) Then</SourceLine>
+   <SourceLine>r = copy.Mask.RGBSurface</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>g = copy.Mask.Graphics</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>If Not (r Is Nil) Then        // the RGBSurface version</SourceLine>
+   <SourceLine>For y = 0 To yMid</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>yRow = yMax - y</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = r.Pixel(x, y)</SourceLine>
+   <SourceLine>r.Pixel(x, y) = r.Pixel(xMax - x, yRow)</SourceLine>
+   <SourceLine>r.Pixel(xMax - x, yRow) = c</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>If (p.Height Mod 2) = 1 Then</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>yRow = p.Height \ 2</SourceLine>
+   <SourceLine>For x = xMax \ 2 DownTo 0      // only do half of the center row</SourceLine>
+   <SourceLine>c = r.Pixel(x, yRow)</SourceLine>
+   <SourceLine>r.Pixel(x, yRow) = r.Pixel(xMax - x, yRow)</SourceLine>
+   <SourceLine>r.Pixel(xMax - x, yRow) = c</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Else        // the Graphics version</SourceLine>
+   <SourceLine>For y = 0 To yMid</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>yRow = yMax - y</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = g.Pixel(x, y)</SourceLine>
+   <SourceLine>g.Pixel(x, y) = g.Pixel(xMax - x, yRow)</SourceLine>
+   <SourceLine>g.Pixel(xMax - x, yRow) = c</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>If (p.Height Mod 2) = 1 Then</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>yRow = p.Height \ 2</SourceLine>
+   <SourceLine>For x = xMax \ 2 DownTo 0      // only do half of the center row</SourceLine>
+   <SourceLine>c = g.Pixel(x, yRow)</SourceLine>
+   <SourceLine>g.Pixel(x, yRow) = g.Pixel(xMax - x, yRow)</SourceLine>
+   <SourceLine>g.Pixel(xMax - x, yRow) = c</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now copy other variables of "p"</SourceLine>
+   <SourceLine>copy.HorizontalResolution = p.HorizontalResolution</SourceLine>
+   <SourceLine>copy.VerticalResolution = p.VerticalResolution</SourceLine>
+   <SourceLine>copy.Objects = p.Objects</SourceLine>
+   <SourceLine>copy.Transparent = p.Transparent</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PixelCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PixelCount(p As Picture) As Integer</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns the total number of pixels within a Picture... useful if you want to</SourceLine>
+   <SourceLine>'    display the "mega pixels" of an Picture.  To calculate mega pixels, divide result</SourceLine>
+   <SourceLine>'    by 1000000.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return 0      // nothing to do, so return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return p.Width * p.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Noise</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Noise(p As Picture, amount As Double, grayNoise As Boolean = False) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function adds Noise to the picture, by tiling it.  We cannot use the tile</SourceLine>
+   <SourceLine>'    function since this function requires each noise tile to be randomized.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim copy As Picture = p.Copy</SourceLine>
+   <SourceLine>Dim g As Graphics = copy.Graphics</SourceLine>
+   <SourceLine>Dim x, xMax, y, yMax As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = copy.Width - 1</SourceLine>
+   <SourceLine>yMax = copy.Height - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For y = 0 To yMax Step 128</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax Step 128</SourceLine>
+   <SourceLine>g.DrawPicture(NoiseTile(amount, grayNoise), x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now copy other variables of "p"</SourceLine>
+   <SourceLine>copy.HorizontalResolution = p.HorizontalResolution</SourceLine>
+   <SourceLine>copy.VerticalResolution = p.VerticalResolution</SourceLine>
+   <SourceLine>copy.Objects = p.Objects</SourceLine>
+   <SourceLine>copy.Transparent = p.Transparent</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, amount As Double, grayNoise As Boolean = False</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NoiseTile</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function NoiseTile(opacity As Double, isGrayNoise As Boolean = False) As Picture</SourceLine>
+   <SourceLine>Static rand As New Random</SourceLine>
+   <SourceLine>Static noisy As Picture</SourceLine>
+   <SourceLine>Static r As RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim x, y, j As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (noisy Is Nil) Then</SourceLine>
+   <SourceLine>noisy = NewPicture(128, 128, 32)</SourceLine>
+   <SourceLine>r = noisy.RGBSurface</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If isGrayNoise Then</SourceLine>
+   <SourceLine>For y = 0 to 127</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To 127</SourceLine>
+   <SourceLine>j = Rand.InRange(0, 255)</SourceLine>
+   <SourceLine>r.Pixel(x, y) = RGB(j, j, j)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 to 127</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To 127</SourceLine>
+   <SourceLine>r.Pixel(x, y) = RGB(Rand.InRange(0, 255), Rand.InRange(0, 255), Rand.InRange(0, 255))</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>noisy.Mask.Graphics.ForeColor = Gray((1.0 - opacity) * 255)</SourceLine>
+   <SourceLine>noisy.Mask.Graphics.FillRect(0, 0, 128, 128)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return noisy</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>opacity As Double, isGrayNoise As Boolean = False</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Tile</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Tile(p As Picture, w As Integer, h As Integer) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function takes a smaller Picture "p" and tiles it into a larger area "w" x "h".</SourceLine>
+   <SourceLine>'    Returns a Picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim tiled As Picture = NewPicture(w, h, 32)</SourceLine>
+   <SourceLine>Dim g As Graphics = tiled.Graphics</SourceLine>
+   <SourceLine>Dim x, xMax, y, yMax As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return tiled      // nothing to do, so return the blank picture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = w - 1</SourceLine>
+   <SourceLine>yMax = h - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For y = 0 To yMax Step p.Height</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax Step p.Width</SourceLine>
+   <SourceLine>g.DrawPicture(p, x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return tiled</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, w As Integer, h As Integer</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>HueShift</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function HueShift(p As Picture, value As Double) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Modifies the Picture by adding "value" to each pixel's Hue value to shift most</SourceLine>
+   <SourceLine>'    of the colors (except grays).  For example, you can use this function to change a</SourceLine>
+   <SourceLine>'    green button into a red one by passing a value of -0.33.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    value must be within a range of -1.0 to 1.0.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim copy As Picture = p.Copy</SourceLine>
+   <SourceLine>Dim g As Graphics</SourceLine>
+   <SourceLine>Dim r As RGBSurface</SourceLine>
+   <SourceLine>Dim x, xMax, y, yMax As Integer</SourceLine>
+   <SourceLine>Dim h As Double</SourceLine>
+   <SourceLine>Dim c As Color</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = copy.Width - 1</SourceLine>
+   <SourceLine>yMax = copy.Height - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Determine if we can use Graphics (fast) or RGBSurface (faster)</SourceLine>
+   <SourceLine>If (copy.Depth &gt;= 16) And Not (copy.RGBSurface Is Nil) Then</SourceLine>
+   <SourceLine>r = copy.RGBSurface</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>g = copy.Graphics</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not (r Is Nil) Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = r.Pixel(x, y)</SourceLine>
+   <SourceLine>h = c.Hue + value</SourceLine>
+   <SourceLine>If (h &gt; 1.0) Then h = h - 1.0</SourceLine>
+   <SourceLine>If (h &lt; 0.0) Then h = h + 1.0</SourceLine>
+   <SourceLine>r.Pixel(x, y) = HSV(h, c.Saturation, c.Value)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = g.Pixel(x, y)</SourceLine>
+   <SourceLine>h = c.Hue + value</SourceLine>
+   <SourceLine>If (h &gt; 1.0) Then h = h - 1.0</SourceLine>
+   <SourceLine>If (h &lt; 0.0) Then h = h + 1.0</SourceLine>
+   <SourceLine>g.Pixel(x, y) = HSV(h, c.Saturation, c.Value)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, value As Double</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Rotate90</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Rotate90(p As Picture, counterClockwise As Boolean = False) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function rotates the picture 90 degrees Clockwise or Counter Clockwise</SourceLine>
+   <SourceLine>'    depending on the value of "counterClockwise".  Default is to rotate Clockwise.  </SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Please note that the copied Picture will change dimensions from the original </SourceLine>
+   <SourceLine>'    with the width and height values swapped.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim copy As Picture = NewPicture(p.Height, p.Width, p.Depth)</SourceLine>
+   <SourceLine>Dim x, xMax, y, yMax As Integer</SourceLine>
+   <SourceLine>Dim gs, gd As Graphics</SourceLine>
+   <SourceLine>Dim rs, rd As RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = p.Width - 1</SourceLine>
+   <SourceLine>yMax = p.Height - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine> // Determine if we can use Graphics (fast) or RGBSurface (faster)</SourceLine>
+   <SourceLine>If (p.Depth &gt;= 16) And Not (p.RGBSurface Is Nil) Then</SourceLine>
+   <SourceLine>rs = p.RGBSurface</SourceLine>
+   <SourceLine>rd = copy.RGBSurface</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>gs = p.Graphics</SourceLine>
+   <SourceLine>gd = copy.Graphics</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Loop through each pixel on the top half and store it on the bottom half the "copy"</SourceLine>
+   <SourceLine>// picture.  If p.Width is an odd number then the center row must be treated separately.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not (rs Is Nil) Then        // the RGBSurface version</SourceLine>
+   <SourceLine>If Not counterClockwise Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>rd.Pixel(yMax - y, x) = rs.Pixel(x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>rd.Pixel(y, xMax - x) = rs.Pixel(x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Else        // the Graphics version</SourceLine>
+   <SourceLine>If Not counterClockwise Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>gd.Pixel(yMax - y, x) = gs.Pixel(x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>gd.Pixel(y, xMax - x) = gs.Pixel(x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// If there is a mask, we need to do the same thing as above</SourceLine>
+   <SourceLine>If p.HasMask Then</SourceLine>
+   <SourceLine>// Determine if we can use Graphics (fast) or RGBSurface (faster)</SourceLine>
+   <SourceLine>If (p.Mask.Depth &gt;= 16) And Not (p.Mask.RGBSurface Is Nil) Then</SourceLine>
+   <SourceLine>rs = p.Mask.RGBSurface</SourceLine>
+   <SourceLine>rd = copy.Mask.RGBSurface</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>gs = p.Mask.Graphics</SourceLine>
+   <SourceLine>gd = copy.Mask.Graphics</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>If Not (rs Is Nil) Then        // the RGBSurface version</SourceLine>
+   <SourceLine>If Not counterClockwise Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>rd.Pixel(yMax - y, x) = rs.Pixel(x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>rd.Pixel(y, xMax - x) = rs.Pixel(x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Else        // the Graphics version</SourceLine>
+   <SourceLine>If Not counterClockwise Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>gd.Pixel(yMax - y, x) = gs.Pixel(x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>gd.Pixel(y, xMax - x) = gs.Pixel(x, y)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now copy other variables of "p"  (must swap horizontal and vertical res)</SourceLine>
+   <SourceLine>copy.HorizontalResolution = p.VerticalResolution</SourceLine>
+   <SourceLine>copy.VerticalResolution = p.HorizontalResolution</SourceLine>
+   <SourceLine>copy.Transparent = p.Transparent</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// cannot copy objects because we would need to rotate them, and that would change</SourceLine>
+   <SourceLine>// the original picture... has to wait until support for duplicating objects is added.</SourceLine>
+   <SourceLine>// copy.Objects = p.Objects </SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, counterClockwise As Boolean = False</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>BlackAndWhite</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function BlackAndWhite(p As Picture) As Picture</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    First converts the image to Grayscale (using Desaturate function), and then </SourceLine>
+   <SourceLine>'    applies a RGBSurface.Transform to convert all pixels within the image to</SourceLine>
+   <SourceLine>'    either absolute Black or absolute White.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Returns a copy of "p", which will be a different color depth if p.Depth &lt;= 8.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If p Is Nil Then Return Nil</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim copy As Picture</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If p.Depth &lt;= 16 Then   </SourceLine>
+   <SourceLine>copy = Desaturate(p.Copy(True))</SourceLine>
+   <SourceLine>Else </SourceLine>
+   <SourceLine>copy = Desaturate(p)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim r As RGBSurface = copy.RGBSurface</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>static cmap(255) As Integer</SourceLine>
+   <SourceLine>if cmap(255) = 0 then</SourceLine>
+   <SourceLine>For k As Integer = 128 To 255</SourceLine>
+   <SourceLine>cmap(k) = 255</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not (r Is Nil) Then r.Transform(cmap)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return copy</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Histogram</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Histogram(p As Picture, accurate As Boolean = True) As Double()</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    A Histogram is the frequency of RGB pixel values within an image.  It is </SourceLine>
+   <SourceLine>'    usually displayed as a graph in image-editing programs, is a set of data </SourceLine>
+   <SourceLine>'    showing the relative distribution of pixels of various densities in an Picture.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function returns an array of Doubles with a size of 1024 elements.  The</SourceLine>
+   <SourceLine>'    array is actually divided into four parts with 256 elements for each part.  The</SourceLine>
+   <SourceLine>'    function returns the values in the order you see below with elements 0 to 255</SourceLine>
+   <SourceLine>'    representing Luminance, 256 to 511 representing Red, etc.:</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'        Luminance (perceptual gray value)</SourceLine>
+   <SourceLine>'        Red channel</SourceLine>
+   <SourceLine>'        Green channel</SourceLine>
+   <SourceLine>'        Blue channel</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Values will be returned between 0.0 and 1.0.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    This function can require a lot of processing since it loops over each pixel.  For</SourceLine>
+   <SourceLine>'    larger images, you might consider setting "accurate = False":  it gives less </SourceLine>
+   <SourceLine>'    accurate results, but only samples a fraction of the pixels in the image.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim r As RGBSurface</SourceLine>
+   <SourceLine>Dim g As Graphics</SourceLine>
+   <SourceLine>Dim x, xMax, y, yMax As Integer</SourceLine>
+   <SourceLine>Dim c As Color</SourceLine>
+   <SourceLine>Dim lum As Double</SourceLine>
+   <SourceLine>Dim graph(1023) As Double</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (p Is Nil) Then Return graph      // no pixel data</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Determine if we can use Graphics (fast) or RGBSurface (faster)</SourceLine>
+   <SourceLine>If (p.Depth &gt;= 16) And Not (p.RGBSurface Is Nil) Then</SourceLine>
+   <SourceLine>r = p.RGBSurface</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>g = p.Graphics</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xMax = p.Width - 1</SourceLine>
+   <SourceLine>yMax = p.Height - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// loop through the pixels in the image.  When not accurate, will loop</SourceLine>
+   <SourceLine>// through every other pixel on even lines and every third pixel for odd</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If accurate Then</SourceLine>
+   <SourceLine>If Not (r Is Nil) Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = r.Pixel(x, y)</SourceLine>
+   <SourceLine>lum = (c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114)      // same formula</SourceLine>
+   <SourceLine>graph(lum) = graph(lum) + 1</SourceLine>
+   <SourceLine>graph(c.Red + 256) = graph(c.Red + 256) + 1</SourceLine>
+   <SourceLine>graph(c.Green + 512) = graph(c.Green + 512) + 1</SourceLine>
+   <SourceLine>graph(c.Blue + 768) = graph(c.Blue + 768) + 1</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>For x = 0 To xMax</SourceLine>
+   <SourceLine>c = g.Pixel(x, y)</SourceLine>
+   <SourceLine>lum = (c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114)      // same formula</SourceLine>
+   <SourceLine>graph(lum) = graph(lum) + 1</SourceLine>
+   <SourceLine>graph(c.Red + 256) = graph(c.Red + 256) + 1</SourceLine>
+   <SourceLine>graph(c.Green + 512) = graph(c.Green + 512) + 1</SourceLine>
+   <SourceLine>graph(c.Blue + 768) = graph(c.Blue + 768) + 1</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If Not (r Is Nil) Then</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>If (y Mod 2) = 0 Then</SourceLine>
+   <SourceLine>For x = 0 To xMax Step 2</SourceLine>
+   <SourceLine>c = r.Pixel(x, y)</SourceLine>
+   <SourceLine>lum = (c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114)      // same formula</SourceLine>
+   <SourceLine>graph(lum) = graph(lum) + 1</SourceLine>
+   <SourceLine>graph(c.Red + 256) = graph(c.Red + 256) + 1</SourceLine>
+   <SourceLine>graph(c.Green + 512) = graph(c.Green + 512) + 1</SourceLine>
+   <SourceLine>graph(c.Blue + 768) = graph(c.Blue + 768) + 1</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For x = 0 To xMax Step 3</SourceLine>
+   <SourceLine>c = r.Pixel(x, y)</SourceLine>
+   <SourceLine>lum = (c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114)      // same formula</SourceLine>
+   <SourceLine>graph(lum) = graph(lum) + 1</SourceLine>
+   <SourceLine>graph(c.Red + 256) = graph(c.Red + 256) + 1</SourceLine>
+   <SourceLine>graph(c.Green + 512) = graph(c.Green + 512) + 1</SourceLine>
+   <SourceLine>graph(c.Blue + 768) = graph(c.Blue + 768) + 1</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For y = 0 To yMax</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>If (y Mod 2) = 0 Then</SourceLine>
+   <SourceLine>For x = 0 To xMax Step 2</SourceLine>
+   <SourceLine>c = g.Pixel(x, y)</SourceLine>
+   <SourceLine>lum = (c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114)      // same formula</SourceLine>
+   <SourceLine>graph(lum) = graph(lum) + 1</SourceLine>
+   <SourceLine>graph(c.Red + 256) = graph(c.Red + 256) + 1</SourceLine>
+   <SourceLine>graph(c.Green + 512) = graph(c.Green + 512) + 1</SourceLine>
+   <SourceLine>graph(c.Blue + 768) = graph(c.Blue + 768) + 1</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>For x = 0 To xMax Step 3</SourceLine>
+   <SourceLine>c = g.Pixel(x, y)</SourceLine>
+   <SourceLine>lum = (c.red * 0.299) + (c.green * 0.587) + (c.blue * 0.114)      // same formula</SourceLine>
+   <SourceLine>graph(lum) = graph(lum) + 1</SourceLine>
+   <SourceLine>graph(c.Red + 256) = graph(c.Red + 256) + 1</SourceLine>
+   <SourceLine>graph(c.Green + 512) = graph(c.Green + 512) + 1</SourceLine>
+   <SourceLine>graph(c.Blue + 768) = graph(c.Blue + 768) + 1</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>#pragma BackgroundTasks True</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// now we need to normalize the data.  "y" is now the maximum value and will</SourceLine>
+   <SourceLine>// be applied to all values in the second loop to normalize the values between</SourceLine>
+   <SourceLine>// 0.0 and 1.0.  For the first section (Luminance), only those values need to be</SourceLine>
+   <SourceLine>// compared.  For the RGB values, the max is found between all three channels.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>y = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For x = 0 To 255          // find the max</SourceLine>
+   <SourceLine>If graph(x) &gt; y Then y = graph(x)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>For x = 0 To 255          // normalize between 0.0 and 1.0</SourceLine>
+   <SourceLine>graph(x) = graph(x) / y</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>y = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For x = 256 To 1023          // find the max</SourceLine>
+   <SourceLine>If graph(x) &gt; y Then y = graph(x)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>For x = 256 To 1023          // normalize between 0.0 and 1.0</SourceLine>
+   <SourceLine>graph(x) = graph(x) / y</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return graph</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>p As Picture, accurate As Boolean = True</ItemParams>
+  <ItemResult>Double()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DrawArrow</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawArrow(Extends g As Graphics, Dir As Integer, x As Integer, y As Integer, Width As Integer, Height As Integer)</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Draws an arrow to the screen.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Note: The x and y start in the top left hand corner.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Variables:</SourceLine>
+   <SourceLine>'    g - The Graphics Object</SourceLine>
+   <SourceLine>'    Dir - The direction the arrow is pointing</SourceLine>
+   <SourceLine>'        Values:</SourceLine>
+   <SourceLine>'            0 - None</SourceLine>
+   <SourceLine>'            1 - North</SourceLine>
+   <SourceLine>'            2 - North East</SourceLine>
+   <SourceLine>'            3 - East</SourceLine>
+   <SourceLine>'            4 - South East</SourceLine>
+   <SourceLine>'            5 - South</SourceLine>
+   <SourceLine>'            6 - South West</SourceLine>
+   <SourceLine>'            7 - West</SourceLine>
+   <SourceLine>'            8 - North West</SourceLine>
+   <SourceLine>'    x - The x coordinate for the arrow</SourceLine>
+   <SourceLine>'    y - The y coordinate for the arrow</SourceLine>
+   <SourceLine>'    Width - The width of the arrow</SourceLine>
+   <SourceLine>'    Height - The height of the arrow</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim fx As New FigureShape</SourceLine>
+   <SourceLine>Dim pW, pH As Single</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Width &gt; Height Then</SourceLine>
+   <SourceLine>x = x + ((Width - Height)/2)</SourceLine>
+   <SourceLine>Width = Height</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>y = y + ((Height - Width)/2)</SourceLine>
+   <SourceLine>Height = Width</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>fx.X = Width/2</SourceLine>
+   <SourceLine>fx.Y = Height/2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>fx.Border = 0</SourceLine>
+   <SourceLine>fx.FillColor = g.ForeColor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>pW = Width/100</SourceLine>
+   <SourceLine>pH = Height/100</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case Dir</SourceLine>
+   <SourceLine>Case 0 'None</SourceLine>
+   <SourceLine>fx.AddLine 30*pW, 30*pH, 70*pW, 30*pH</SourceLine>
+   <SourceLine>fx.AddLine 70*pW, 70*pH, 30*pW, 70*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 1 'North</SourceLine>
+   <SourceLine>fx.AddLine 50*pW, 0*pH, 100*pW, 50*pH</SourceLine>
+   <SourceLine>fx.AddLine 80*pW, 50*pH, 80*pW, 100*pH</SourceLine>
+   <SourceLine>fx.AddLine 20*pW, 100*pH, 20*pW, 50*pH</SourceLine>
+   <SourceLine>fx.AddLine 0*pW, 50*pH, 50*pW, 0*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 2 'North East</SourceLine>
+   <SourceLine>fx.AddLine 100*pW, 0*pH, 100*pW, 80*pH</SourceLine>
+   <SourceLine>fx.AddLine 80*pW, 60*pH, 40*pW, 100*pH</SourceLine>
+   <SourceLine>fx.AddLine 0*pW, 60*pH, 40*pW, 20*pH</SourceLine>
+   <SourceLine>fx.AddLine 20*pW, 0*pH, 100*pW, 0*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 3 'East</SourceLine>
+   <SourceLine>fx.AddLine 100*pW, 50*pH, 50*pW, 100*pH</SourceLine>
+   <SourceLine>fx.AddLine 50*pW, 80*pH, 0*pW, 80*pH</SourceLine>
+   <SourceLine>fx.AddLine 0*pW, 20*pH, 50*pW, 20*pH</SourceLine>
+   <SourceLine>fx.AddLine 50*pW, 0*pH, 100*pW, 50*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 4 'South East</SourceLine>
+   <SourceLine>fx.AddLine 100*pW, 100*pH, 20*pW, 100*pH</SourceLine>
+   <SourceLine>fx.AddLine 40*pW, 80*pH, 0*pW, 40*pH</SourceLine>
+   <SourceLine>fx.AddLine 40*pW, 0*pH, 80*pW, 40*pH</SourceLine>
+   <SourceLine>fx.AddLine 100*pW, 20*pH, 100*pW, 100*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 5 'South</SourceLine>
+   <SourceLine>fx.AddLine 50*pW, 100*pH, 0*pW, 50*pH</SourceLine>
+   <SourceLine>fx.AddLine 20*pW, 50*pH, 20*pW, 0*pH</SourceLine>
+   <SourceLine>fx.AddLine 80*pW, 0*pH, 80*pW, 50*pH</SourceLine>
+   <SourceLine>fx.AddLine 100*pW, 50*pH, 50*pW, 100*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 6 'South West</SourceLine>
+   <SourceLine>fx.AddLine 0*pW, 100*pH, 0*pW, 20*pH</SourceLine>
+   <SourceLine>fx.AddLine 20*pW, 40*pH, 60*pW, 0*pH</SourceLine>
+   <SourceLine>fx.AddLine 100*pW, 40*pH, 60*pW, 80*pH</SourceLine>
+   <SourceLine>fx.AddLine 80*pW, 100*pH, 0*pW, 100*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 7 'West</SourceLine>
+   <SourceLine>fx.AddLine 0*pW, 50*pH, 50*pW, 0*pH</SourceLine>
+   <SourceLine>fx.AddLine 50*pW, 20*pH, 100*pW, 20*pH</SourceLine>
+   <SourceLine>fx.AddLine 100*pW, 80*pH, 50*pW, 80*pH</SourceLine>
+   <SourceLine>fx.AddLine 50*pW, 100*pH, 0*pW, 50*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 8 'North West</SourceLine>
+   <SourceLine>fx.AddLine 0*pW, 0*pH, 80*pW, 0*pH</SourceLine>
+   <SourceLine>fx.AddLine 60*pW, 20*pH, 100*pW, 60*pH</SourceLine>
+   <SourceLine>fx.AddLine 60*pW, 100*pH, 20*pW, 60*pH</SourceLine>
+   <SourceLine>fx.AddLine 0*pW, 80*pH, 0*pW, 0*pH</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Exit Sub</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.DrawObject(fx, x, y)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends g As Graphics, Dir As Integer, x As Integer, y As Integer, Width As Integer, Height As Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DrawDiagonalText</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawDiagonalText(Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer, Height As Integer)</SourceLine>
+   <SourceLine>Dim s As New StringShape</SourceLine>
+   <SourceLine>s.Bold = True</SourceLine>
+   <SourceLine>s.FillColor = g.ForeColor</SourceLine>
+   <SourceLine>s.Text = Text'+" "</SourceLine>
+   <SourceLine>s.TextFont = g.TextFont</SourceLine>
+   <SourceLine>s.TextSize = g.GetMaxFontSize(s.Text, Width, Height)</SourceLine>
+   <SourceLine>g.TextSize = s.TextSize</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s.X = Width/2</SourceLine>
+   <SourceLine>s.Y = (g.TextAscent+Height)/2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s.Rotation = ATan((Height-g.TextAscent)/Width)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.DrawObject(s, x, y)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer, Height As Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DrawFade</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawFade(Extends g as graphics, ColorStart As Color, ColorEnd As Color, FadeDir As integer = 0, x As Integer = - 1, y As Integer = - 1, Width As integer = - 1, Height As Integer = - 1)</SourceLine>
+   <SourceLine>Dim i, j, w As Integer</SourceLine>
+   <SourceLine>Dim pct As Double</SourceLine>
+   <SourceLine>Dim colorset() As color</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If x = -1 Or y = -1 Or Width = -1 Or Height = -1 Then</SourceLine>
+   <SourceLine>x = 0</SourceLine>
+   <SourceLine>y = 0</SourceLine>
+   <SourceLine>Width = g.Width</SourceLine>
+   <SourceLine>Height = g.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>g = g.Clip(x, y, Width, Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case FadeDir</SourceLine>
+   <SourceLine>Case 0 // Vertical</SourceLine>
+   <SourceLine>w = Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 1 // Horz</SourceLine>
+   <SourceLine>w = Width</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim tmpColor As Color</SourceLine>
+   <SourceLine>tmpColor = ColorStart</SourceLine>
+   <SourceLine>ColorStart = ColorEnd</SourceLine>
+   <SourceLine>ColorEnd = tmpColor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 2 // Vertical</SourceLine>
+   <SourceLine>w = Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim tmpColor As Color</SourceLine>
+   <SourceLine>tmpColor = ColorStart</SourceLine>
+   <SourceLine>ColorStart = ColorEnd</SourceLine>
+   <SourceLine>ColorEnd = tmpColor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 3 // Horz</SourceLine>
+   <SourceLine>w = Width</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>colorset = Gradiant(ColorEnd, ColorStart, w)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For j = 0 To w</SourceLine>
+   <SourceLine>pct = j / w</SourceLine>
+   <SourceLine>g.forecolor = colorset(j)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case FadeDir</SourceLine>
+   <SourceLine>Case 0, 2 // Vertical</SourceLine>
+   <SourceLine>g.drawline(0, j, Width, j)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 1, 3</SourceLine>
+   <SourceLine>g.drawline(j, 0, j, Height)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends g as graphics, ColorStart As Color, ColorEnd As Color, FadeDir As integer = 0, x As Integer = - 1, y As Integer = - 1, Width As integer = - 1, Height As Integer = - 1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DrawImg</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawImg(Extends g As Graphics, p As Picture, mode As Integer, x As Integer, y As Integer, w As Integer, h As Integer, Vert As Integer = 1, Horz As Integer = 1)</SourceLine>
+   <SourceLine>Dim subx, suby, subw, subh As Integer</SourceLine>
+   <SourceLine>Dim Transparency As Double</SourceLine>
+   <SourceLine>Dim Aspect As Double</SourceLine>
+   <SourceLine>'Mode</SourceLine>
+   <SourceLine>'0 - Fill Screen (Keep AR)</SourceLine>
+   <SourceLine>'1 - Fit To Screen (Keep AR)</SourceLine>
+   <SourceLine>'2 - Strech to Screen</SourceLine>
+   <SourceLine>'3 - Center (Keep AR)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If p = Nil Then Exit Sub</SourceLine>
+   <SourceLine>If p.Width &lt; 1 Or p.Height &lt; 1 Then Exit Sub</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Transparency = g.Transparency</SourceLine>
+   <SourceLine>g = g.Clip(x, y, w, h)</SourceLine>
+   <SourceLine>g.Transparency = Transparency</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Aspect = p.Width/p.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>subx = 0</SourceLine>
+   <SourceLine>suby = 0</SourceLine>
+   <SourceLine>subw = w</SourceLine>
+   <SourceLine>subh = h</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case mode</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>If w / Aspect &gt; h Then</SourceLine>
+   <SourceLine>subw = w</SourceLine>
+   <SourceLine>subh = w / Aspect</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>subw = h * Aspect</SourceLine>
+   <SourceLine>subh = h</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>subx = (W - subw)/2</SourceLine>
+   <SourceLine>suby = (H - subh)/2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 1</SourceLine>
+   <SourceLine>If w / Aspect &lt; h Then</SourceLine>
+   <SourceLine>subw = w</SourceLine>
+   <SourceLine>subh = w / Aspect</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>subw = h * Aspect</SourceLine>
+   <SourceLine>subh = h</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>subx = (W - subw)/2</SourceLine>
+   <SourceLine>suby = (H - subh)/2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>subx = 0</SourceLine>
+   <SourceLine>suby = 0</SourceLine>
+   <SourceLine>subw = w</SourceLine>
+   <SourceLine>subh = h</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Case 3</SourceLine>
+   <SourceLine>subx = (W - p.Width)/2</SourceLine>
+   <SourceLine>suby = (H - p.Height)/2</SourceLine>
+   <SourceLine>subw = p.Width</SourceLine>
+   <SourceLine>subh = p.Height</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case Vert</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>Suby = 0</SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>Suby = h - p.Height</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case Horz</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>Subx = 0</SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>Subx = w - p.Width</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.DrawPicture(p, subx, suby, subw, subh, 0, 0, p.Width, p.Height)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends g As Graphics, p As Picture, mode As Integer, x As Integer, y As Integer, w As Integer, h As Integer, Vert As Integer = 1, Horz As Integer = 1</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DrawText</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawText(Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer = - 1, Height As Integer = - 1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False)</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Draws text to the screen as the size you want and in the orientation you want.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Note: The x and y start in the top left hand corner.</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'    Variables</SourceLine>
+   <SourceLine>'        g        - The Graphics Object</SourceLine>
+   <SourceLine>'        Text     - The text to be drawn</SourceLine>
+   <SourceLine>'        x        - The x coordinate for the arrow</SourceLine>
+   <SourceLine>'        y        - The y coordinate for the arrow</SourceLine>
+   <SourceLine>'        Width    - The width of the arrow</SourceLine>
+   <SourceLine>'        Height   - The height of the arrow</SourceLine>
+   <SourceLine>'        (The following options require the Width and height to be set)</SourceLine>
+   <SourceLine>'        Vert     - Sets the vertical alignment of the text</SourceLine>
+   <SourceLine>'                       0: Top</SourceLine>
+   <SourceLine>'                       1: Middle</SourceLine>
+   <SourceLine>'                       2: Bottom</SourceLine>
+   <SourceLine>'        Horz     - Sets the horizontal alignment of the text</SourceLine>
+   <SourceLine>'                       0: Left</SourceLine>
+   <SourceLine>'                       1: Center</SourceLine>
+   <SourceLine>'                       2: Right</SourceLine>
+   <SourceLine>'        WordWrap - Wraps text with breaks on spaces</SourceLine>
+   <SourceLine>'        Max      - Auto sizes the text to fill the max amount of space</SourceLine>
+   <SourceLine>'    </SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim i, t, M, id As Integer</SourceLine>
+   <SourceLine>Dim subx, suby As Integer</SourceLine>
+   <SourceLine>Dim yOffset As Integer</SourceLine>
+   <SourceLine>Dim tParts(0) As String</SourceLine>
+   <SourceLine>Dim Words_Space(), Words() As String</SourceLine>
+   <SourceLine>Dim clipy As Boolean</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Clipy = True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Trim(Text) = "" Then</SourceLine>
+   <SourceLine>Exit Sub</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Width = 0 Or Height = 0 Then</SourceLine>
+   <SourceLine>Exit Sub</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Text = Trim(ReplaceLineEndings(Text, EndOfLine))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Width = -1 Or Height = -1 Then</SourceLine>
+   <SourceLine>Horz = 0</SourceLine>
+   <SourceLine>Vert = 0</SourceLine>
+   <SourceLine>WordWrap = False</SourceLine>
+   <SourceLine>Max = False</SourceLine>
+   <SourceLine>Clipy = False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If Clipy Then</SourceLine>
+   <SourceLine>g = g.Clip(x, y, Width, Height)</SourceLine>
+   <SourceLine>x = 0</SourceLine>
+   <SourceLine>y = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Max = True Then</SourceLine>
+   <SourceLine>g.TextSize = 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If InStr(Text, " ") = 0 OR InStr(Text, EndOfLine) &gt; 0  Then</SourceLine>
+   <SourceLine>WordWrap = False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If WordWrap = True Then</SourceLine>
+   <SourceLine>Text = ReplaceLineEndings(Text, " ") // This is a fix for new lines with word wrap. They dont seem to be compatable.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Words = Split(Text, " ")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Max = True Then</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>i = 0</SourceLine>
+   <SourceLine>t = 0</SourceLine>
+   <SourceLine>M = UBound(Words)</SourceLine>
+   <SourceLine>Redim tParts(0)</SourceLine>
+   <SourceLine>tParts(0) = Trim(Words(0))</SourceLine>
+   <SourceLine>While i &lt; M</SourceLine>
+   <SourceLine>If g.StringWidth(tParts(t) + " " + Trim(Words(i+1))) &lt; Width Then</SourceLine>
+   <SourceLine>tParts(t) = tParts(t) + " " + Trim(Words(i+1))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>t = t + 1</SourceLine>
+   <SourceLine>Redim tParts(t)</SourceLine>
+   <SourceLine>tParts(t) = Words(i+1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If (UBound(tParts)+1)*(g.TextHeight) &lt; Height Then</SourceLine>
+   <SourceLine>g.TextSize = g.TextSize + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>g.TextSize = g.TextSize - 1</SourceLine>
+   <SourceLine>Exit Do</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = 0</SourceLine>
+   <SourceLine>t = 0</SourceLine>
+   <SourceLine>M = UBound(Words)</SourceLine>
+   <SourceLine>Redim tParts(0)</SourceLine>
+   <SourceLine>tParts(0) = Trim(Words(0))</SourceLine>
+   <SourceLine>While i &lt; M</SourceLine>
+   <SourceLine>If g.StringWidth(tParts(t) + " " + Trim(Words(i+1))) &lt; Width Then</SourceLine>
+   <SourceLine>tParts(t) = tParts(t) + " " + Trim(Words(i+1))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>t = t + 1</SourceLine>
+   <SourceLine>Redim tParts(t)</SourceLine>
+   <SourceLine>tParts(t) = Words(i+1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If UBound(tParts) = UBound(Words) Then</SourceLine>
+   <SourceLine>i = 0</SourceLine>
+   <SourceLine>M = UBound(Words)+1</SourceLine>
+   <SourceLine>While i &lt; M</SourceLine>
+   <SourceLine>While g.StringWidth(Words(i)) &gt; Width AND g.TextSize &gt; 1</SourceLine>
+   <SourceLine>g.TextSize = g.TextSize - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>If InStr(Trim(Text), EndOfLine) &gt; 0 Then</SourceLine>
+   <SourceLine>Redim tParts(CountFields(Text, EndOfLine)-1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Max = True Then</SourceLine>
+   <SourceLine>While g.StringWidth(Text) &lt; Width And g.TextHeight*(UBound(tParts)+1) &lt; Height</SourceLine>
+   <SourceLine>g.TextSize = g.TextSize + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>g.TextSize = g.TextSize - 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>tparts = Split(Text, EndOfLine)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Max = False And Width &gt; 0 And Height &gt; 0 Then</SourceLine>
+   <SourceLine>If g.StringWidth(tparts(0)) &gt; Width Or (((UBound(tParts)+1)*g.TextHeight) &gt; Height And UBound(tParts) &gt; 0) Then</SourceLine>
+   <SourceLine>If ((UBound(tParts)+1)*g.TextHeight) &gt; Height And UBound(tParts) &gt; 0 Then</SourceLine>
+   <SourceLine>Dim size As Integer</SourceLine>
+   <SourceLine>size = Floor(Height/g.TextHeight)-1</SourceLine>
+   <SourceLine>If size &lt; 0 Then</SourceLine>
+   <SourceLine>size = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Redim tParts(size)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>id = UBound(tParts)</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>If g.StringWidth(Trim(tparts(id)) + "...") &gt; Width And Len(tparts(id)) &lt;&gt; 0 Then</SourceLine>
+   <SourceLine>tparts(id) = Trim(Left(tparts(id), Len(tparts(id))-1))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>tparts(id) = Trim(tparts(id)) + "..."</SourceLine>
+   <SourceLine>Exit Do</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Select Case Vert</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>yOffset = 0</SourceLine>
+   <SourceLine>Case 1</SourceLine>
+   <SourceLine>yOffset = Height - (Height + ((UBound(tParts)+1)*g.TextHeight))/2</SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>yOffset = Height - ((UBound(tParts)+1)*g.TextHeight)</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = 0</SourceLine>
+   <SourceLine>M = UBound(tparts) + 1</SourceLine>
+   <SourceLine>While i &lt; M</SourceLine>
+   <SourceLine>Select Case Horz</SourceLine>
+   <SourceLine>Case 0</SourceLine>
+   <SourceLine>subx = 0</SourceLine>
+   <SourceLine>Case 1</SourceLine>
+   <SourceLine>subx = (width - g.StringWidth(tparts(i)))/2</SourceLine>
+   <SourceLine>Case 2</SourceLine>
+   <SourceLine>subx = width-g.StringWidth(tparts(i))</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>suby = (g.TextHeight * i) + yOffset</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.DrawString(tparts(i), x+subx, y+suby+g.TextAscent)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer = - 1, Height As Integer = - 1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>GetMaxFontSize</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function GetMaxFontSize(Extends g As Graphics, text As String, Width As Integer, Height As Integer) As Integer</SourceLine>
+   <SourceLine>Dim SizeWidth, SizeHeight As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.TextSize = 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'Text = ReplaceAll(Text, "0", "O")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If g.TextFont = "Monaco" Then</SourceLine>
+   <SourceLine>SizeWidth = Floor(Width/g.StringWidth(Text))</SourceLine>
+   <SourceLine>SizeHeight = Height * 1.15</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>SizeWidth = Floor(Width/g.StringWidth(Text))</SourceLine>
+   <SourceLine>SizeHeight = Height</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If SizeWidth &lt; SizeHeight Then</SourceLine>
+   <SourceLine>Return SizeWidth</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return SizeHeight</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends g As Graphics, text As String, Width As Integer, Height As Integer</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DrawImageWell</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub DrawImageWell(Extends g as graphics, x As Integer, y As Integer, Width As Integer, Height As Integer)</SourceLine>
+   <SourceLine>// Draw ImageWell border in a canvas</SourceLine>
+   <SourceLine>Dim offset As Integer = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.ForeColor = &amp;cE9E9E900</SourceLine>
+   <SourceLine>offset = 1</SourceLine>
+   <SourceLine>g.PenWidth = 5</SourceLine>
+   <SourceLine>g.PenHeight = 5</SourceLine>
+   <SourceLine>g.DrawRoundRect(x+offset, y+offset, Width-(offset*2), Height-(offset*2), 6, 6)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.ForeColor = &amp;cF4F4F400</SourceLine>
+   <SourceLine>offset = 1</SourceLine>
+   <SourceLine>g.PenWidth = 2</SourceLine>
+   <SourceLine>g.PenHeight = 2</SourceLine>
+   <SourceLine>g.DrawRoundRect(x+offset, y+offset, Width-(offset*2), Height-(offset*2), 6, 6)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>g.ForeColor = &amp;c9D9D9D00</SourceLine>
+   <SourceLine>offset = 3</SourceLine>
+   <SourceLine>g.PenWidth = 1</SourceLine>
+   <SourceLine>g.PenHeight = 1</SourceLine>
+   <SourceLine>g.DrawRoundRect(x+offset, y+offset, Width-(offset*2), Height-(offset*2), 6, 6)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>Extends g as graphics, x As Integer, y As Integer, Width As Integer, Height As Integer</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ModernizePicture</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ModernizePicture(input As Picture) As Picture</SourceLine>
+   <SourceLine>If input.hasAlphaChannel Then Return input</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#if TargetCarbon Then Return input</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim result As New Picture( input.Width, input.Height )</SourceLine>
+   <SourceLine>result.Graphics.DrawPicture( input, 0, 0 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return result</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>input As Picture</ItemParams>
+  <ItemResult>Picture</ItemResult>
+ </Method>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+</block>
+</RBProject>

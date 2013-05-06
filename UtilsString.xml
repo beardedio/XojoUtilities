@@ -1,0 +1,3618 @@
+<?xml version="1.0"?>
+<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Module" ID="-1122482829">
+ <ObjName>UtilsString</ObjName>
+ <ObjContainerID>1865486656</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>Repeat</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Repeat(s as String, repeatCount as Integer) As String</SourceLine>
+   <SourceLine>// Concatenate a string to itself 'repeatCount' times.</SourceLine>
+   <SourceLine>// Example: Repeat("spam ", 5) = "spam spam spam spam spam ".</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma disablebackgroundTasks</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If repeatCount &lt;= 0 Then Return ""</SourceLine>
+   <SourceLine>If repeatCount = 1 Then Return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Implementation note: normally, you don't want to use string concatenation</SourceLine>
+   <SourceLine>// for something like this, since that creates a new string on each operation.</SourceLine>
+   <SourceLine>// But in this case, we can double the size of the string on iteration, which</SourceLine>
+   <SourceLine>// quickly reduces the overhead of concatenation to insignificance.  This method</SourceLine>
+   <SourceLine>// is faster than any other we've found (short of declares, which were only</SourceLine>
+   <SourceLine>// about 2X faster and were quite platform-specific).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim desiredLenB As Integer = LenB(s) * repeatCount</SourceLine>
+   <SourceLine>Dim output As String = s</SourceLine>
+   <SourceLine>Dim cutoff As Integer = (desiredLenB+1)\2</SourceLine>
+   <SourceLine>Dim curLenB As Integer = LenB(output)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>While curLenB &lt; cutoff</SourceLine>
+   <SourceLine>output = output + output</SourceLine>
+   <SourceLine>curLenB = curLenB + curLenB</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>output = output + LeftB(output, desiredLenB - curLenB)</SourceLine>
+   <SourceLine>Return output</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s as String, repeatCount as Integer</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>EditDistance</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function EditDistance(s1 As String, s2 As String) As Integer</SourceLine>
+   <SourceLine>// Return the Levenshtein distance, aka the edit distance,</SourceLine>
+   <SourceLine>// between the two StringUtils.  That's the number of insertions,</SourceLine>
+   <SourceLine>// deletions, or changes required to make one string match the other.</SourceLine>
+   <SourceLine>// A result of 0 means the strings</SourceLine>
+   <SourceLine>// are identical; higher values mean more different.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Note that this function is case-sensitive; if you want a case-</SourceLine>
+   <SourceLine>// insensitive measure, simply Uppercase or Lowercase both strings</SourceLine>
+   <SourceLine>// before calling.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Implementation adapted from &lt;http://www.merriampark.com/ld.htm&gt;,</SourceLine>
+   <SourceLine>// though we're using only a 1D array since the 2D array is wasteful.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma DisableBackgroundTasks</SourceLine>
+   <SourceLine>#pragma DisableBoundsChecking</SourceLine>
+   <SourceLine>#pragma DisableAutoWaitCursor</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim n, m As Integer</SourceLine>
+   <SourceLine>n = s1.Len</SourceLine>
+   <SourceLine>m = s2.Len</SourceLine>
+   <SourceLine>if n = 0 then return m</SourceLine>
+   <SourceLine>if m = 0 then return n</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim i, j, cost As Integer</SourceLine>
+   <SourceLine>Dim d(-1) As Integer</SourceLine>
+   <SourceLine>Redim d(m)</SourceLine>
+   <SourceLine>for j = 1 to m</SourceLine>
+   <SourceLine>d(j) = j</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s1chars(-1), s2chars(-1) As String</SourceLine>
+   <SourceLine>s1chars = Split( s1, "" )</SourceLine>
+   <SourceLine>s2chars = Split( s2, "" )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s1char As String</SourceLine>
+   <SourceLine>Dim lastCost, nextCost As Integer</SourceLine>
+   <SourceLine>Dim a, b, c As Integer</SourceLine>
+   <SourceLine>Dim jMinus1 As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>for i = 1 to n</SourceLine>
+   <SourceLine>s1char = s1chars(i-1)</SourceLine>
+   <SourceLine>lastCost = i</SourceLine>
+   <SourceLine>jMinus1 = 0</SourceLine>
+   <SourceLine>for j = 1 to m</SourceLine>
+   <SourceLine>if StrComp(s1char, s2chars(jMinus1),0) = 0 then cost = 0 else cost = 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// set nextCost to the minimum of the following three possibilities:</SourceLine>
+   <SourceLine>a = d(j) + 1</SourceLine>
+   <SourceLine>b = lastCost + 1</SourceLine>
+   <SourceLine>c = cost + d(jMinus1)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if a &lt; b then</SourceLine>
+   <SourceLine>if c &lt; a then nextCost = c else nextCost = a</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if c &lt; b then nextCost = c else nextCost = b</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>d(jMinus1) = lastCost</SourceLine>
+   <SourceLine>lastCost = nextCost</SourceLine>
+   <SourceLine>jMinus1 = j</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>d(m) = lastCost</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return nextCost</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s1 As String, s2 As String</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Soundex</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Soundex(s As String, stripPrefix As Boolean = true) As String</SourceLine>
+   <SourceLine>// Return the Soundex code for the given string.</SourceLine>
+   <SourceLine>// That's the first character, followed by numeric</SourceLine>
+   <SourceLine>// codes for the first several consonants.</SourceLine>
+   <SourceLine>// For more detail, see: &lt;http://www.searchforancestors.com/soundex.html&gt;</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim prefix, prefixes(-1) As String</SourceLine>
+   <SourceLine>Dim i, prefixLen As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = Trim( s )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if stripPrefix then</SourceLine>
+   <SourceLine>prefixes = Array("La ", "De ", "Van ")  // more to come?</SourceLine>
+   <SourceLine>for each prefix in prefixes</SourceLine>
+   <SourceLine>prefixLen = prefix.Len</SourceLine>
+   <SourceLine>if Left( s, prefixLen ) = prefix then</SourceLine>
+   <SourceLine>s = Mid( s, prefixLen+1 )</SourceLine>
+   <SourceLine>exit</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim c, out As String</SourceLine>
+   <SourceLine>out = Uppercase( Left(s, 1) )</SourceLine>
+   <SourceLine>Dim sLen, curCode, lastCode As Integer</SourceLine>
+   <SourceLine>sLen = s.Len</SourceLine>
+   <SourceLine>for i = 2 to sLen</SourceLine>
+   <SourceLine>c = Uppercase( Mid( s, i, 1 ) )</SourceLine>
+   <SourceLine>if InStrB( "BPFV", c ) &gt; 0 then</SourceLine>
+   <SourceLine>curCode = 1</SourceLine>
+   <SourceLine>elseif InStrB( "CSKGJQXZ", c ) &gt; 0 then</SourceLine>
+   <SourceLine>curCode = 2</SourceLine>
+   <SourceLine>elseif InStrB( "DT", c ) &gt; 0 then</SourceLine>
+   <SourceLine>curCode = 3</SourceLine>
+   <SourceLine>elseif c = "L" then</SourceLine>
+   <SourceLine>curCode = 4</SourceLine>
+   <SourceLine>elseif InStrB( "MN", c ) &gt; 0 then</SourceLine>
+   <SourceLine>curCode = 5</SourceLine>
+   <SourceLine>elseif c = "R" then</SourceLine>
+   <SourceLine>curCode = 6</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>curCode = 0</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>if curCode &gt; 0 and curCode &lt;&gt; lastCode then</SourceLine>
+   <SourceLine>out = out + str(curCode)</SourceLine>
+   <SourceLine>if Len(out) = 4 then return out</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return Left( out + "000", 4 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, stripPrefix As Boolean = true</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Hash</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Hash(s As String) As Integer</SourceLine>
+   <SourceLine>// Return the hash value of the given string, as used by RB's</SourceLine>
+   <SourceLine>// Variant and Dictionary classes.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim v As Variant</SourceLine>
+   <SourceLine>v = s</SourceLine>
+   <SourceLine>return v.Hash</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Count</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Count(source As String, substr As String) As Integer</SourceLine>
+   <SourceLine>// Return how many non-overlapping occurrences of 'substr' there</SourceLine>
+   <SourceLine>// are in 'source'.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim theCount As Integer</SourceLine>
+   <SourceLine>Dim substrLength As Integer</SourceLine>
+   <SourceLine>Dim start As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>substrLength = Len(substr)</SourceLine>
+   <SourceLine>If substrLength = 0 Then Return Len(source) + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>start = 1</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>start= InStr(start, source, substr)</SourceLine>
+   <SourceLine>If start &lt; 1 Then Return theCount</SourceLine>
+   <SourceLine>theCount = theCount + 1</SourceLine>
+   <SourceLine>start = start + substrLength</SourceLine>
+   <SourceLine>Loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, substr As String</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>CountB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function CountB(source As String, substr As String) As Integer</SourceLine>
+   <SourceLine>// Return how many non-overlapping occurrences of 'substr' there </SourceLine>
+   <SourceLine>// are in 'source', doing binary comparison.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim theCount As Integer</SourceLine>
+   <SourceLine>Dim substrLength As Integer</SourceLine>
+   <SourceLine>Dim start As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>substrLength = Len(substr)</SourceLine>
+   <SourceLine>If substrLength = 0 Then Return LenB(source) + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>start = 1</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>start= InStrB(start, source, substr)</SourceLine>
+   <SourceLine>If start &lt; 1 Then Return theCount</SourceLine>
+   <SourceLine>theCount = theCount + 1</SourceLine>
+   <SourceLine>start = start + substrLength</SourceLine>
+   <SourceLine>Loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, substr As String</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PadBoth</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PadBoth(s as String, width as Integer, padding as String = " ") As String</SourceLine>
+   <SourceLine>// Pad a string to at least 'width' characters, by adding padding characters</SourceLine>
+   <SourceLine>// to the left and right sides of the string.</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// If it is impossible to center the string, the string will be one character</SourceLine>
+   <SourceLine>// to the right more than it is to the left.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim length As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>length = Len(s)</SourceLine>
+   <SourceLine>If length &gt;= width Then Return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim mostToRepeat As Integer</SourceLine>
+   <SourceLine>mostToRepeat = Ceil((width-length)/Len(padding))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim repeated As String</SourceLine>
+   <SourceLine>repeated = Repeat(padding, Ceil(mostToRepeat/2))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Mid(repeated, 1, Ceil((width-length)/2)) + s + Mid(repeated,1,(width-length)\2)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s as String, width as Integer, padding as String = " "</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PadLeft</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PadLeft(s as String, width as Integer, padding as String = " ") As String</SourceLine>
+   <SourceLine>// Pad a string to at least 'width' characters, by adding padding characters</SourceLine>
+   <SourceLine>// to the left side of the string.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim length As Integer</SourceLine>
+   <SourceLine>length = Len(s)</SourceLine>
+   <SourceLine>If length &gt;= width Then Return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim mostToRepeat As Integer</SourceLine>
+   <SourceLine>mostToRepeat = Ceil((width-length)/Len(padding))</SourceLine>
+   <SourceLine>Return Mid(Repeat(padding, mostToRepeat),1,width-length) + s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s as String, width as Integer, padding as String = " "</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>PadRight</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function PadRight(s as String, width as Integer, padding as String = " ") As String</SourceLine>
+   <SourceLine>// Pad a string to at least 'width' characters, by adding padding characters</SourceLine>
+   <SourceLine>// to the right side of the string.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim length As Integer</SourceLine>
+   <SourceLine>length = Len(s)</SourceLine>
+   <SourceLine>If length &gt;= width Then Return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim mostToRepeat As Integer</SourceLine>
+   <SourceLine>mostToRepeat = Ceil((width-length)/Len(padding))</SourceLine>
+   <SourceLine>Return s + Mid(Repeat(padding, mostToRepeat),1,width-length)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s as String, width as Integer, padding as String = " "</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>CountFieldsQuoted</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function CountFieldsQuoted(src as string, sep as string) As integer</SourceLine>
+   <SourceLine>// Equivalent to RB's CountFields() function, but respects quoted values</SourceLine>
+   <SourceLine>// Usage: </SourceLine>
+   <SourceLine>//    s = """Hello, Kitty"", ""One"", ""Two, Three"""</SourceLine>
+   <SourceLine>//    x = CountFieldsQuoted(s, ",")</SourceLine>
+   <SourceLine>// result: x=3</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma DisableBoundsChecking</SourceLine>
+   <SourceLine>#pragma NilObjectChecking False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If InStr( src, sep ) = 0 Then Return 1</SourceLine>
+   <SourceLine>If InStr(src,"""")=0 Then Return CountFields(src, sep)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim countParts, i, n, c As Integer</SourceLine>
+   <SourceLine>Dim sepLen As Integer = Len( sep )</SourceLine>
+   <SourceLine>Dim parts( -1 ) As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>parts = Split( src, """" )</SourceLine>
+   <SourceLine>countParts = UBound( parts )</SourceLine>
+   <SourceLine>For i = 0 To countParts Step 2</SourceLine>
+   <SourceLine>n = InStr( parts( i ), sep )</SourceLine>
+   <SourceLine>While n &gt; 0</SourceLine>
+   <SourceLine>c = c + 1</SourceLine>
+   <SourceLine>n = InStr( n + sepLen, parts( i ), sep )</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return c + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>src as string, sep as string</ItemParams>
+  <ItemResult>integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NthFieldQuoted</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function NthFieldQuoted(src as string, sep as string, index as integer) As string</SourceLine>
+   <SourceLine>// Equivalent to RB's nthField() function, but respects quoted values</SourceLine>
+   <SourceLine>// Usage: </SourceLine>
+   <SourceLine>//    s = """Hello, Kitty"", ""One"", ""Two, Three"""</SourceLine>
+   <SourceLine>//    s1 = nthFieldQuoted(s, ",", 3)</SourceLine>
+   <SourceLine>// result: s1 = "Two, Three" (including the quotes!)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Easy cases: no occurrences of the separator, or no quotation marks</SourceLine>
+   <SourceLine>if InStr(src,sep)=0 then</SourceLine>
+   <SourceLine>if index=1 then</SourceLine>
+   <SourceLine>return src</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>return ""</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>elseif InStr(src,"""")= 0 then</SourceLine>
+   <SourceLine>return NthField(src, sep, index)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Harder case: both separator and quotation marks.</SourceLine>
+   <SourceLine>// We'll use InStrQuoted to help us out.</SourceLine>
+   <SourceLine>Dim sepLen As Integer = sep.Len</SourceLine>
+   <SourceLine>Dim startPos As Integer = 1</SourceLine>
+   <SourceLine>for i As Integer = 1 to index - 1</SourceLine>
+   <SourceLine>Dim sepPos As Integer = InStrQuoted( startPos, src, sep )</SourceLine>
+   <SourceLine>if sepPos = 0 then return ""</SourceLine>
+   <SourceLine>startPos = sepPos + sepLen</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>Dim sepPos As Integer = InStrQuoted( startPos, src, sep )</SourceLine>
+   <SourceLine>if sepPos = 0 then return Mid( src, startPos )</SourceLine>
+   <SourceLine>return Mid( src, startPos, sepPos - startPos )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Old code is below for posterity.</SourceLine>
+   <SourceLine>'dim c, n, startPos, endPos as integer</SourceLine>
+   <SourceLine>'dim inQuotes as boolean</SourceLine>
+   <SourceLine>'dim a as string</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'dim sepLen as integer = sep.Len</SourceLine>
+   <SourceLine>'dim srcLen as integer = len( src )</SourceLine>
+   <SourceLine>'dim leftSep as string = left( sep, 1 )</SourceLine>
+   <SourceLine>'dim adjustedIndex as integer = (index -1)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'endpos = srcLen + 1  // (accounts for final field, where no ending separator is found)</SourceLine>
+   <SourceLine>'for n=1 to srcLen</SourceLine>
+   <SourceLine>'a = Mid(src,n,1)</SourceLine>
+   <SourceLine>'if a= """" then</SourceLine>
+   <SourceLine>'inQuotes = not inQuotes</SourceLine>
+   <SourceLine>'elseif (a=leftSep) and not inQuotes then</SourceLine>
+   <SourceLine>'if mid(src, n, sepLen) = sep then</SourceLine>
+   <SourceLine>'c = c + 1</SourceLine>
+   <SourceLine>'if index = 1 then</SourceLine>
+   <SourceLine>'// First Field</SourceLine>
+   <SourceLine>'startPos = 1</SourceLine>
+   <SourceLine>'endPos = n-1</SourceLine>
+   <SourceLine>'exit</SourceLine>
+   <SourceLine>'else</SourceLine>
+   <SourceLine>'// Field 2..x</SourceLine>
+   <SourceLine>'if (c=adjustedIndex)  then</SourceLine>
+   <SourceLine>'// Leading Sep gefunden</SourceLine>
+   <SourceLine>'startPos = n+sepLen</SourceLine>
+   <SourceLine>'elseif (c = index) then</SourceLine>
+   <SourceLine>'// Trailing Sep found</SourceLine>
+   <SourceLine>'endPos = n-1</SourceLine>
+   <SourceLine>'exit</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'next</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'if startPos = 0 then</SourceLine>
+   <SourceLine>'if index=1 then</SourceLine>
+   <SourceLine>'return src</SourceLine>
+   <SourceLine>'else</SourceLine>
+   <SourceLine>'return ""</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'else</SourceLine>
+   <SourceLine>'return mid(src,startPos,endPos-startPos+1)</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>src as string, sep as string, index as integer</ItemParams>
+  <ItemResult>string</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Contains</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Contains(extends s As String, what As String) As Boolean</SourceLine>
+   <SourceLine>// Return true if 's' contains the substring 'what'.</SourceLine>
+   <SourceLine>// By "contains" we mean case-insensitive, encoding-savvy containment</SourceLine>
+   <SourceLine>// as with InStr.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if what = "" then return true</SourceLine>
+   <SourceLine>return InStr( s, what ) &gt; 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends s As String, what As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>CountRegEx</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function CountRegEx(s As String, pattern As String) As Integer</SourceLine>
+   <SourceLine>// Count the number of occurrences of a RegEx pattern within a string.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim re As New RegEx</SourceLine>
+   <SourceLine>Dim rm As RegExMatch</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>re.SearchPattern = pattern</SourceLine>
+   <SourceLine>rm = re.Search( s )</SourceLine>
+   <SourceLine>While rm &lt;&gt; Nil</SourceLine>
+   <SourceLine>'System.DebugLog rm.SubExpressionString(0) + " at " + str(rm.SubExpressionStartB(0)) + " matches " + pattern + " in " + s</SourceLine>
+   <SourceLine>out = out + 1</SourceLine>
+   <SourceLine>rm = re.Search</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return out</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, pattern As String</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StartsWith</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StartsWith(extends s As String, withWhat As String) As Boolean</SourceLine>
+   <SourceLine>// Return true if 's' starts with the string 'withWhat',</SourceLine>
+   <SourceLine>// doing a standard string comparison.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return Left(s, withWhat.Len) = withWhat</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends s As String, withWhat As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ContainsB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ContainsB(extends s As String, what As String) As Boolean</SourceLine>
+   <SourceLine>// Return true if 's' contains the substring 'what'.</SourceLine>
+   <SourceLine>// By "contains" we mean binary containment</SourceLine>
+   <SourceLine>// as with InStrB.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if what = "" then return true</SourceLine>
+   <SourceLine>return InStrB( s, what ) &gt; 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends s As String, what As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StartsWithB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StartsWithB(extends s As String, withWhat As String) As Boolean</SourceLine>
+   <SourceLine>// Return true if 's' starts with the string 'withWhat',</SourceLine>
+   <SourceLine>// doing a binary comparison.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return StrComp( LeftB(s, withWhat.Len), withWhat, 0 ) = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends s As String, withWhat As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IsEmpty</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function IsEmpty(extends s As String) As Boolean</SourceLine>
+   <SourceLine>// Return true if the string is empty.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return s = ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends s As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>InStrReverse</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function InStrReverse(startPos As Integer=-1, source As String, substr As String) As Integer</SourceLine>
+   <SourceLine>// Similar to InStr, but searches backwards from the given position</SourceLine>
+   <SourceLine>// (or if startPos = -1, then from the end of the string).</SourceLine>
+   <SourceLine>// If substr can't be found, returns 0.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim srcLen As Integer = source.Len</SourceLine>
+   <SourceLine>if startPos = -1 then startPos = srcLen</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Here's an easy way...</SourceLine>
+   <SourceLine>// There may be a faster implementation, but then again, there may not -- it probably</SourceLine>
+   <SourceLine>// depends on the particulars of the data.</SourceLine>
+   <SourceLine>Dim reversedSource As String = Reverse(source)</SourceLine>
+   <SourceLine>Dim reversedSubstr As String = Reverse(substr)</SourceLine>
+   <SourceLine>Dim reversedPos As Integer</SourceLine>
+   <SourceLine>reversedPos = InStr( srcLen - startPos + 1, reversedSource, reversedSubstr )</SourceLine>
+   <SourceLine>if reversedPos &lt; 1 then return 0</SourceLine>
+   <SourceLine>return srcLen - reversedPos - substr.Len + 2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>startPos As Integer=-1, source As String, substr As String</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>InStrReverseB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function InStrReverseB(startPosB As Integer=-1, source As String, substr As String) As Integer</SourceLine>
+   <SourceLine>// Similar to InStrB, but searches backwards from the given position</SourceLine>
+   <SourceLine>// (or if startPosB = -1, then from the end of the string).</SourceLine>
+   <SourceLine>// If substr can't be found, returns 0.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim srcLen As Integer = source.LenB</SourceLine>
+   <SourceLine>Dim subLen As Integer = substr.LenB</SourceLine>
+   <SourceLine>if startPosB = -1 then startPosB = srcLen</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// We'll do a simple sequential search.  A Boyer-Moore algorithm</SourceLine>
+   <SourceLine>// would work better in many cases, but we'd have to rewrite the</SourceLine>
+   <SourceLine>// whole algorithm to work backwards.  The sequential search will</SourceLine>
+   <SourceLine>// be good enough in most cases anyway.</SourceLine>
+   <SourceLine>Dim posB As Integer</SourceLine>
+   <SourceLine>for posB = Min( srcLen - subLen + 1, startPosB ) downTo 1</SourceLine>
+   <SourceLine>if StrComp( MidB( source, posB, subLen ), substr, 0 ) = 0 then return posB</SourceLine>
+   <SourceLine>next posB</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>startPosB As Integer=-1, source As String, substr As String</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SplitToInt</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SplitToInt(source As String, delimiter As String=" ") As Integer()</SourceLine>
+   <SourceLine>// Split a string into fields, then convert each field into an Integer</SourceLine>
+   <SourceLine>// using the Val function.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim fields(-1) As String</SourceLine>
+   <SourceLine>fields = source.Split(delimiter)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out(-1) As Integer</SourceLine>
+   <SourceLine>Redim out( UBound(fields) )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
+   <SourceLine>for i = UBound(fields) DownTo 0</SourceLine>
+   <SourceLine>out(i) = Val( fields(i) )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, delimiter As String=" "</ItemParams>
+  <ItemResult>Integer()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SplitToVal</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SplitToVal(source As String, delimiter As String=" ") As Double()</SourceLine>
+   <SourceLine>// Split a string into fields, then convert each field into a Double</SourceLine>
+   <SourceLine>// using the Val function.  This is appropriate for a set of numbers</SourceLine>
+   <SourceLine>// used only by the computer; for human-readable numbers, consider</SourceLine>
+   <SourceLine>// using SplitToCDbl instead.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim fields(-1) As String</SourceLine>
+   <SourceLine>fields = source.Split(delimiter)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out(-1) As Double</SourceLine>
+   <SourceLine>Redim out( UBound(fields) )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
+   <SourceLine>for i = UBound(fields) DownTo 0</SourceLine>
+   <SourceLine>out(i) = Val( fields(i) )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, delimiter As String=" "</ItemParams>
+  <ItemResult>Double()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SplitToCDbl</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SplitToCDbl(source As String, delimiter As String=" ") As Double()</SourceLine>
+   <SourceLine>// Split a string into fields, then convert each field into a Double</SourceLine>
+   <SourceLine>// using the CDbl function.  This is appropriate for a set of numbers</SourceLine>
+   <SourceLine>// entered or readable by the end-user.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim fields(-1) As String</SourceLine>
+   <SourceLine>fields = source.Split(delimiter)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out(-1) As Double</SourceLine>
+   <SourceLine>Redim out( UBound(fields) )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
+   <SourceLine>for i = UBound(fields) DownTo 0</SourceLine>
+   <SourceLine>out(i) = CDbl( fields(i) )</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, delimiter As String=" "</ItemParams>
+  <ItemResult>Double()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SplitByRegEx</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SplitByRegEx(source As String, delimPattern As String) As String()</SourceLine>
+   <SourceLine>// Split a string into fields delimited by a regular expression.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out(-1) As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim re As New RegEx</SourceLine>
+   <SourceLine>Dim rm As RegExMatch</SourceLine>
+   <SourceLine>Dim startPos As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>re.SearchPattern = delimPattern</SourceLine>
+   <SourceLine>rm = re.Search( source )</SourceLine>
+   <SourceLine>While rm &lt;&gt; Nil</SourceLine>
+   <SourceLine>'System.DebugLog rm.SubExpressionString(0) + " at " + str(rm.SubExpressionStartB(0)) + " matches " + pattern + " in " + s</SourceLine>
+   <SourceLine>out.Append MidB( source, startPos + 1, rm.SubExpressionStartB(0) - startPos )</SourceLine>
+   <SourceLine>startPos = re.SearchStartPosition</SourceLine>
+   <SourceLine>rm = re.Search</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If startPos &lt; source.LenB Then</SourceLine>
+   <SourceLine>out.Append MidB( source, startPos + 1 )</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, delimPattern As String</ItemParams>
+  <ItemResult>String()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SQLify</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SQLify(s As String) As String</SourceLine>
+   <SourceLine>// Return a version of s ready for use in an SQL statement.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// In other words, we just need to double the apostrophes:</SourceLine>
+   <SourceLine>s = ReplaceAll( s, "'", "''" )</SourceLine>
+   <SourceLine>s = ReplaceAll( s, "\", "\\" )</SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Chop</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Chop(s As String, charsToCut As Integer) As String</SourceLine>
+   <SourceLine>// Return s with the rightmost 'charsToCut' chars removed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim charsLeft As Integer = s.Len - charsToCut</SourceLine>
+   <SourceLine>If charsLeft &lt;= 0 Then Return ""</SourceLine>
+   <SourceLine>Return s.Left( s.Len - charsToCut )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, charsToCut As Integer</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ChopB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ChopB(s As String, bytesToCut As Integer) As String</SourceLine>
+   <SourceLine>// Return s with the rightmost 'bytesToCut' bytes removed.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim bytesLeft As Integer = s.LenB - bytesToCut</SourceLine>
+   <SourceLine>If bytesLeft &lt;= 0 Then Return ""</SourceLine>
+   <SourceLine>Return s.LeftB( s.LenB - bytesToCut )</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, bytesToCut As Integer</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Squeeze</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Squeeze(s As String, charSet As String=" ") As String</SourceLine>
+   <SourceLine>// Find any repeating characters, where the character is a member of</SourceLine>
+   <SourceLine>// charSet, and replace the run with a single character.  Note that this</SourceLine>
+   <SourceLine>// uses standard RB text matching, and so is case-insensitive; all</SourceLine>
+   <SourceLine>// runs will be replaced with the case as given in charSet.  If you need</SourceLine>
+   <SourceLine>// case-sensitive squeezing, use SqueezeB.</SourceLine>
+   <SourceLine>// Example: Squeeze("woOow mAAAn", "aeiou") = "wow man".</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim sLenB As Integer = s.LenB</SourceLine>
+   <SourceLine>If sLenB &lt; 2 Then Return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>charSet = ConvertEncoding( charSet, s.Encoding )</SourceLine>
+   <SourceLine>For Each char As String In Split( charSet, "" )</SourceLine>
+   <SourceLine>Dim doubleChar As String = char + char</SourceLine>
+   <SourceLine>Do</SourceLine>
+   <SourceLine>s = ReplaceAll( s, doubleChar, char )</SourceLine>
+   <SourceLine>Dim newLenB As Integer = s.LenB</SourceLine>
+   <SourceLine>If newLenB = sLenB Then Exit</SourceLine>
+   <SourceLine>sLenB = newLenB</SourceLine>
+   <SourceLine>Loop</SourceLine>
+   <SourceLine>Next char</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, charSet As String=" "</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Remove</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Remove(s As String, charSet As String=" ") As String</SourceLine>
+   <SourceLine>// Delete all characters which are members of charSet. Example:</SourceLine>
+   <SourceLine>// Delete("wooow maaan", "aeiou") = "ww mn".</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim sLenB As Integer = s.LenB</SourceLine>
+   <SourceLine>if sLenB &lt; 2 then return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim m As MemoryBlock</SourceLine>
+   <SourceLine>m = NewMemoryBlock( sLenB )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>charSet = ConvertEncoding( charSet, s.Encoding )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim sLen As Integer = s.Len</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim char As String</SourceLine>
+   <SourceLine>Dim spos, mpos As Integer</SourceLine>
+   <SourceLine>for spos = 1 to sLen</SourceLine>
+   <SourceLine>char = Mid( s, spos, 1 )</SourceLine>
+   <SourceLine>if InStrB( charSet, char ) &lt; 1 then</SourceLine>
+   <SourceLine>m.StringValue( mpos, char.LenB ) = char</SourceLine>
+   <SourceLine>mpos = mpos + char.LenB</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return DefineEncoding( m.StringValue(0, mpos), s.Encoding )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, charSet As String=" "</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ReplaceRange</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ReplaceRange(s As String, start As Integer, length As Integer, newText As String) As String</SourceLine>
+   <SourceLine>// Replace a part of the given string with a new string.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return Left(s, start-1) + newText + Mid(s, start + length)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, start As Integer, length As Integer, newText As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ReplaceRangeB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ReplaceRangeB(s As String, startB As Integer, lengthB As Integer, newText As String) As String</SourceLine>
+   <SourceLine>// Replace a part of the given string with a new string</SourceLine>
+   <SourceLine>// (with offset and length in bytes rather than characters).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return LeftB(s, startB-1) + newText + MidB(s, startB + lengthB)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, startB As Integer, lengthB As Integer, newText As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Metaphone</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Metaphone(source As String, ByRef outPrimary As String, ByRef outAlternate As String)</SourceLine>
+   <SourceLine>// Compute the Double Metaphone of the source string.  This is an algorithm that</SourceLine>
+   <SourceLine>// finds one or two approximate phonetic representations of a string, useful in</SourceLine>
+   <SourceLine>// searching for almost-matches -- e.g., looking for names whose spelling may have</SourceLine>
+   <SourceLine>// varied, or correcting typos made by the user, and so on.</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// The output is roughly human-readable, with the following conventions:</SourceLine>
+   <SourceLine>//   Vowels are omitted from the output, except for a vowel at the beginning</SourceLine>
+   <SourceLine>//      of a word, which is represented by an A (e.g. "ox" becomes "AKS")</SourceLine>
+   <SourceLine>//   X is used to represent a "ch" sound (e.g., "church" becomes "XRX")</SourceLine>
+   <SourceLine>//   0 (zero) is used to represent a "th" sound (e.g. "think" becomes "0NK")</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// For more information about Double Metaphone, see:</SourceLine>
+   <SourceLine>//     http://aspell.sourceforge.net/metaphone/</SourceLine>
+   <SourceLine>//     http://www.cuj.com/articles/2000/0006/0006d/0006d.htm?topic=articles</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// This implementation is based on the one at:</SourceLine>
+   <SourceLine>//     http://aspell.sourceforge.net/metaphone/dmetaph.cpp</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim length As Integer</SourceLine>
+   <SourceLine>length = source.Len</SourceLine>
+   <SourceLine>if length &lt; 1 then</SourceLine>
+   <SourceLine>outPrimary = ""</SourceLine>
+   <SourceLine>outAlternate = ""</SourceLine>
+   <SourceLine>return</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>source = Uppercase(source) + " "</SourceLine>
+   <SourceLine>Dim current As Integer = 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim charAt(-1) As String</SourceLine>
+   <SourceLine>charAt = source.Split("")</SourceLine>
+   <SourceLine>charAt.Insert 0, ""  // (make it 1-based, like Mid)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim slavoGermanic As Boolean</SourceLine>
+   <SourceLine>if InStr(source, "W") &gt; 0 or InStr(source, "K") &gt; 0 _</SourceLine>
+   <SourceLine>or InStr(source, "CZ") &gt; 0 or InStr(source, "WITZ") &gt; 0 then</SourceLine>
+   <SourceLine>slavoGermanic = true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out1, out2 As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// skip these when at start of word</SourceLine>
+   <SourceLine>if MStringAt(source, 1, 2, "GN", "KN", "PN", "WR", "PS") then current = current + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// initial 'X' is pronounced 'Z' e.g. 'Xavier'</SourceLine>
+   <SourceLine>if charAt(1) = "X" then</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"  // "Z" maps to "S"</SourceLine>
+   <SourceLine>current = current + 1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//---------- main loop ---------------</SourceLine>
+   <SourceLine>while current &lt;= length</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>select case charAt(current)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "A", "E", "I", "O", "U", "Y"</SourceLine>
+   <SourceLine>if current = 1 then</SourceLine>
+   <SourceLine>// all initial vowels map to "A"; elsewhere they're skipped</SourceLine>
+   <SourceLine>out1 = out1 + "A"  </SourceLine>
+   <SourceLine>out2 = out2 + "A"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "B"</SourceLine>
+   <SourceLine>//"-mb", e.g", "dumb", already skipped over...</SourceLine>
+   <SourceLine>out1 = out1 + "P"  </SourceLine>
+   <SourceLine>out2 = out2 + "P"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "B" then</SourceLine>
+   <SourceLine>current = current + 2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current + 1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "Ç"</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "C"</SourceLine>
+   <SourceLine>// various germanic</SourceLine>
+   <SourceLine>if current &gt; 2 _</SourceLine>
+   <SourceLine>and not MIsVowel(source, current - 2) _</SourceLine>
+   <SourceLine>and MStringAt(source, (current - 1), 3, "ACH") _ </SourceLine>
+   <SourceLine>and (charAt(current + 2) &lt;&gt; "I" and (charAt(current + 2) &lt;&gt; "E"_</SourceLine>
+   <SourceLine>or MStringAt(source, current - 2, 6, "BACHER", "MACHER")) ) then       </SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>current = current + 2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif current = 1 AND MStringAt(source, current, 6, "CAESAR") then</SourceLine>
+   <SourceLine>// special case 'caesar' (why didn't this go at the top?)</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>current = current + 2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 4, "CHIA") then</SourceLine>
+   <SourceLine>// italian 'chianti'</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>current = current + 2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "CH") then       </SourceLine>
+   <SourceLine>// find 'michael'</SourceLine>
+   <SourceLine>if current &gt; 0 AND MStringAt(source, current, 4, "CHAE") then</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>current = current + 2</SourceLine>
+   <SourceLine>break</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif current = 0 _</SourceLine>
+   <SourceLine>and (MStringAt(source, current + 1, 5, "HARAC", "HARIS") _</SourceLine>
+   <SourceLine>or MStringAt(source, current + 1, 3, "HOR", "HYM", "HIA", "HEM")) _</SourceLine>
+   <SourceLine>and not MStringAt(source, 0, 5, "CHORE") then</SourceLine>
+   <SourceLine>// greek roots e.g. 'chemistry', 'chorus'</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>current = current + 2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//germanic, greek, or otherwise 'ch' for 'kh' sound</SourceLine>
+   <SourceLine>if((MStringAt(source, 0, 4, "VAN ", "VON ") or MStringAt(source, 0, 3, "SCH")) _</SourceLine>
+   <SourceLine>_ // 'architect but not 'arch', 'orchestra', 'orchid'</SourceLine>
+   <SourceLine>or MStringAt(source, current - 2, 6, "ORCHES", "ARCHIT", "ORCHID") _</SourceLine>
+   <SourceLine>or MStringAt(source, current + 2, 1, "T", "S") _</SourceLine>
+   <SourceLine>or ((MStringAt(source, current - 1, 1, "A", "O", "U", "E") OR current = 1) _</SourceLine>
+   <SourceLine>_ //e.g., 'wachtler', 'wechsler', but not 'tichner'</SourceLine>
+   <SourceLine>and MStringAt(source, current + 2, 1, "L", "R", "N", "M", "B", "H", "F", "V", "W", " "))) then</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>else  </SourceLine>
+   <SourceLine>if current &gt; 1 then</SourceLine>
+   <SourceLine>if MStringAt(source, 1, 2, "MC") then</SourceLine>
+   <SourceLine>//e.g., "McHugh"</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current + 2</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// end of CH case</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "CZ") and not MStringAt(source, current - 2, 4, "WICZ") then</SourceLine>
+   <SourceLine>//e.g, 'czerny'</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current + 1, 3, "CIA") then</SourceLine>
+   <SourceLine>//e.g., 'focaccia'</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "CC") and not (current = 2 AND charAt(1) = "M") then</SourceLine>
+   <SourceLine>// double "C", but not if e.g. 'McClellan'</SourceLine>
+   <SourceLine>//'bellocchio' but not 'bacchus'</SourceLine>
+   <SourceLine>if MStringAt(source, current + 2, 1, "I", "E", "H") and not MStringAt(source, current + 2, 2, "HU") then</SourceLine>
+   <SourceLine>//'accident', 'accede" "succeed'</SourceLine>
+   <SourceLine>if((current = 2 AND charAt(current - 1) = "A") _</SourceLine>
+   <SourceLine>OR MStringAt(source, current - 1, 5, "UCCEE", "UCCES")) then</SourceLine>
+   <SourceLine>out1 = out1 + "KS"  </SourceLine>
+   <SourceLine>out2 = out2 + "KS"</SourceLine>
+   <SourceLine>//'bacci', 'bertucci', other italian</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine>else // Pierce's rule</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "CK", "CG", "CQ") then</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "CI", "CE", "CY") then</SourceLine>
+   <SourceLine>// italian vs. english</SourceLine>
+   <SourceLine>if MStringAt(source, current, 3, "CIO", "CIE", "CIA") then</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// all other C cases are considered a K:</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// name sent in 'mac caffrey', 'mac gregor'</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 2, " C", " Q", " G" ) then</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 1, "C", "K", "Q") _</SourceLine>
+   <SourceLine>AND not MStringAt(source, current + 1, 2, "CE", "CI") then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "D"</SourceLine>
+   <SourceLine>if MStringAt(source, current, 2, "DG") then</SourceLine>
+   <SourceLine>if MStringAt(source, current + 2, 1, "I", "E", "Y") then</SourceLine>
+   <SourceLine>//e.g. 'edge'</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "J"</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//e.g. 'edgar'</SourceLine>
+   <SourceLine>out1 = out1 + "TK"  </SourceLine>
+   <SourceLine>out2 = out2 + "TK"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "DT", "DD") then</SourceLine>
+   <SourceLine>out1 = out1 + "T"  </SourceLine>
+   <SourceLine>out2 = out2 + "T"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "T"  </SourceLine>
+   <SourceLine>out2 = out2 + "T"</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "F"</SourceLine>
+   <SourceLine>out1 = out1 + "F"  </SourceLine>
+   <SourceLine>out2 = out2 + "F"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "F" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "G"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "H"  then</SourceLine>
+   <SourceLine>// GH...</SourceLine>
+   <SourceLine>if current &gt; 1 AND not MIsVowel(source, current - 1) then</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif current = 1 then</SourceLine>
+   <SourceLine>//'ghislane', ghiradelli</SourceLine>
+   <SourceLine>if charAt(current + 2) = "I" then</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "J"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif((current &gt; 2 AND MStringAt(source, current - 2, 1, "B", "H", "D") ) _</SourceLine>
+   <SourceLine>_ //e.g., 'bough'</SourceLine>
+   <SourceLine>OR (current &gt; 3 AND MStringAt(source, current - 3, 1, "B", "H", "D") ) _</SourceLine>
+   <SourceLine>_ //e.g., 'broughton'</SourceLine>
+   <SourceLine>OR (current &gt; 4 AND MStringAt(source, current - 4, 1, "B", "H") ) ) then</SourceLine>
+   <SourceLine>//Parker's rule (with some further refinements) - e.g., 'hugh'</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//e.g., 'laugh', 'McLaughlin', 'cough', 'gough', 'rough', 'tough'</SourceLine>
+   <SourceLine>if current &gt; 3 _</SourceLine>
+   <SourceLine>AND charAt(current - 1) = "U" _</SourceLine>
+   <SourceLine>AND MStringAt(source, current - 3, 1, "C", "G", "L", "R", "T") then</SourceLine>
+   <SourceLine>out1 = out1 + "F"  </SourceLine>
+   <SourceLine>out2 = out2 + "F"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if((current &gt; 0) AND charAt(current - 1) &lt;&gt; "I") then</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif charAt(current + 1) = "N" then</SourceLine>
+   <SourceLine>// GN...</SourceLine>
+   <SourceLine>if current = 1 AND MIsVowel(source, 0) AND not SlavoGermanic then</SourceLine>
+   <SourceLine>out1 = out1 + "KN"  </SourceLine>
+   <SourceLine>out2 = out2 + "N"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//not e.g. 'cagney'</SourceLine>
+   <SourceLine>if not MStringAt(source, current + 2, 2, "EY") _</SourceLine>
+   <SourceLine>AND charAt(current + 1) &lt;&gt; "Y" AND not SlavoGermanic then</SourceLine>
+   <SourceLine>out1 = out1 + "N"  </SourceLine>
+   <SourceLine>out2 = out2 + "KN"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "KN"  </SourceLine>
+   <SourceLine>out2 = out2 + "KN"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current + 1, 2, "LI") AND not SlavoGermanic then</SourceLine>
+   <SourceLine>//'tagliaro'</SourceLine>
+   <SourceLine>out1 = out1 + "KL"  </SourceLine>
+   <SourceLine>out2 = out2 + "L"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif current = 1 _</SourceLine>
+   <SourceLine>AND (charAt(current + 1) = "Y"  _</SourceLine>
+   <SourceLine>OR MStringAt(source, current + 1, 2, "ES", "EP", "EB", "EL", "EY", "IB", "IL", "IN", "IE", "EI", "ER")) then</SourceLine>
+   <SourceLine>//ges-,gep-,gel-, gie- at beginning</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "J"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif (MStringAt(source, current + 1, 2, "ER") OR charAt(current + 1) = "Y") _</SourceLine>
+   <SourceLine>AND not MStringAt(source, 1, 6, "DANGER", "RANGER", "MANGER") _</SourceLine>
+   <SourceLine>AND not MStringAt(source, current - 1, 1, "E", "I") _</SourceLine>
+   <SourceLine>AND not MStringAt(source, current - 1, 3, "RGY", "OGY") then</SourceLine>
+   <SourceLine>// -ger-,  -gy-</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "J"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current + 1, 1, "E", "I", "Y") OR MStringAt(source, current - 1, 4, "AGGI", "OGGI") then</SourceLine>
+   <SourceLine>// italian e.g, 'biaggi'</SourceLine>
+   <SourceLine>//obvious germanic</SourceLine>
+   <SourceLine>if MStringAt(source, 1, 4, "VAN ", "VON ") OR MStringAt(source, 1, 3, "SCH") _</SourceLine>
+   <SourceLine>OR MStringAt(source, current + 1, 2, "ET") then</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//always soft if french ending</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 4, "IER ") then</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "J"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// any other G</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "G" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "H"</SourceLine>
+   <SourceLine>//only keep if first &amp; before vowel or btw. 2 vowels</SourceLine>
+   <SourceLine>if (current = 1 OR MIsVowel(source, current - 1)) AND MIsVowel(source, current + 1) then</SourceLine>
+   <SourceLine>out1 = out1 + "H"  </SourceLine>
+   <SourceLine>out2 = out2 + "H"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else//also takes care of 'HH'</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "J"</SourceLine>
+   <SourceLine>//obvious spanish, 'jose', 'san jacinto'</SourceLine>
+   <SourceLine>if MStringAt(source, current, 4, "JOSE") OR MStringAt(source, 1, 4, "SAN ") then</SourceLine>
+   <SourceLine>if (current = 0 AND charAt(current + 4) = " ") OR MStringAt(source, 1, 4, "SAN ") then</SourceLine>
+   <SourceLine>out1 = out1 + "H"  </SourceLine>
+   <SourceLine>out2 = out2 + "H"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "H"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if current = 0 AND not MStringAt(source, current, 4, "JOSE") then</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "A"//Yankelovich/Jankelowicz</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//spanish pron. of e.g. 'bajador'</SourceLine>
+   <SourceLine>if MIsVowel(source, current - 1) _</SourceLine>
+   <SourceLine>AND not SlavoGermanic _</SourceLine>
+   <SourceLine>AND (charAt(current + 1) = "A" OR charAt(current + 1) = "O") then</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "H"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if current = length then</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + ""</SourceLine>
+   <SourceLine>elseif not MStringAt(source, current + 1, 1, "L", "T", "K", "S", "N", "M", "B", "Z") _</SourceLine>
+   <SourceLine>AND not MStringAt(source, current - 1, 1, "S", "K", "L") then</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "J"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if charAt(current + 1) = "J" then //it could happen! </SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "K"</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "K" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "L"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "L" then</SourceLine>
+   <SourceLine>//spanish e.g. 'cabrillo', 'gallegos'</SourceLine>
+   <SourceLine>if (current = length - 2 AND MStringAt(source, current - 1, 4, "ILLO", "ILLA", "ALLE")) _</SourceLine>
+   <SourceLine>OR ((MStringAt(source, length - 1, 2, "AS", "OS") OR MStringAt(source, length, 1, "A", "O")) _</SourceLine>
+   <SourceLine>AND MStringAt(source, current - 1, 4, "ALLE")) then</SourceLine>
+   <SourceLine>out1 = out1 + "L"  </SourceLine>
+   <SourceLine>out2 = out2 + ""</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "L"  </SourceLine>
+   <SourceLine>out2 = out2 + "L"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "L"  </SourceLine>
+   <SourceLine>out2 = out2 + "L"</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "M"</SourceLine>
+   <SourceLine>out1 = out1 + "M"  </SourceLine>
+   <SourceLine>out2 = out2 + "M"</SourceLine>
+   <SourceLine>if (MStringAt(source, current - 1, 3, "UMB") _ </SourceLine>
+   <SourceLine>AND (current + 1 = length OR MStringAt(source, current + 2, 2, "ER"))) _</SourceLine>
+   <SourceLine>_ //'dumb","thumb'</SourceLine>
+   <SourceLine>OR charAt(current + 1) = "M" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "N"</SourceLine>
+   <SourceLine>out1 = out1 + "N"  </SourceLine>
+   <SourceLine>out2 = out2 + "N"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "N" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "Ñ"</SourceLine>
+   <SourceLine>out1 = out1 + "N"  </SourceLine>
+   <SourceLine>out2 = out2 + "N"</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "P"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "H" then  // PH sounds like F</SourceLine>
+   <SourceLine>out1 = out1 + "F"  </SourceLine>
+   <SourceLine>out2 = out2 + "F"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "P"  </SourceLine>
+   <SourceLine>out2 = out2 + "P"</SourceLine>
+   <SourceLine>// (also account for "campbell", "raspberry")</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 1, "P", "B") then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "Q"</SourceLine>
+   <SourceLine>out1 = out1 + "K"  </SourceLine>
+   <SourceLine>out2 = out2 + "K"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "Q" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "R"</SourceLine>
+   <SourceLine>//french e.g. 'rogier', but exclude 'hochmeier'</SourceLine>
+   <SourceLine>if current = length AND not SlavoGermanic _</SourceLine>
+   <SourceLine>AND MStringAt(source, current - 2, 2, "IE") _ </SourceLine>
+   <SourceLine>AND not MStringAt(source, current - 4, 2, "ME", "MA") then</SourceLine>
+   <SourceLine>out1 = out1 + ""  </SourceLine>
+   <SourceLine>out2 = out2 + "R"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "R"  </SourceLine>
+   <SourceLine>out2 = out2 + "R"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if charAt(current + 1) = "R" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "S"</SourceLine>
+   <SourceLine>if MStringAt(source, current - 1, 3, "ISL", "YSL") then</SourceLine>
+   <SourceLine>//special cases 'island', 'isle', 'carlisle', 'carlysle'</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif current = 1 AND MStringAt(source, current, 5, "SUGAR") then</SourceLine>
+   <SourceLine>//special case 'sugar-'</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "SH") then</SourceLine>
+   <SourceLine>//germanic</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 4, "HEIM", "HOEK", "HOLM", "HOLZ") then</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 3, "SIO", "SIA") OR MStringAt(source, current, 4, "SIAN") then</SourceLine>
+   <SourceLine>//italian &amp; armenian</SourceLine>
+   <SourceLine>if not SlavoGermanic then</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif (current = 1 AND MStringAt(source, current + 1, 1, "M", "N", "L", "W")) _</SourceLine>
+   <SourceLine>OR MStringAt(source, current + 1, 1, "Z") then</SourceLine>
+   <SourceLine>//german &amp; anglicisations, e.g. 'smith' match 'schmidt', 'snider' match 'schneider'</SourceLine>
+   <SourceLine>//also, -sz- in slavic language altho in hungarian it is pronounced "s"</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 1, "Z") then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "SC") then</SourceLine>
+   <SourceLine>//Schlesinger's rule</SourceLine>
+   <SourceLine>if charAt(current + 2) = "H" then</SourceLine>
+   <SourceLine>//dutch origin, e.g. 'school', 'schooner'</SourceLine>
+   <SourceLine>if MStringAt(source, current + 3, 2, "OO", "ER", "EN", "UY", "ED", "EM") then</SourceLine>
+   <SourceLine>//'schermerhorn', 'schenker'</SourceLine>
+   <SourceLine>if MStringAt(source, current + 3, 2, "ER", "EN") then</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "SK"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "SK"  </SourceLine>
+   <SourceLine>out2 = out2 + "SK"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if current = 1 AND not MIsVowel(source, 4) AND charAt(4) &lt;&gt; "W" then</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current + 2, 1, "I", "E", "Y") then</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "SK"  </SourceLine>
+   <SourceLine>out2 = out2 + "SK"</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//french e.g. 'resnais', 'artois'</SourceLine>
+   <SourceLine>if current = length AND MStringAt(source, current - 2, 2, "AI", "OI") then</SourceLine>
+   <SourceLine>out1 = out1 + ""  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 1, "S", "Z") then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "T"</SourceLine>
+   <SourceLine>if MStringAt(source, current, 4, "TION") then</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 3, "TIA", "TCH") then</SourceLine>
+   <SourceLine>out1 = out1 + "X"  </SourceLine>
+   <SourceLine>out2 = out2 + "X"</SourceLine>
+   <SourceLine>current = current +  3</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 2, "TH") OR MStringAt(source, current, 3, "TTH") then</SourceLine>
+   <SourceLine>//special case 'thomas', 'thames' or germanic</SourceLine>
+   <SourceLine>if MStringAt(source, current + 2, 2, "OM", "AM") _</SourceLine>
+   <SourceLine>OR MStringAt(source, 1, 4, "VAN ", "VON ") OR MStringAt(source, 1, 3, "SCH") then</SourceLine>
+   <SourceLine>out1 = out1 + "T"  </SourceLine>
+   <SourceLine>out2 = out2 + "T"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "0"     // 0 represents "TH" sound in Metaphone</SourceLine>
+   <SourceLine>out2 = out2 + "T"     // (a bad choice -- # would have been better)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "T"  </SourceLine>
+   <SourceLine>out2 = out2 + "T"</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 1, "T", "D") then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "V"</SourceLine>
+   <SourceLine>out1 = out1 + "F"  </SourceLine>
+   <SourceLine>out2 = out2 + "F"</SourceLine>
+   <SourceLine>if charAt(current + 1) = "V" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "W"</SourceLine>
+   <SourceLine>//can also be in middle of word</SourceLine>
+   <SourceLine>if MStringAt(source, current, 2, "WR") then</SourceLine>
+   <SourceLine>out1 = out1 + "R"  </SourceLine>
+   <SourceLine>out2 = out2 + "R"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if current = 1 AND (MIsVowel(source, current + 1) OR MStringAt(source, current, 2, "WH")) then</SourceLine>
+   <SourceLine>//Wasserman should match Vasserman</SourceLine>
+   <SourceLine>if(MIsVowel(source, current + 1)) then</SourceLine>
+   <SourceLine>out1 = out1 + "A"  </SourceLine>
+   <SourceLine>out2 = out2 + "F"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//need Uomo to match Womo</SourceLine>
+   <SourceLine>out1 = out1 + "A"  </SourceLine>
+   <SourceLine>out2 = out2 + "A"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if (current = length AND MIsVowel(source, current - 1)) _</SourceLine>
+   <SourceLine>OR MStringAt(source, current - 1, 5, "EWSKI", "EWSKY", "OWSKI", "OWSKY") _</SourceLine>
+   <SourceLine>OR MStringAt(source, 1, 3, "SCH") then</SourceLine>
+   <SourceLine>//Arnow should match Arnoff</SourceLine>
+   <SourceLine>out1 = out1 + ""  </SourceLine>
+   <SourceLine>out2 = out2 + "F"</SourceLine>
+   <SourceLine>current = current + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>elseif MStringAt(source, current, 4, "WICZ", "WITZ") then</SourceLine>
+   <SourceLine>//polish e.g. 'filipowicz'</SourceLine>
+   <SourceLine>out1 = out1 + "TS"  </SourceLine>
+   <SourceLine>out2 = out2 + "FX"</SourceLine>
+   <SourceLine>current = current + 4</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>//else skip it</SourceLine>
+   <SourceLine>current = current + 1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "X"</SourceLine>
+   <SourceLine>//french e.g. breaux</SourceLine>
+   <SourceLine>if not (current = length AND _</SourceLine>
+   <SourceLine>(MStringAt(source, current - 3, 3, "IAU", "EAU") OR MStringAt(source, current - 2, 2, "AU", "OU"))) then</SourceLine>
+   <SourceLine>out1 = out1 + "KS"  </SourceLine>
+   <SourceLine>out2 = out2 + "KS"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 1, "C", "X") then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "Z"</SourceLine>
+   <SourceLine>//chinese pinyin e.g. 'zhao'</SourceLine>
+   <SourceLine>if charAt(current + 1) = "H" then</SourceLine>
+   <SourceLine>out1 = out1 + "J"  </SourceLine>
+   <SourceLine>out2 = out2 + "J"</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if MStringAt(source, current + 1, 2, "ZO", "ZI", "ZA") _</SourceLine>
+   <SourceLine>OR (SlavoGermanic AND current &gt; 1 AND charAt(current - 1) &lt;&gt; "T") then</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "TS"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out1 = out1 + "S"  </SourceLine>
+   <SourceLine>out2 = out2 + "S"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if charAt(current + 1) = "Z" then</SourceLine>
+   <SourceLine>current = current +  2</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>current = current +  1</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// ----</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// if none of the above cases, just skip this character</SourceLine>
+   <SourceLine>current = current + 1</SourceLine>
+   <SourceLine>end Select</SourceLine>
+   <SourceLine>wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>outPrimary = out1</SourceLine>
+   <SourceLine>outAlternate = out2</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, ByRef outPrimary As String, ByRef outAlternate As String</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MIsVowel</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function MIsVowel(source As String, atPos As Integer) As Boolean</SourceLine>
+   <SourceLine>// This is a private helper function for the Metaphone method.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return InStr( "AEIOUY", Mid(source, atPos, 1) ) &gt; 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, atPos As Integer</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MStringAt</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function MStringAt(source As String, start As Integer, length As Integer,  paramArray args As String) As Boolean</SourceLine>
+   <SourceLine>// This is a private helper function for the Metaphone method.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if start &lt; 1 then return false</SourceLine>
+   <SourceLine>Dim target As String</SourceLine>
+   <SourceLine>if start &gt; source.Len then</SourceLine>
+   <SourceLine>target = " "</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>target = Mid(source, start, length)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return (args.IndexOf(target) &gt;= 0)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, start As Integer, length As Integer,  paramArray args As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ReverseB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ReverseB(s As String) As String</SourceLine>
+   <SourceLine>// Return s with the bytes in reverse order.</SourceLine>
+   <SourceLine>// Note that if s is text in any encoding that may have</SourceLine>
+   <SourceLine>// multi-byte characters, you should probably be using</SourceLine>
+   <SourceLine>// Reverse instead of ReverseB.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if LenB(s) &lt; 2 then return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>Dim m as MemoryBlock = s</SourceLine>
+   <SourceLine>Dim leftIndex as Integer = 0</SourceLine>
+   <SourceLine>Dim rightIndex as Integer = m.Size - 4</SourceLine>
+   <SourceLine>While leftIndex + 4 &lt; rightIndex</SourceLine>
+   <SourceLine>Dim tempL as Integer = m.Long(leftIndex)</SourceLine>
+   <SourceLine>Dim tempR as Integer = m.Long(rightIndex)</SourceLine>
+   <SourceLine>m.LittleEndian = not m.LittleEndian</SourceLine>
+   <SourceLine>m.Long(leftIndex) = tempR</SourceLine>
+   <SourceLine>m.Long(rightIndex) =tempL</SourceLine>
+   <SourceLine>m.LittleEndian = not m.LittleEndian</SourceLine>
+   <SourceLine>leftIndex = leftIndex + 4</SourceLine>
+   <SourceLine>rightIndex = rightIndex - 4</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>rightIndex = rightIndex + 3</SourceLine>
+   <SourceLine>While leftIndex &lt; rightIndex</SourceLine>
+   <SourceLine>Dim temp as Byte = m.Byte(leftIndex)</SourceLine>
+   <SourceLine>m.Byte(leftIndex) = m.Byte(rightIndex)</SourceLine>
+   <SourceLine>m.Byte(rightIndex) = temp</SourceLine>
+   <SourceLine>leftIndex = leftIndex + 1</SourceLine>
+   <SourceLine>rightIndex = rightIndex - 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>Return DefineEncoding(m, Encoding(s))</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>EndsWith</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function EndsWith(extends s As String, withWhat As String) As Boolean</SourceLine>
+   <SourceLine>// Return true if 's' ends with the string 'withWhat',</SourceLine>
+   <SourceLine>// doing a standard string comparison.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Right(s, withWhat.Len) = withWhat</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends s As String, withWhat As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>EndsWithB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function EndsWithB(extends s As String, withWhat As String) As Boolean</SourceLine>
+   <SourceLine>// Return true if 's' ends with the string 'withWhat',</SourceLine>
+   <SourceLine>// doing a binary comparison.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return StrComp( RightB(s, withWhat.LenB), withWhat, 0 ) = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>extends s As String, withWhat As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Sprintf</ItemName>
+  <Compatibility>TargetHasGUI</Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Sprintf(src as string, ParamArray data as Variant) As string</SourceLine>
+   <SourceLine>// Returns a string produced according to the formatting string &lt;src&gt;.</SourceLine>
+   <SourceLine>// The format string &lt;src&gt; is composed of zero or more directives: ordinary</SourceLine>
+   <SourceLine>// characters (excluding %) that are</SourceLine>
+   <SourceLine>// copied directly to the result, and conversion</SourceLine>
+   <SourceLine>// specifications, each of which results in fetching its</SourceLine>
+   <SourceLine>// own parameter.</SourceLine>
+   <SourceLine>// For details, see http://de.php.net/manual/en/function.sprintf.php</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Attention: This function differs from the PHP sprintf() function in that</SourceLine>
+   <SourceLine>// it formats floating numbers according to the locale settings.</SourceLine>
+   <SourceLine>// For example, in Germany,</SourceLine>
+   <SourceLine>//    sprintf("%04.2f", 123.45)</SourceLine>
+   <SourceLine>// will return "0123,45".</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Written by Frank Bitterlich, bitterlich@gsco.de</SourceLine>
+   <SourceLine>// Additional work by Florent Pillet, florent@florentpillet.com</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// NOTE: This method is currently available only to GUI apps due</SourceLine>
+   <SourceLine>// to &lt;http://www.realsoftware.com/feedback/viewreport.php?reportid=owsxeqnf&gt;.</SourceLine>
+   <SourceLine>// Once that bug is fixed, we can make this available to console apps too.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim rex as new RegEx</SourceLine>
+   <SourceLine>dim match as RegExMatch</SourceLine>
+   <SourceLine>dim argtype, padding, alignment, precstr, replacement, frmstr, s as string</SourceLine>
+   <SourceLine>dim p, width, precision, index, start, length as integer</SourceLine>
+   <SourceLine>dim vf as double</SourceLine>
+   <SourceLine>dim datum As Variant</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rex.SearchPattern = "(%)(0|/s|'.)?(-)?(\d*)(\.\d+)?([%bcdeufosxX])"</SourceLine>
+   <SourceLine>rex.Options.Greedy = true</SourceLine>
+   <SourceLine>match = rex.Search(src)</SourceLine>
+   <SourceLine>index = -1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>do until match = nil</SourceLine>
+   <SourceLine>if match.SubExpressionCount = 7 then</SourceLine>
+   <SourceLine>padding = Right(" " + match.SubExpressionString(2), 1)</SourceLine>
+   <SourceLine>// if padding = "" then padding = " " // default: space</SourceLine>
+   <SourceLine>alignment = match.SubExpressionString(3)</SourceLine>
+   <SourceLine>width = Val(match.SubExpressionString(4))</SourceLine>
+   <SourceLine>precstr = Mid(match.SubExpressionString(5), 2)</SourceLine>
+   <SourceLine>precision = Val(precstr)</SourceLine>
+   <SourceLine>if precstr="" then precision = 6</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>argtype = match.SubExpressionString(6)</SourceLine>
+   <SourceLine>if argtype &lt;&gt; "%" then</SourceLine>
+   <SourceLine>index = index + 1</SourceLine>
+   <SourceLine>if index &gt; UBound(data) then</SourceLine>
+   <SourceLine>datum = 0</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>datum = data(index)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>select case argtype</SourceLine>
+   <SourceLine>case "%"</SourceLine>
+   <SourceLine>replacement = "%"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "b" // binary int</SourceLine>
+   <SourceLine>replacement = bin(datum)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "c" // character</SourceLine>
+   <SourceLine>replacement = Encodings.UTF8.Chr(datum)</SourceLine>
+   <SourceLine>width = 0</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "d" // signed int</SourceLine>
+   <SourceLine>if padding = "0" then</SourceLine>
+   <SourceLine>frmstr = "-"+Repeat("0", width)</SourceLine>
+   <SourceLine>if datum&lt;0 then frmstr = Left(frmstr, Len(frmstr)-1)</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>frmstr = "-#"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>replacement = Format(datum, frmstr)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "e" // scientific notation</SourceLine>
+   <SourceLine>vf = datum</SourceLine>
+   <SourceLine>frmstr = "-#."+Repeat("0", precision)+"e+"</SourceLine>
+   <SourceLine>Replacement = Format(vf, frmstr)</SourceLine>
+   <SourceLine>p = InStr(Replacement, "e")</SourceLine>
+   <SourceLine>// Make sure the part after the "e" has two digits</SourceLine>
+   <SourceLine>Replacement = Left(Replacement, p)+Format(Val(Mid(Replacement, p+1)), "+00")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "u" // unsigned int</SourceLine>
+   <SourceLine>replacement = Format(datum, "#")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "f" // signed float</SourceLine>
+   <SourceLine>if padding = "0" then</SourceLine>
+   <SourceLine>frmstr = "-"+Repeat("0", width)</SourceLine>
+   <SourceLine>if datum&lt;0 then frmstr = Left(frmstr, Len(frmstr)-1)</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>frmstr = "-#"</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>if precision &gt; 0 then</SourceLine>
+   <SourceLine>frmstr = frmstr + "." + Repeat("0", precision)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>Replacement = Format(datum, frmstr)</SourceLine>
+   <SourceLine>if precision &gt; 0 and padding&lt;&gt;"0" then width = width + precision + 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "o" // octal int</SourceLine>
+   <SourceLine>replacement = Oct(datum)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "s" // string</SourceLine>
+   <SourceLine>replacement = datum</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>case "x" // hex int; uppercase "X" means uppercase hex, "x" is lowercase hex</SourceLine>
+   <SourceLine>replacement = hex(datum)</SourceLine>
+   <SourceLine>if asc(argtype) = &amp;h58 then // uppercase "X"</SourceLine>
+   <SourceLine>replacement = Uppercase(replacement)</SourceLine>
+   <SourceLine>else // lowercase "x"</SourceLine>
+   <SourceLine>replacement = lowercase(replacement)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if width&gt;Len(replacement) then</SourceLine>
+   <SourceLine>if alignment="-" then // align left</SourceLine>
+   <SourceLine>replacement=replacement+Repeat(padding, width-Len(replacement))</SourceLine>
+   <SourceLine>else // align right</SourceLine>
+   <SourceLine>replacement=Repeat(padding, width-Len(replacement))+replacement</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>start = match.SubExpressionStartB(0)+1</SourceLine>
+   <SourceLine>length = LenB(match.SubExpressionString(0))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>s = LeftB(src, start-1) + replacement</SourceLine>
+   <SourceLine>src = s + MidB(src, start+length)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>match = rex.Search(src, Len(s))</SourceLine>
+   <SourceLine>loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return src</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>src as string, ParamArray data as Variant</ItemParams>
+  <ItemResult>string</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ThousandsSeparator</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ThousandsSeparator() As String</SourceLine>
+   <SourceLine>// Return the thousands separator the user uses (either "." or ",").</SourceLine>
+   <SourceLine>If mThousandsSeparator = "" Then</SourceLine>
+   <SourceLine>mThousandsSeparator = Format(1000, "#,#")</SourceLine>
+   <SourceLine>mThousandsSeparator = Mid( mThousandsSeparator, 2, 1 )</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return mThousandsSeparator</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DecimalSeparator</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function DecimalSeparator() As String</SourceLine>
+   <SourceLine>// Return the decimal separator the user uses (either "." or ",").</SourceLine>
+   <SourceLine>If mDecimalSeparator = "" Then</SourceLine>
+   <SourceLine>mDecimalSeparator = Format(1.2, "0.0")</SourceLine>
+   <SourceLine>mDecimalSeparator = Mid( mDecimalSeparator, 2, 1 )</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return mDecimalSeparator</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SplitByLength</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SplitByLength(s As String, fieldWidth As Integer) As String()</SourceLine>
+   <SourceLine>// Split a string into fields, each containing 'fieldWidth' characters</SourceLine>
+   <SourceLine>// (except for the last one, which may have fewer).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If fieldWidth &lt; 1 Then   // fieldWidth must be &gt;= 1</SourceLine>
+   <SourceLine>Raise New OutOfBoundsException</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out(-1) As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim qty As Integer</SourceLine>
+   <SourceLine>qty = Ceil( Len(s) / fieldWidth )</SourceLine>
+   <SourceLine>Redim out( qty - 1 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim pos, i As Integer</SourceLine>
+   <SourceLine>pos = 1</SourceLine>
+   <SourceLine>For i = 0 To qty-1</SourceLine>
+   <SourceLine>out(i) = Mid( s, pos, fieldWidth )</SourceLine>
+   <SourceLine>pos = pos + fieldWidth</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, fieldWidth As Integer</ItemParams>
+  <ItemResult>String()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Trim</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Trim(source As String, charsToTrim As String) As String</SourceLine>
+   <SourceLine>// This is an extended version of RB's Trim function that lets you specify</SourceLine>
+   <SourceLine>// a set of characters to trim.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim srcLen As Integer = source.Len</SourceLine>
+   <SourceLine>Dim leftPos, i As Integer</SourceLine>
+   <SourceLine>For i = 1 To srcLen</SourceLine>
+   <SourceLine>If InStr( charsToTrim, Mid(source, i, 1) ) = 0 Then Exit</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>leftPos = i</SourceLine>
+   <SourceLine>If leftPos &gt; srcLen Then Return ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim rightPos As Integer</SourceLine>
+   <SourceLine>For i = srcLen DownTo 1</SourceLine>
+   <SourceLine>If InStr( charsToTrim, Mid(source, i, 1) ) = 0 Then Exit</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>rightPos = i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Mid( source, leftPos, rightPos - leftPos + 1 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, charsToTrim As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SplitByLengthB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SplitByLengthB(s As String, fieldWidth As Integer) As String()</SourceLine>
+   <SourceLine>// Split a string into fields, each containing 'fieldWidth' bytes</SourceLine>
+   <SourceLine>// (except for the last one, which may have fewer).</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If fieldWidth &lt; 1 Then   // fieldWidth must be &gt;= 1</SourceLine>
+   <SourceLine>Raise New OutOfBoundsException</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out(-1) As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim qty As Integer</SourceLine>
+   <SourceLine>qty = Ceil( LenB(s) / fieldWidth )</SourceLine>
+   <SourceLine>Redim out( qty - 1 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim pos, i As Integer</SourceLine>
+   <SourceLine>pos = 1</SourceLine>
+   <SourceLine>For i = 0 To qty-1</SourceLine>
+   <SourceLine>out(i) = MidB( s, pos, fieldWidth )</SourceLine>
+   <SourceLine>pos = pos + fieldWidth</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, fieldWidth As Integer</ItemParams>
+  <ItemResult>String()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ControlCharacters</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ControlCharacters() As String</SourceLine>
+   <SourceLine>// Return the control character region of the ASCII set,</SourceLine>
+   <SourceLine>// i.e., ASCII 0 through 31.</SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
+   <SourceLine>if mControlChars = "" then</SourceLine>
+   <SourceLine>for i = 0 to 31</SourceLine>
+   <SourceLine>mControlChars = mControlChars + Encodings.ASCII.Chr(i)</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return mControlChars</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams></ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LTrim</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LTrim(source As String, charsToTrim As String) As String</SourceLine>
+   <SourceLine>// This is an extended version of RB's LTrim function that lets you specify</SourceLine>
+   <SourceLine>// a set of characters to trim.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim srcLen As Integer = source.Len</SourceLine>
+   <SourceLine>Dim leftPos, i As Integer</SourceLine>
+   <SourceLine>for i = 1 to srcLen</SourceLine>
+   <SourceLine>if InStr( charsToTrim, Mid(source, i, 1) ) = 0 then exit</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>leftPos = i</SourceLine>
+   <SourceLine>if leftPos &gt; srcLen then return ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return Mid( source, leftPos )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, charsToTrim As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>RTrim</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function RTrim(source As String, charsToTrim As String) As String</SourceLine>
+   <SourceLine>// This is an extended version of RB's RTrim function that lets you specify</SourceLine>
+   <SourceLine>// a set of characters to trim.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim srcLen As Integer = source.Len</SourceLine>
+   <SourceLine>Dim rightPos, i As Integer</SourceLine>
+   <SourceLine>for i = srcLen DownTo 1</SourceLine>
+   <SourceLine>if InStr( charsToTrim, Mid(source, i, 1) ) = 0 then exit</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>rightPos = i</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return Mid( source, 1, rightPos )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, charsToTrim As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>HexB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function HexB(s As String) As String</SourceLine>
+   <SourceLine>// Return a hex representation of each byte of s,</SourceLine>
+   <SourceLine>// i.e., each byte becomes a pair of hexadecimal digits,</SourceLine>
+   <SourceLine>// separated by spaces from the next byte.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Credit: Charles Yeomans.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If s = "" Then Return ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If RBVersion &gt; 5.5</SourceLine>
+   <SourceLine>Static HexTable As MemoryBlock</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>Dim HexTable As MemoryBlock</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If HexTable Is Nil Then</SourceLine>
+   <SourceLine>HexTable = New MemoryBlock(512)</SourceLine>
+   <SourceLine>For i As Integer = 0 To 15</SourceLine>
+   <SourceLine>HexTable.StringValue(i + i , 2) = "0" + Hex(i)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>For i As Integer = 16 To 255</SourceLine>
+   <SourceLine>HexTable.StringValue(i + i, 2) = Hex(i)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim inData As MemoryBlock = New MemoryBlock(LenB(s))</SourceLine>
+   <SourceLine>inData.StringValue(0, inData.Size) = s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim outData As MemoryBlock = New MemoryBlock(3*inData.Size - 1)</SourceLine>
+   <SourceLine>outData.Short(0) = HexTable.Short(2*inData.Byte(0))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim lastByte As Integer = inData.Size - 1</SourceLine>
+   <SourceLine>For offset As Integer = 1 To lastByte</SourceLine>
+   <SourceLine>outData.Byte(3*offset - 1) = 32 // (space)</SourceLine>
+   <SourceLine>outData.Short(3*offset) = HexTable.Short(2*inData.Byte(offset))</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return outData.StringValue(0, outData.Size, Encodings.ASCII)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>MatchCase</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function MatchCase(textToChange As String, sampleText As String) As String</SourceLine>
+   <SourceLine>// Return a version of textToChange that matches the case style</SourceLine>
+   <SourceLine>// of sampleText: Lowercase, Uppercase, or Titlecase.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Examine the text until we find 2 characters that have case.</SourceLine>
+   <SourceLine>Dim pos As Integer = 1</SourceLine>
+   <SourceLine>Dim maxPos As Integer = sampleText.Len</SourceLine>
+   <SourceLine>Dim foundUpper() As Boolean</SourceLine>
+   <SourceLine>Dim c, upperC, lowerC As String</SourceLine>
+   <SourceLine>for pos = 1 to maxPos</SourceLine>
+   <SourceLine>c = MidB( sampleText, pos, 1 )</SourceLine>
+   <SourceLine>upperC = Uppercase(c)</SourceLine>
+   <SourceLine>lowerC = Lowercase(c)</SourceLine>
+   <SourceLine>if StrComp( upperC, lowerC, 0 ) &lt;&gt; 0 then</SourceLine>
+   <SourceLine>// found a character with case; remember which case it is</SourceLine>
+   <SourceLine>foundUpper.Append StrComp(c, upperC, 0 ) = 0</SourceLine>
+   <SourceLine>if UBound( foundUpper ) &gt;= 1 then exit</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// found a caseless character; reset our found list</SourceLine>
+   <SourceLine>Redim foundUpper(-1)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if UBound( foundUpper ) &lt; 1 then</SourceLine>
+   <SourceLine>// didn't find enough characters with case; sample is no good</SourceLine>
+   <SourceLine>return textToChange</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if foundUpper(0) then</SourceLine>
+   <SourceLine>if foundUpper(1) then return Uppercase(textToChange)</SourceLine>
+   <SourceLine>return Titlecase(textToChange)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>return Lowercase(textToChange)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>textToChange As String, sampleText As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Random</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Random(length As Integer = 8, charset As String = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ") As String</SourceLine>
+   <SourceLine>// Generate a random string of the specified length, by choosing characters</SourceLine>
+   <SourceLine>// at random from the given character set.  NOTE: we currently assume that</SourceLine>
+   <SourceLine>// all characters in charset are only 1 byte each.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If RBVersion &gt; 5.5</SourceLine>
+   <SourceLine>Static m As MemoryBlock</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>Dim m As MemoryBlock</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If m = Nil Then</SourceLine>
+   <SourceLine>m = New MemoryBlock( length )</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>m.Size = length</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim charsetSize As Integer = Len( charset )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If RBVersion &gt; 5.5</SourceLine>
+   <SourceLine>Static r As New Random</SourceLine>
+   <SourceLine>For i As Integer = 0 To length - 1</SourceLine>
+   <SourceLine>m.StringValue( i, 1 ) = MidB( charset, r.InRange( 1, charsetSize ), 1 )</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>For i As Integer = 0 To length - 1</SourceLine>
+   <SourceLine>m.StringValue( i, 1 ) = MidB( charset, Rnd * charsetSize + 1, 1 )</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return DefineEncoding( m.StringValue( 0, length ), charset.Encoding )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>length As Integer = 8, charset As String = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ"</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SplitQuoted</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SplitQuoted(source As String, delimiter As String, removeQuotes as Boolean) As String()</SourceLine>
+   <SourceLine>// Same as RB's Split, except that it respects quoted strings.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim out() As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Easy cases: no occurrences of the separator, or no quotation marks</SourceLine>
+   <SourceLine>if InStr( source, delimiter )=0 then</SourceLine>
+   <SourceLine>out = Array( source )</SourceLine>
+   <SourceLine>elseif InStr( source, """" )= 0 then</SourceLine>
+   <SourceLine>out = Split( source, delimiter )</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// Harder case: both separator and quotation marks.</SourceLine>
+   <SourceLine>// We'll use InStrQuoted to help us out.</SourceLine>
+   <SourceLine>Dim delimiterLen As Integer = delimiter.Len</SourceLine>
+   <SourceLine>Dim startPos As Integer = 1</SourceLine>
+   <SourceLine>do</SourceLine>
+   <SourceLine>Dim delimiterPos As Integer = InStrQuoted( startPos, source, delimiter )</SourceLine>
+   <SourceLine>if delimiterPos = 0 then</SourceLine>
+   <SourceLine>// no more separators</SourceLine>
+   <SourceLine>out.Append Mid( source, startPos )</SourceLine>
+   <SourceLine>exit</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>out.Append Mid( source, startPos, delimiterPos - startPos )</SourceLine>
+   <SourceLine>startPos = delimiterPos + delimiterLen</SourceLine>
+   <SourceLine>loop</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Finally, strip quotes if asked to do so.</SourceLine>
+   <SourceLine>// (Including the case of a start quote without an end quote, which</SourceLine>
+   <SourceLine>// could happen in the last field.)</SourceLine>
+   <SourceLine>if removeQuotes then</SourceLine>
+   <SourceLine>for i As Integer = 0 to UBound( out )</SourceLine>
+   <SourceLine>Dim s As String = out(i)</SourceLine>
+   <SourceLine>if s.LeftB( 1 ) = """" then</SourceLine>
+   <SourceLine>if s.RightB( 1 ) = """" then</SourceLine>
+   <SourceLine>out(i) = MidB( s, 2, s.LenB - 2 )</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>out(i) = MidB( s, 2 )</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return out</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>source As String, delimiter As String, removeQuotes as Boolean</ItemParams>
+  <ItemResult>String()</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>JoinQuoted</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function JoinQuoted(fields() as String, delimiter as String) As String</SourceLine>
+   <SourceLine>// Join the given strings with a delimiter, just like RB's intrinsic Join</SourceLine>
+   <SourceLine>// method, except that if any of the fields contains the delimiter,</SourceLine>
+   <SourceLine>// that item will be surrounded by quotes in the output.  See</SourceLine>
+   <SourceLine>// SplitQuoted for the inverse function.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Approach: copy the items into a second array, putting quotes</SourceLine>
+   <SourceLine>// around any that contain the delimiter, then Join them.  This</SourceLine>
+   <SourceLine>// way we don't mutate the array that's passed in.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim quoted() As String</SourceLine>
+   <SourceLine>Dim ub As Integer = UBound( fields )</SourceLine>
+   <SourceLine>Redim quoted( ub )</SourceLine>
+   <SourceLine>for i As Integer = 0 to ub</SourceLine>
+   <SourceLine>Dim fld As String = fields(i)</SourceLine>
+   <SourceLine>if Instr( fld, Delimiter ) &gt; 0 then</SourceLine>
+   <SourceLine>quoted(i) = """" + fld + """"</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>quoted(i) = fld</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return Join( quoted, delimiter )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>fields() as String, delimiter as String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>EncodeCase</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function EncodeCase(s As String) As String</SourceLine>
+   <SourceLine>// Return a version of the given string that encodes the uppercase/lowercase state</SourceLine>
+   <SourceLine>// of each letter as follows: every time we switch from uppercase to lowercase, we</SourceLine>
+   <SourceLine>// insert a "^".  A "^" in the original string will be represented as "^^".  Finally, we</SourceLine>
+   <SourceLine>// will assume lowercase at the beginning of the string (so an initial capital letter</SourceLine>
+   <SourceLine>// will be preceded by "^").</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// This can be useful for doing things like case-sensitive lookup of strings in a</SourceLine>
+   <SourceLine>// Dictionary, which is normally case insensitive.</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// For the inverse operation, see DecodeCase.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim chars() As String = Split( s, "" )</SourceLine>
+   <SourceLine>Dim inUpperState As Boolean = false</SourceLine>
+   <SourceLine>Dim idx As Integer</SourceLine>
+   <SourceLine>Dim anyUpper As Boolean</SourceLine>
+   <SourceLine>for idx = 0 to UBound( chars )</SourceLine>
+   <SourceLine>Dim c As String = chars(idx)</SourceLine>
+   <SourceLine>if c = "^" then</SourceLine>
+   <SourceLine>// got a caret in the original string; double it</SourceLine>
+   <SourceLine>chars.Insert idx, "^"</SourceLine>
+   <SourceLine>idx = idx + 1</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// determine whether the given character fails to match the current state</SourceLine>
+   <SourceLine>Dim codepoint As Integer = Asc(c)</SourceLine>
+   <SourceLine>Dim switchCase As Boolean</SourceLine>
+   <SourceLine>if inUpperState then</SourceLine>
+   <SourceLine>if codepoint &lt; 128 then</SourceLine>
+   <SourceLine>// lowercase ASCII ranges from 97 to 122</SourceLine>
+   <SourceLine>switchCase = (codepoint &gt;= 97 and codepoint &lt;= 122)</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// if not ASCII, use RB's routines to see if it'd be any different in upper case</SourceLine>
+   <SourceLine>switchCase = StrComp( c, Uppercase(c), 0 ) &lt;&gt; 0</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>if codepoint &lt; 128 then</SourceLine>
+   <SourceLine>// uppercase ASCII ranges from 65 to 90</SourceLine>
+   <SourceLine>switchCase = (codepoint &gt;= 65 and codepoint &lt;= 90)</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>// if not ASCII, use RB's routines to see if it'd be any different in lower case</SourceLine>
+   <SourceLine>switchCase = StrComp( c, Lowercase(c), 0 ) &lt;&gt; 0</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>if switchCase then anyUpper = true</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>if switchCase then</SourceLine>
+   <SourceLine>// yep, time to switch case</SourceLine>
+   <SourceLine>chars.Insert idx, "^"</SourceLine>
+   <SourceLine>idx = idx + 1</SourceLine>
+   <SourceLine>inUpperState = not inUpperState</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim result As String = Join( chars, "" )</SourceLine>
+   <SourceLine>if anyUpper then result = Lowercase( result )</SourceLine>
+   <SourceLine>return result</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>DecodeCase</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function DecodeCase(s As String) As String</SourceLine>
+   <SourceLine>// This function undoes the encoding of case done by EncodeCase, resulting</SourceLine>
+   <SourceLine>// in the original string.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim parts() As String = Split( s, "^" )</SourceLine>
+   <SourceLine>For i As Integer = 1 To UBound( parts ) Step 2</SourceLine>
+   <SourceLine>If parts(i) = "" Then</SourceLine>
+   <SourceLine>parts(i) = "^"</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>parts(i) = Uppercase( parts(i) )</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Return Join( parts, "" )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Reverse</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Reverse(s As String) As String</SourceLine>
+   <SourceLine>// Return s with the characters in reverse order.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if Len(s) &lt; 2 then return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim characters() as String = Split( s, "" )</SourceLine>
+   <SourceLine>Dim leftIndex as Integer = 0</SourceLine>
+   <SourceLine>Dim rightIndex as Integer = UBound(characters)</SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine>While leftIndex &lt; rightIndex</SourceLine>
+   <SourceLine>Dim temp as String = characters(leftIndex)</SourceLine>
+   <SourceLine>characters(leftIndex) = characters(rightIndex)</SourceLine>
+   <SourceLine>characters(rightIndex) = temp</SourceLine>
+   <SourceLine>leftIndex = leftIndex + 1</SourceLine>
+   <SourceLine>rightIndex = rightIndex - 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>Return Join( characters, "" )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LineEnding</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LineEnding(s As String) As String</SourceLine>
+   <SourceLine>// Return the first line ending (of any standard sort: Unix, classic Mac, or Windows)</SourceLine>
+   <SourceLine>// which is found in the given string.  If none is found, return standard EndOfLine</SourceLine>
+   <SourceLine>// for the platform we're running on.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The code below can't deal with UTF-16, but should deal fine with anything else.</SourceLine>
+   <SourceLine>// So, in those rare cases where we have UTF-16, let's convert.  This could be a</SourceLine>
+   <SourceLine>// performance bottleneck if you call this on large UTF-16 strings.</SourceLine>
+   <SourceLine>if s.Encoding = Encodings.UTF16 then s = s.ConvertEncoding( Encodings.UTF8 )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Loop over the bytes of the string until we find a 13 or 10.  A line ending should</SourceLine>
+   <SourceLine>// be either 13 alone (Mac), 10 alone (Unix), or 13+10 (Windows).</SourceLine>
+   <SourceLine>Dim posB, maxPosB As Integer</SourceLine>
+   <SourceLine>maxPosB = LenB( s )</SourceLine>
+   <SourceLine>for posB = 1 to maxPosB</SourceLine>
+   <SourceLine>Dim b As Integer = AscB( MidB( s, posB, 1 ) )</SourceLine>
+   <SourceLine>if b = 10 then</SourceLine>
+   <SourceLine>return Chr(10)</SourceLine>
+   <SourceLine>elseif b = 13 then</SourceLine>
+   <SourceLine>if AscB( MidB( s, posB+1, 1 ) ) = 10 then return Chr(13) + Chr(10)</SourceLine>
+   <SourceLine>return Chr(13)</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return EndOfLine</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>InStrQuoted</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function InStrQuoted(start As Integer = 1, source As String, find As String) As Integer</SourceLine>
+   <SourceLine>// This is the same as the built-in InStr function, except that it ignores</SourceLine>
+   <SourceLine>// any occurrence of "find" within double quotes.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>do</SourceLine>
+   <SourceLine>// Find the next occurrence of the search string.  If none, then we're done.</SourceLine>
+   <SourceLine>Dim foundPos As Integer = InStr( start, source, find )</SourceLine>
+   <SourceLine>if foundPos &lt; 1 then return foundPos</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Now, also find the next quotation mark; if this comes before</SourceLine>
+   <SourceLine>// our foundPos, then we need to ignore that and resume searching</SourceLine>
+   <SourceLine>// after the closing quote.  Otherwise, we're done.</SourceLine>
+   <SourceLine>Dim quotePos As Integer = InStr( start, source, """" )</SourceLine>
+   <SourceLine>if quotePos = 0 or quotePos &gt; foundPos then return foundPos</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim closeQuotePos As Integer = InStr( quotePos+1, source, """" )</SourceLine>
+   <SourceLine>if closeQuotePos = 0 then return 0 // no closing quote, treat whole end of string as quoted</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>start = closeQuotePos + 1</SourceLine>
+   <SourceLine>loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>start As Integer = 1, source As String, find As String</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>Chop</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function Chop(s As String, stringToCut As String) As String</SourceLine>
+   <SourceLine>// Chops 'stringToCut' off of s, if stringToCut is found at the end.</SourceLine>
+   <SourceLine>// Useful for removing file extensions, trailing punctuation, etc.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim cutLen As Integer = stringToCut.Len</SourceLine>
+   <SourceLine>If Right(s, cutLen) = stringToCut Then</SourceLine>
+   <SourceLine>Return s.Left( s.Len - cutLen )</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, stringToCut As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ChopB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ChopB(s As String, stringToCut As String) As String</SourceLine>
+   <SourceLine>// Chops 'stringToCut' off of s, if stringToCut is found at the end.</SourceLine>
+   <SourceLine>// Useful for removing file extensions, trailing punctuation, etc.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim cutLenB As Integer = stringToCut.LenB</SourceLine>
+   <SourceLine>If StrComp( RightB(s, cutLenB), stringToCut, 0 ) = 0 Then</SourceLine>
+   <SourceLine>Return s.LeftB( s.LenB - cutLenB )</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, stringToCut As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SqueezeB</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SqueezeB(s As String, charSet As String=" ") As String</SourceLine>
+   <SourceLine>// Find any repeating characters, where the character is a member of</SourceLine>
+   <SourceLine>// charSet, and replace the run with a single character.  Note that this</SourceLine>
+   <SourceLine>// uses binary matching (and so is case sensitive), but does convert</SourceLine>
+   <SourceLine>// charSet into the encoding of s, so you don't have to worry about that.</SourceLine>
+   <SourceLine>// Example: Squeeze("wooow maaan", "aeiou") = "wow man".</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim sLenB As Integer = s.LenB</SourceLine>
+   <SourceLine>if sLenB &lt; 2 then return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#pragma BackgroundTasks False</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>charSet = ConvertEncoding( charSet, s.Encoding )</SourceLine>
+   <SourceLine>for each char as String in Split( charSet, "" )</SourceLine>
+   <SourceLine>Dim doubleChar As String = char + char</SourceLine>
+   <SourceLine>do</SourceLine>
+   <SourceLine>s = ReplaceAllB( s, doubleChar, char )</SourceLine>
+   <SourceLine>Dim newLenB As Integer = s.LenB</SourceLine>
+   <SourceLine>if newLenB = sLenB then exit</SourceLine>
+   <SourceLine>sLenB = newLenB</SourceLine>
+   <SourceLine>loop</SourceLine>
+   <SourceLine>next char</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return s</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, charSet As String=" "</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>WrapLines</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub WrapLines(lines() As String, charsPerLine As Integer = 72, paragraphFill As Boolean = true)</SourceLine>
+   <SourceLine>// Wrap the text so that no line is longer than charsPerLine.  If paragraphFill</SourceLine>
+   <SourceLine>// is true, then whenever one long line is followed by a line that does not</SourceLine>
+   <SourceLine>// start with whitespace, join them together into one continuous paragraph.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If UBound( lines ) &lt; 0 Then Return</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Start by joining lines, if called for.</SourceLine>
+   <SourceLine>If paragraphFill Then</SourceLine>
+   <SourceLine>Dim lineNum As Integer = 1</SourceLine>
+   <SourceLine>Dim lastLineShort As Boolean = ( lines(0).Len &lt; charsPerLine-20 )</SourceLine>
+   <SourceLine>While lineNum &lt;= UBound( lines )</SourceLine>
+   <SourceLine>Dim line As String = lines( lineNum )</SourceLine>
+   <SourceLine>Dim firstChar As String = Left( line, 1 )</SourceLine>
+   <SourceLine>If lastLineShort Then</SourceLine>
+   <SourceLine>// last line was short, so don't join this one to it</SourceLine>
+   <SourceLine>lineNum = lineNum + 1</SourceLine>
+   <SourceLine>Elseif line = "" Or firstChar &lt;= " " Or firstChar = "&gt;" Or firstChar = "|" Then</SourceLine>
+   <SourceLine>// this line is empty or starts with whitespace or other special char; don't join it</SourceLine>
+   <SourceLine>lineNum = lineNum + 1</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// this line starts with a character; join it to the previous line</SourceLine>
+   <SourceLine>lines( lineNum - 1 ) = lines( lineNum - 1 ) + " " + line</SourceLine>
+   <SourceLine>lines.Remove lineNum</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>lastLineShort = ( line.Len &lt; charsPerLine-20 )</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Then, go through and do the wrapping.</SourceLine>
+   <SourceLine>For lineNum As Integer = 0 To UBound( lines )</SourceLine>
+   <SourceLine>Dim line As String = RTrim( lines( lineNum ) )</SourceLine>
+   <SourceLine>If line.Len &lt;= charsPerLine Then</SourceLine>
+   <SourceLine>lines( lineNum ) = line</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Dim breakPos As Integer</SourceLine>
+   <SourceLine>For breakPos = charsPerLine DownTo 1</SourceLine>
+   <SourceLine>Dim c As String = Mid( line, breakPos, 1 )</SourceLine>
+   <SourceLine>If c &lt;= " " Or c = "-" Then Exit</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>If breakPos &lt; 2 Then breakPos = charsPerLine + 1  // no point breaking before char 1</SourceLine>
+   <SourceLine>lines.Insert lineNum + 1, LTrim( Mid( line, breakPos ) )</SourceLine>
+   <SourceLine>lines( lineNum ) = LTrim( Left( line, breakPos - 1) )</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>lines() As String, charsPerLine As Integer = 72, paragraphFill As Boolean = true</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>GuessEncoding</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function GuessEncoding(s As String) As TextEncoding</SourceLine>
+   <SourceLine>// Guess what text encoding the text in the given string is in.</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// Note that it this version does not report whether the UTF-32 or</SourceLine>
+   <SourceLine>// UTF-16 that is in the wrong byte order.  If that's a possibility,</SourceLine>
+   <SourceLine>// you should use the other version of GuessEncoding instead.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim whoCares As Boolean</SourceLine>
+   <SourceLine>Return GuessEncoding( s, whoCares )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>TextEncoding</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>GuessEncoding</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function GuessEncoding(s As String, ByRef outWrongOrder As Boolean) As TextEncoding</SourceLine>
+   <SourceLine>// Guess what text encoding the text in the given string is in.</SourceLine>
+   <SourceLine>// This ignores the encoding set on the string, and guesses</SourceLine>
+   <SourceLine>// one of the following:</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>//   * UTF-32</SourceLine>
+   <SourceLine>//   * UTF-16</SourceLine>
+   <SourceLine>//   * UTF-8</SourceLine>
+   <SourceLine>//   * Encodings.SystemDefault</SourceLine>
+   <SourceLine>//</SourceLine>
+   <SourceLine>// If the UTF-32 or UTF-16 is in the wrong byte order for this platform,</SourceLine>
+   <SourceLine>// then outWrongOrder will be set to true.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Static isBigEndian, endianChecked As Boolean</SourceLine>
+   <SourceLine>If Not endianChecked Then</SourceLine>
+   <SourceLine>Dim temp As String = Encodings.UTF16.Chr( &amp;hFEFF )</SourceLine>
+   <SourceLine>isBigEndian = (AscB( MidB( temp, 1, 1 ) ) = &amp;hFE)</SourceLine>
+   <SourceLine>endianChecked = True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// check for a BOM</SourceLine>
+   <SourceLine>Dim b0 As Integer = AscB( s.MidB( 1, 1 ) )</SourceLine>
+   <SourceLine>Dim b1 As Integer = AscB( s.MidB( 2, 1 ) )</SourceLine>
+   <SourceLine>Dim b2 As Integer = AscB( s.MidB( 3, 1 ) )</SourceLine>
+   <SourceLine>Dim b3 As Integer = AscB( s.MidB( 4, 1 ) )</SourceLine>
+   <SourceLine>If b0=0 And b1=0 And b2=&amp;hFE And b3=&amp;hFF Then</SourceLine>
+   <SourceLine>// UTF-32, big-endian</SourceLine>
+   <SourceLine>outWrongOrder = Not isBigEndian</SourceLine>
+   <SourceLine>#If RBVersion &gt;= 2012.02 Then</SourceLine>
+   <SourceLine>Return Encodings.UTF32</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>Return Encodings.UCS4</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>Elseif b0=&amp;hFF And b1=&amp;hFE And b2=0 And b3=0 And s.LenB &gt;= 4 Then</SourceLine>
+   <SourceLine>// UTF-32, little-endian</SourceLine>
+   <SourceLine>outWrongOrder = isBigEndian</SourceLine>
+   <SourceLine>#If RBVersion &gt;= 2012.02 Then</SourceLine>
+   <SourceLine>Return Encodings.UTF32</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>Return Encodings.UCS4</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>Elseif b0=&amp;hFE And b1=&amp;hFF Then</SourceLine>
+   <SourceLine>// UTF-16, big-endian</SourceLine>
+   <SourceLine>outWrongOrder = Not isBigEndian</SourceLine>
+   <SourceLine>Return Encodings.UTF16</SourceLine>
+   <SourceLine>Elseif b0=&amp;hFF And b1=&amp;hFE Then</SourceLine>
+   <SourceLine>// UTF-16, little-endian</SourceLine>
+   <SourceLine>outWrongOrder = isBigEndian</SourceLine>
+   <SourceLine>Return Encodings.UTF16</SourceLine>
+   <SourceLine>Elseif b0=&amp;hEF And b1=&amp;hBB And b1=&amp;hBF Then</SourceLine>
+   <SourceLine>// UTF-8 (ah, a sensible encoding where endianness doesn't matter!)</SourceLine>
+   <SourceLine>Return Encodings.UTF8</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// no BOM; see if it's entirely ASCII.</SourceLine>
+   <SourceLine>Dim m As MemoryBlock = s</SourceLine>
+   <SourceLine>Dim i, maxi As Integer = s.LenB - 1</SourceLine>
+   <SourceLine>For i = 0 To maxi</SourceLine>
+   <SourceLine>If m.Byte(i) &gt; 127 Then Exit</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>If i &gt; maxi Then Return Encodings.ASCII</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Not ASCII; check for a high incidence of nulls every other byte,</SourceLine>
+   <SourceLine>// which suggests UTF-16 (at least in Roman text).</SourceLine>
+   <SourceLine>Dim nulls(1) As Integer  // null count in even (0) and odd (1) bytes</SourceLine>
+   <SourceLine>For i = 0 To maxi</SourceLine>
+   <SourceLine>If m.Byte(i) = 0 Then</SourceLine>
+   <SourceLine>nulls(i Mod 2) = nulls(i Mod 2) + 1</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>If nulls(0) &gt; nulls(1)*2 And nulls(0) &gt; maxi\2 Then</SourceLine>
+   <SourceLine>// UTF-16, big-endian</SourceLine>
+   <SourceLine>outWrongOrder = Not isBigEndian</SourceLine>
+   <SourceLine>Return Encodings.UTF16</SourceLine>
+   <SourceLine>Elseif nulls(1) &gt; nulls(0)*2 And nulls(1) &gt; maxi\2 Then</SourceLine>
+   <SourceLine>// UTF-16, little-endian</SourceLine>
+   <SourceLine>outWrongOrder = isBigEndian</SourceLine>
+   <SourceLine>Return Encodings.UTF16</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// it's not ASCII; check for illegal UTF-8 characters.</SourceLine>
+   <SourceLine>// See Table 3.1B, "Legal UTF-8 Byte Sequences",</SourceLine>
+   <SourceLine>// at &lt;http://unicode.org/versions/corrigendum1.html&gt;</SourceLine>
+   <SourceLine>Dim b As Byte</SourceLine>
+   <SourceLine>For i = 0 To maxi</SourceLine>
+   <SourceLine>Select Case m.Byte(i)</SourceLine>
+   <SourceLine>Case &amp;h00 To &amp;h7F</SourceLine>
+   <SourceLine>// single-byte character; just continue</SourceLine>
+   <SourceLine>Case &amp;hC2 To &amp;hDF</SourceLine>
+   <SourceLine>// one additional byte</SourceLine>
+   <SourceLine>If i+1 &gt; maxi Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>i = i+1</SourceLine>
+   <SourceLine>Case &amp;hE0</SourceLine>
+   <SourceLine>// two additional bytes</SourceLine>
+   <SourceLine>If i+2 &gt; maxi Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>If b &lt; &amp;hA0 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>i = i+2</SourceLine>
+   <SourceLine>Case &amp;hE1 To &amp;hEF</SourceLine>
+   <SourceLine>// two additional bytes</SourceLine>
+   <SourceLine>If i+2 &gt; maxi Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>i = i+2</SourceLine>
+   <SourceLine>Case &amp;hF0</SourceLine>
+   <SourceLine>// three additional bytes</SourceLine>
+   <SourceLine>If i+3 &gt; maxi Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>If b &lt; &amp;h90 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+3)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>i = i+3</SourceLine>
+   <SourceLine>Case &amp;hF1 To &amp;hF3</SourceLine>
+   <SourceLine>// three additional bytes</SourceLine>
+   <SourceLine>If i+3 &gt; maxi Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+3)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>i = i+3</SourceLine>
+   <SourceLine>Case &amp;hF4</SourceLine>
+   <SourceLine>// three additional bytes</SourceLine>
+   <SourceLine>If i+3 &gt; maxi Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+1)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;h8F Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+2)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>b = m.Byte(i+3)</SourceLine>
+   <SourceLine>If b &lt; &amp;h80 Or b &gt; &amp;hBF Then Exit For</SourceLine>
+   <SourceLine>i = i+3</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Exit For</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>Next i</SourceLine>
+   <SourceLine>If i &gt; maxi Then Return Encodings.UTF8  // no illegal UTF-8 sequences, so that's probably what it is</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// If not valid UTF-8, then let's just guess the system default.</SourceLine>
+   <SourceLine>Return Encodings.SystemDefault</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String, ByRef outWrongOrder As Boolean</ItemParams>
+  <ItemResult>TextEncoding</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SwapBytePairs</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SwapBytePairs(s As String) As String</SourceLine>
+   <SourceLine>// Swap every pair of bytes in the given string.  This can be useful</SourceLine>
+   <SourceLine>// when dealing with UTF-16 data with the wrong byte order.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim inm As MemoryBlock = s</SourceLine>
+   <SourceLine>inm.LittleEndian = True</SourceLine>
+   <SourceLine>Dim outm As New MemoryBlock( inm.Size )</SourceLine>
+   <SourceLine>outm.LittleEndian = False</SourceLine>
+   <SourceLine>Dim maxi As Integer = inm.Size - 2</SourceLine>
+   <SourceLine>For i As Integer = 0 To maxi Step 2</SourceLine>
+   <SourceLine>outm.UInt16Value(i) = inm.UInt16Value(i)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Return outm.StringValue( 0, outm.Size, s.Encoding )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SwapByteQuads</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SwapByteQuads(s As String) As String</SourceLine>
+   <SourceLine>// Swap the order of every 4 bytes in the given string.  This can be useful</SourceLine>
+   <SourceLine>// when dealing with UTF-32 data with the wrong byte order.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim inm As MemoryBlock = s</SourceLine>
+   <SourceLine>inm.LittleEndian = True</SourceLine>
+   <SourceLine>Dim outm As New MemoryBlock( inm.Size )</SourceLine>
+   <SourceLine>outm.LittleEndian = False</SourceLine>
+   <SourceLine>Dim maxi As Integer = inm.Size - 4</SourceLine>
+   <SourceLine>For i As Integer = 0 To maxi Step 4</SourceLine>
+   <SourceLine>outm.UInt32Value(i) = inm.UInt32Value(i)</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Return outm.StringValue( 0, outm.Size, s.Encoding )</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>URLDecode</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function URLDecode(s as String) As String</SourceLine>
+   <SourceLine>Dim TempAns As String</SourceLine>
+   <SourceLine>Dim CurChr As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>CurChr = 1</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Do Until CurChr - 1 = Len(s)</SourceLine>
+   <SourceLine>Select Case Mid(s, CurChr, 1)</SourceLine>
+   <SourceLine>Case "+"</SourceLine>
+   <SourceLine>TempAns = TempAns + " "</SourceLine>
+   <SourceLine>Case "%"</SourceLine>
+   <SourceLine>TempAns = TempAns + Chr(Val("&amp;h" + Mid(s, CurChr + 1, 2)))</SourceLine>
+   <SourceLine>CurChr = CurChr + 2</SourceLine>
+   <SourceLine>Case Else</SourceLine>
+   <SourceLine>TempAns = TempAns + Mid(s, CurChr, 1)</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>CurChr = CurChr + 1</SourceLine>
+   <SourceLine>Loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return  TempAns</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s as String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>URLEncode</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function URLEncode(s as String) As String</SourceLine>
+   <SourceLine>Dim TempAns As String</SourceLine>
+   <SourceLine>Dim CurChr As Integer</SourceLine>
+   <SourceLine>CurChr = 1</SourceLine>
+   <SourceLine>Do Until CurChr - 1 = Len(s)</SourceLine>
+   <SourceLine>Select Case Asc(Mid(s, CurChr, 1))</SourceLine>
+   <SourceLine>Case 48 To 57, 65 To 90, 97 To 122</SourceLine>
+   <SourceLine>TempAns = TempAns + Mid(s, CurChr, 1)</SourceLine>
+   <SourceLine>Case 32</SourceLine>
+   <SourceLine>TempAns = TempAns + "%" + Hex(32)</SourceLine>
+   <SourceLine>Case Else</SourceLine>
+   <SourceLine>TempAns = TempAns +"%" + Right("0" + Hex(Asc(Mid(s, CurChr, 1))), 2)</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>CurChr = CurChr + 1</SourceLine>
+   <SourceLine>Loop</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return TempAns</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s as String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>TrimNull</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function TrimNull(s As String) As String</SourceLine>
+   <SourceLine>Return Trim(s, Chr(0))</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>s As String</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>BaseConvert</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function BaseConvert(num As String, FromBase As UInt8, ToBase As UInt8) As String</SourceLine>
+   <SourceLine>Dim CharSet As String = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/"</SourceLine>
+   <SourceLine>Dim Output As String = ""</SourceLine>
+   <SourceLine>Dim intNum As Integer</SourceLine>
+   <SourceLine>Dim intChar As Integer</SourceLine>
+   <SourceLine>Dim i, strlen As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If FromBase &gt; 64 or FromBase &lt; 2 Then Return ""</SourceLine>
+   <SourceLine>If ToBase &gt; 64 or ToBase &lt; 2 Then Return ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if FromBase &lt;&gt; 10 Then</SourceLine>
+   <SourceLine>strlen = len(num)</SourceLine>
+   <SourceLine>i = strlen - 1</SourceLine>
+   <SourceLine>while i &gt;= 0</SourceLine>
+   <SourceLine>'astr = num.Mid(strlen-i, 1)</SourceLine>
+   <SourceLine>'aa = val(astr)</SourceLine>
+   <SourceLine>'ab = (FromBase^i)</SourceLine>
+   <SourceLine>'ac = aa*ab</SourceLine>
+   <SourceLine>'intNum = intNum +ac</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>intNum = intNum +(val(num.Mid(strlen-i, 1))*(FromBase^i))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = i - 1</SourceLine>
+   <SourceLine>wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>intNum = val(num)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if ToBase &lt;&gt; 10 Then</SourceLine>
+   <SourceLine>i = 0</SourceLine>
+   <SourceLine>While intNum &gt; 0</SourceLine>
+   <SourceLine>'a = base^ (i+1)</SourceLine>
+   <SourceLine>'b =num MOD a</SourceLine>
+   <SourceLine>'c = b/base^ (i)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>intChar = (intNum Mod (ToBase ^(i+1)))/ToBase ^i</SourceLine>
+   <SourceLine>Output = CharSet.Mid(intChar+1,1)+Output</SourceLine>
+   <SourceLine>intNum = intNum - (intChar*(ToBase ^i))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>i = i + 1</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Output = str(intNum)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return Output</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>1</ItemFlags>
+  <Shared>0</Shared>
+  <ItemParams>num As String, FromBase As UInt8, ToBase As UInt8</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Note>
+  <ItemName>Contributors</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Contributors</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Many people have contributed to the development of this module, including:</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Frank Bitterlich, bitterlich@gsco.de</NoteLine>
+   <NoteLine>Ben Blake, benb@kagi.com</NoteLine>
+   <NoteLine>Cortis Clark, cortis@realsoftware.com</NoteLine>
+   <NoteLine>Carlos Martinho, rblists@rbtips.com</NoteLine>
+   <NoteLine>Jon Johnson, jonj@realsoftware.com</NoteLine>
+   <NoteLine>Joe Strout, joe@strout.net (*)</NoteLine>
+   <NoteLine>Florent Pillet, florent@florentpillet.com</NoteLine>
+   <NoteLine>Kem Tekinay, ktekinay@mactechnologies.com</NoteLine>
+   <NoteLine>Charles Yeomans, yeomans@desuetude.com</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>(*) To whom correspondence should be addressed.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>1</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Home Page</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Home Page</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>This StringUtils module is maintained by Verified Express, LLC.</NoteLine>
+   <NoteLine>The current administrative contact for it is Joe Strout (joe@strout.net).</NoteLine>
+   <NoteLine>You should be able to find the latest version via this URL:</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>    http://www.verex.com/opensource/</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>1</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Version History</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Version History</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2004-JUL-17: version 1.0</NoteLine>
+   <NoteLine>- First public release.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2004-JUL-22: version 1.1</NoteLine>
+   <NoteLine>- Fixed some (harmless) warnings in CountRegEx and Repeat.</NoteLine>
+   <NoteLine>- Added ControlCharacters.</NoteLine>
+   <NoteLine>- Added DecimalSeparator.</NoteLine>
+   <NoteLine>- Added ThousandsSeparator.</NoteLine>
+   <NoteLine>- Added SplitByLength and SplitByLengthB.</NoteLine>
+   <NoteLine>- Added Sprintf.</NoteLine>
+   <NoteLine>- Added Trim, LTrim, and RTrim (with charsToTrim parameter).</NoteLine>
+   <NoteLine>- Improved the speed of CountFieldsQuoted substantially.</NoteLine>
+   <NoteLine>- Improved the speed of NthFieldQuoted and Squeeze slightly.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2004-SEP-23: version 1.2</NoteLine>
+   <NoteLine>- Fixed a bug in the TestSplitToVal unit test.</NoteLine>
+   <NoteLine>- Fixed a bug in EditDistance causing incorrect results in some cases.</NoteLine>
+   <NoteLine>- Improved the speed of EditDistance substantially.</NoteLine>
+   <NoteLine>- Changed EditDistance to be case-sensitive.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2005-AUG-05: version 1.3</NoteLine>
+   <NoteLine>- Improved speed of InStrReverseB.</NoteLine>
+   <NoteLine>- Fixed a bug in Sprintf that caused incorrect results when non-ASCII</NoteLine>
+   <NoteLine>  characters were used in the format string.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2006-MAR-13: version 1.4</NoteLine>
+   <NoteLine>- Improved speed of HexB slightly.</NoteLine>
+   <NoteLine>- Added MatchCase function.</NoteLine>
+   <NoteLine>- Fixed a bug in NthFieldQuoted which would cause it to fail when </NoteLine>
+   <NoteLine>   the separator occurred as the first character of the string.</NoteLine>
+   <NoteLine>- Added Random function.</NoteLine>
+   <NoteLine>- Made all functions available to console apps except Sprintf.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2006-APR-10: version 1.5</NoteLine>
+   <NoteLine>- Improved speed of HexB substantially.</NoteLine>
+   <NoteLine>- Adjusted Random so that it should work in 5.5 and earlier (untested).</NoteLine>
+   <NoteLine>- Added SplitQuoted and JoinQuoted functions.</NoteLine>
+   <NoteLine>- Added EncodeCase and DecodeCase functions.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2006-JUN-29: version 1.6</NoteLine>
+   <NoteLine>- Fixed buggy handling of "%%" in Sprintf, and made it so that unspecified</NoteLine>
+   <NoteLine>   values are output as if you had specified 0; also changed %c to output</NoteLine>
+   <NoteLine>   a Unicode character for the given code point.</NoteLine>
+   <NoteLine>- Improved speed of Reverse and ReverseB (thanks to Charles Yeomans).</NoteLine>
+   <NoteLine>   Note that I'm not sure whether the new code works in 5.5; somebody who</NoteLine>
+   <NoteLine>   has 5.5 is going to have to start helping with that (if anyone cares).</NoteLine>
+   <NoteLine>- Added new LineEnding function, that returns the first line ending (of</NoteLine>
+   <NoteLine>   any standard sort) that is found in the string.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2006-AUG-08: version 1.7</NoteLine>
+   <NoteLine>- Added InStrQuoted function.</NoteLine>
+   <NoteLine>- Rewrote SplitQuoted in terms of InStrQuoted.  This fixed several bugs</NoteLine>
+   <NoteLine>   in the previous implementation, including an infinite loop and an</NoteLine>
+   <NoteLine>   OutOfBoundsException that could occur on certain inputs.</NoteLine>
+   <NoteLine>- Rewrote NthFieldQuoted in terms of InStrQuoted, just to make the code</NoteLine>
+   <NoteLine>   simpler and more consistent.  This should cause no changes in behavior.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2006-SEP-06: version 1.8</NoteLine>
+   <NoteLine>- Fixed a bug in EndsWithB that would cause it to fail on multi-byte characters.</NoteLine>
+   <NoteLine>- Added versions of Chop and ChopB that specify a string to chop off, rather</NoteLine>
+   <NoteLine>   than a number of characters.</NoteLine>
+   <NoteLine>- Dramatically improved the speed of Squeeze.  NOTE: Also changed the</NoteLine>
+   <NoteLine>   behavior slightly.  Squeeze now uses standard, non-binary text matching.</NoteLine>
+   <NoteLine>- A new function, SqueezeB, is now provided for binary squeezing.  Both</NoteLine>
+   <NoteLine>   versions are substantially faster than the old one, which always did binary,</NoteLine>
+   <NoteLine>   but existing code may want to switch to SqueezeB.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>2007-MAR-15: version 1.9</NoteLine>
+   <NoteLine>- Made Chop and ChopB work in RB2006R4 as they did in previous versions,</NoteLine>
+   <NoteLine>  returning an empty string when told to chop more than the total number</NoteLine>
+   <NoteLine>  of chars or bytes.  (Previous code relied on an undefined behavior of Left</NoteLine>
+   <NoteLine>  and LeftB.)</NoteLine>
+   <NoteLine>- Added the WrapLines function.</NoteLine>
+   <NoteLine>- Improved speed of the Repeat function, especially on large repeat counts.</NoteLine>
+   <NoteLine>- Added the GuessEncoding functions.</NoteLine>
+   <NoteLine>- Added the SwapBytePairs and SwapByteQuads functions.</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>1</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>License</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>License</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>This StringUtils module is in the public domain.  You may use it for any purpose</NoteLine>
+   <NoteLine>whatsoever, but it comes with no express or implied warranty of correctness or</NoteLine>
+   <NoteLine>fitness for any purpose.</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Share and enjoy!</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>1</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Most Wanted</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Most Wanted</NoteLine>
+   <NoteLine>Features we'd really like to have, but haven't yet found the time to implement:</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>...none at the moment!</NoteLine>
+   <NoteLine></NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Property>
+  <ItemName>mThousandsSeparator</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mThousandsSeparator As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mThousandsSeparator As String</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mDecimalSeparator</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mDecimalSeparator As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mDecimalSeparator As String</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <Property>
+  <ItemName>mControlChars</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>mControlChars As String</SourceLine>
+   <SourceLine></SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemDeclaration>mControlChars As String</ItemDeclaration>
+  <ItemFlags>33</ItemFlags>
+  <Shared>0</Shared>
+ </Property>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <InheritsFrom>Object</InheritsFrom>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>ModifierKey</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>ModifierKey</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>Cmd</ItemDef>
+  <ItemFlags>0</ItemFlags>
+  <ConstantInstance>
+   <ItemPlatform>2</ItemPlatform>
+   <ItemLanguage>0</ItemLanguage>
+   <ItemDef>Ctrl</ItemDef>
+  </ConstantInstance>
+  <ConstantInstance>
+   <ItemPlatform>5</ItemPlatform>
+   <ItemLanguage>0</ItemLanguage>
+   <ItemDef>Ctrl</ItemDef>
+  </ConstantInstance>
+ </Constant>
+</block>
+</RBProject>
