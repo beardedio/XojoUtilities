@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2013r2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
  <ObjContainerID>1865486656</ObjContainerID>
@@ -45,7 +45,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends bs As BinaryStream</ItemParams>
   <ItemResult>Int64</ItemResult>
  </Method>
@@ -62,7 +62,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends bs As BinaryStream, Encoding as TextEncoding</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -99,7 +99,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>c As color, Alpha As Boolean = False</ItemParams>
   <ItemResult>string</ItemResult>
  </Method>
@@ -149,7 +149,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>d As date, Pad As Boolean = False</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -190,7 +190,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p as picture</ItemParams>
   <ItemResult>string</ItemResult>
  </Method>
@@ -224,7 +224,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>path As String, type As Integer = 0</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -256,7 +256,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s as string</ItemParams>
   <ItemResult>color</ItemResult>
  </Method>
@@ -296,7 +296,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>data as string</ItemParams>
   <ItemResult>picture</ItemResult>
  </Method>
@@ -325,7 +325,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>i As Integer</ItemParams>
   <ItemResult>color</ItemResult>
  </Method>
@@ -381,7 +381,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>MultiLine As Boolean = False</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -403,7 +403,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -422,7 +422,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -448,7 +448,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>MultiLine As Boolean = False</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -486,7 +486,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -562,7 +562,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Type As Integer, s As String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -610,7 +610,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -656,7 +656,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>v As Integer = 4</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -677,7 +677,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>b As Boolean</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -704,7 +704,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends xml as XMLDocument</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -746,7 +746,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -818,7 +818,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends Win As Window, Set As Boolean</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -837,7 +837,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Type As Integer, err As RuntimeException, s As String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -898,7 +898,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends f as FolderItem</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -941,7 +941,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>f as FolderItem</ItemParams>
   <ItemResult>MemoryBlock</ItemResult>
  </Method>
@@ -967,7 +967,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>Int64</ItemResult>
  </Method>
@@ -994,7 +994,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>num As Int64</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -1021,7 +1021,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends db As Database, sql As String</ItemParams>
   <ItemResult>RecordSet</ItemResult>
  </Method>
@@ -1043,7 +1043,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends db As Database, sql As String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -1066,7 +1066,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends db As Database, sql As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -1102,7 +1102,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends lb As Listbox, row As Integer, column As Integer, choices() As String, celltags() As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -1129,7 +1129,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>FontName As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -1145,7 +1145,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>DataFolder As FolderItem</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <Property>
   <ItemName>DebugLogFile</ItemName>
@@ -1159,7 +1159,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>DebugLogFile As BinaryStream</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <Property>
   <ItemName>DebugLogPrefix</ItemName>
@@ -1173,7 +1173,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>DebugLogPrefix As String</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <Property>
   <ItemName>LastLogString</ItemName>
@@ -1187,7 +1187,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>LastLogString As String</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <Property>
   <ItemName>LastLogCount</ItemName>
@@ -1201,7 +1201,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>LastLogCount As UInt64 = 0</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <Property>
   <ItemName>RepeatedSpaces</ItemName>
@@ -1215,7 +1215,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>RepeatedSpaces As Integer = 0</ItemDeclaration>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
   <ViewProperty>
@@ -1223,6 +1223,7 @@
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -1230,18 +1231,21 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Super</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -1249,6 +1253,7 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>

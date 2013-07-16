@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2013r2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1567812713">
  <ObjName>UtilsGraphic</ObjName>
  <ObjContainerID>1865486656</ObjContainerID>
@@ -32,7 +32,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>x As Integer = 128</ItemParams>
   <ItemResult>Color</ItemResult>
  </Method>
@@ -60,7 +60,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends c As Color, tolerance As Double = 0.0</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -122,7 +122,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, tolerance As Double = 0.0</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -151,7 +151,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends c As Color</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -222,7 +222,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends p As Picture, force32Bit As Boolean = False</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -267,7 +267,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, opacity As Double</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -311,7 +311,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, opacity As Double</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -348,7 +348,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>top As Color, base As Color, opacity As Double</ItemParams>
   <ItemResult>Color</ItemResult>
  </Method>
@@ -394,7 +394,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>top As Color, base As Color, opacity As Double = 1.0</ItemParams>
   <ItemResult>Color</ItemResult>
  </Method>
@@ -440,7 +440,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>top As Color, base As Color, opacity As Double = 1.0</ItemParams>
   <ItemResult>Color</ItemResult>
  </Method>
@@ -493,7 +493,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>front As Color, back As Color, elements As Integer</ItemParams>
   <ItemResult>Color()</ItemResult>
  </Method>
@@ -521,7 +521,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends c As Color</ItemParams>
   <ItemResult>Color</ItemResult>
  </Method>
@@ -559,7 +559,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Y As Integer, U As Integer, V As Integer</ItemParams>
   <ItemResult>Color</ItemResult>
  </Method>
@@ -583,7 +583,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends c As Color</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -606,7 +606,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends c As Color</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -630,7 +630,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends c As Color</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -699,7 +699,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -740,7 +740,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -758,7 +758,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends p As Picture</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -799,7 +799,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -828,7 +828,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends c As Color</ItemParams>
   <ItemResult>Color</ItemResult>
  </Method>
@@ -882,7 +882,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, w As Integer, h As Integer</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -943,7 +943,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, w As Integer, h As Integer</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1008,7 +1008,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1073,7 +1073,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1223,7 +1223,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1251,7 +1251,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -1298,7 +1298,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, amount As Double, grayNoise As Boolean = False</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1348,7 +1348,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>opacity As Double, isGrayNoise As Boolean = False</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1390,7 +1390,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, w As Integer, h As Integer</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1462,7 +1462,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, value As Double</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1608,7 +1608,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, counterClockwise As Boolean = False</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1657,7 +1657,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -1824,7 +1824,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>p As Picture, accurate As Boolean = True</ItemParams>
   <ItemResult>Double()</ItemResult>
  </Method>
@@ -1947,7 +1947,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends g As Graphics, Dir As Integer, x As Integer, y As Integer, Width As Integer, Height As Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -1977,7 +1977,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer, Height As Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -2048,7 +2048,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends g as graphics, ColorStart As Color, ColorEnd As Color, FadeDir As integer = 0, x As Integer = - 1, y As Integer = - 1, Width As integer = - 1, Height As Integer = - 1</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -2141,7 +2141,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends g As Graphics, p As Picture, mode As Integer, x As Integer, y As Integer, w As Integer, h As Integer, Vert As Integer = 1, Horz As Integer = 1</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -2380,7 +2380,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer = - 1, Height As Integer = - 1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -2415,7 +2415,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends g As Graphics, text As String, Width As Integer, Height As Integer</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -2452,7 +2452,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends g as graphics, x As Integer, y As Integer, Width As Integer, Height As Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -2476,7 +2476,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>input As Picture</ItemParams>
   <ItemResult>Picture</ItemResult>
  </Method>
@@ -2485,6 +2485,7 @@
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -2492,12 +2493,14 @@
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Super</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -2505,6 +2508,7 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -2512,6 +2516,7 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
  </ViewBehavior>

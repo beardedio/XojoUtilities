@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2013r2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="2104973703">
  <ObjName>UtilsArray</ObjName>
  <ObjContainerID>1865486656</ObjContainerID>
@@ -26,7 +26,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -49,7 +49,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double</ItemParams>
   <ItemResult>Double</ItemResult>
  </Method>
@@ -77,7 +77,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -105,7 +105,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double</ItemParams>
   <ItemResult>Double</ItemResult>
  </Method>
@@ -133,7 +133,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -161,7 +161,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double</ItemParams>
   <ItemResult>Double</ItemResult>
  </Method>
@@ -184,7 +184,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer</ItemParams>
   <ItemResult>Double</ItemResult>
  </Method>
@@ -207,7 +207,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double</ItemParams>
   <ItemResult>Double</ItemResult>
  </Method>
@@ -237,7 +237,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer, arr2() As Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -266,7 +266,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer</ItemParams>
   <ItemResult>Integer()</ItemResult>
  </Method>
@@ -297,7 +297,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr1() As Integer, arr2() As Integer</ItemParams>
   <ItemResult>Integer()</ItemResult>
  </Method>
@@ -326,7 +326,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double</ItemParams>
   <ItemResult>Double()</ItemResult>
  </Method>
@@ -355,7 +355,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As String</ItemParams>
   <ItemResult>String()</ItemResult>
  </Method>
@@ -389,7 +389,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As String, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
   <ItemResult>String()</ItemResult>
  </Method>
@@ -423,7 +423,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
   <ItemResult>Double()</ItemResult>
  </Method>
@@ -457,7 +457,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
   <ItemResult>Integer()</ItemResult>
  </Method>
@@ -510,7 +510,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer, fromIndex As Integer, toIndex As Integer, arrayToInsert() As Integer, srcFrom As Integer = 0, srcTo As Integer = 0</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -557,7 +557,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -604,7 +604,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As String, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -651,7 +651,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double, fromIndex As Integer = 0, toIndex As Integer = 0</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -704,7 +704,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As String, fromIndex As Integer, toIndex As Integer, arrayToInsert() As String, srcFrom As Integer = 0, srcTo As Integer = 0</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -757,7 +757,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double, fromIndex As Integer, toIndex As Integer, arrayToInsert() As Double, srcFrom As Integer = 0, srcTo As Integer = 0</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -787,7 +787,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As String, arr2() As String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -817,7 +817,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double, arr2() As Double</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -848,7 +848,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr1() As Double, arr2() As Double</ItemParams>
   <ItemResult>Double()</ItemResult>
  </Method>
@@ -879,7 +879,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr1() As String, arr2() As String</ItemParams>
   <ItemResult>String()</ItemResult>
  </Method>
@@ -909,7 +909,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -939,7 +939,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Double</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -969,7 +969,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>Extends arr() As Integer</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -1047,6 +1047,7 @@
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -1054,12 +1055,14 @@
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Super</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -1067,6 +1070,7 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -1074,6 +1078,7 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
  </ViewBehavior>

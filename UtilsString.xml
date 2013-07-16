@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<RBProject version="2012r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2013r2" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="-1122482829">
  <ObjName>UtilsString</ObjName>
  <ObjContainerID>1865486656</ObjContainerID>
@@ -47,7 +47,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s as String, repeatCount as Integer</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -129,7 +129,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s1 As String, s2 As String</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -195,7 +195,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, stripPrefix As Boolean = true</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -218,7 +218,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -252,7 +252,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, substr As String</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -286,7 +286,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, substr As String</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -321,7 +321,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s as String, width as Integer, padding as String = " "</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -348,7 +348,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s as String, width as Integer, padding as String = " "</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -375,7 +375,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s as String, width as Integer, padding as String = " "</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -419,7 +419,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>src as string, sep as string</ItemParams>
   <ItemResult>integer</ItemResult>
  </Method>
@@ -514,7 +514,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>src as string, sep as string, index as integer</ItemParams>
   <ItemResult>string</ItemResult>
  </Method>
@@ -537,7 +537,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends s As String, what As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -569,7 +569,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, pattern As String</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -590,7 +590,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends s As String, withWhat As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -613,7 +613,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends s As String, what As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -634,7 +634,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends s As String, withWhat As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -654,7 +654,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends s As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -687,7 +687,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>startPos As Integer=-1, source As String, substr As String</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -722,7 +722,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>startPosB As Integer=-1, source As String, substr As String</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -754,7 +754,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, delimiter As String=" "</ItemParams>
   <ItemResult>Integer()</ItemResult>
  </Method>
@@ -788,7 +788,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, delimiter As String=" "</ItemParams>
   <ItemResult>Double()</ItemResult>
  </Method>
@@ -821,7 +821,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, delimiter As String=" "</ItemParams>
   <ItemResult>Double()</ItemResult>
  </Method>
@@ -860,7 +860,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, delimPattern As String</ItemParams>
   <ItemResult>String()</ItemResult>
  </Method>
@@ -883,7 +883,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -905,7 +905,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, charsToCut As Integer</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -926,7 +926,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, bytesToCut As Integer</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -966,7 +966,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, charSet As String=" "</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -1007,7 +1007,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, charSet As String=" "</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -1027,7 +1027,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, start As Integer, length As Integer, newText As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -1048,7 +1048,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, startB As Integer, lengthB As Integer, newText As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -1810,7 +1810,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, ByRef outPrimary As String, ByRef outAlternate As String</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -1830,7 +1830,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, atPos As Integer</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -1857,7 +1857,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, start As Integer, length As Integer,  paramArray args As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -1903,7 +1903,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -1924,7 +1924,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends s As String, withWhat As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -1945,7 +1945,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>extends s As String, withWhat As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
@@ -2092,7 +2092,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>src as string, ParamArray data as Variant</ItemParams>
   <ItemResult>string</ItemResult>
  </Method>
@@ -2116,7 +2116,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2140,7 +2140,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2178,7 +2178,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, fieldWidth As Integer</ItemParams>
   <ItemResult>String()</ItemResult>
  </Method>
@@ -2213,7 +2213,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, charsToTrim As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2251,7 +2251,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, fieldWidth As Integer</ItemParams>
   <ItemResult>String()</ItemResult>
  </Method>
@@ -2278,7 +2278,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams></ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2307,7 +2307,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, charsToTrim As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2335,7 +2335,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, charsToTrim As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2389,7 +2389,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2440,7 +2440,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>textToChange As String, sampleText As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2487,7 +2487,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>length As Integer = 8, charset As String = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ"</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2547,7 +2547,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>source As String, delimiter As String, removeQuotes as Boolean</ItemParams>
   <ItemResult>String()</ItemResult>
  </Method>
@@ -2586,7 +2586,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>fields() as String, delimiter as String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2658,7 +2658,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2687,7 +2687,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2720,7 +2720,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2761,7 +2761,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2798,7 +2798,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>start As Integer = 1, source As String, find As String</ItemParams>
   <ItemResult>Integer</ItemResult>
  </Method>
@@ -2823,7 +2823,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, stringToCut As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2848,7 +2848,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, stringToCut As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2888,7 +2888,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, charSet As String=" "</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -2949,7 +2949,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>lines() As String, charsPerLine As Integer = 72, paragraphFill As Boolean = true</ItemParams>
   <ItemResult></ItemResult>
  </Method>
@@ -2974,7 +2974,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>TextEncoding</ItemResult>
  </Method>
@@ -3138,7 +3138,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String, ByRef outWrongOrder As Boolean</ItemParams>
   <ItemResult>TextEncoding</ItemResult>
  </Method>
@@ -3168,7 +3168,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -3198,7 +3198,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -3234,7 +3234,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s as String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -3267,7 +3267,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s as String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -3284,7 +3284,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>s As String</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -3349,7 +3349,7 @@
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
   <ItemParams>num As String, FromBase As UInt8, ToBase As UInt8</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
@@ -3529,7 +3529,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>mThousandsSeparator As String</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <Property>
   <ItemName>mDecimalSeparator</ItemName>
@@ -3543,7 +3543,7 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>mDecimalSeparator As String</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <Property>
   <ItemName>mControlChars</ItemName>
@@ -3557,13 +3557,14 @@
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>mControlChars As String</ItemDeclaration>
   <ItemFlags>33</ItemFlags>
-  <Shared>0</Shared>
+  <IsShared>0</IsShared>
  </Property>
  <ViewBehavior>
   <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -3571,12 +3572,14 @@
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Super</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -3584,6 +3587,7 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
@@ -3591,6 +3595,7 @@
    <Visible>1</Visible>
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
    <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
  </ViewBehavior>
