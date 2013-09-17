@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
-<RBProject version="2013r2" FormatVersion="2" MinIDEVersion="20070100">
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2013r3" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
- <ObjContainerID>1865486656</ObjContainerID>
+ <ObjContainerID>1414474552</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -1133,6 +1133,51 @@
   <ItemParams>FontName As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
+ <Method>
+  <ItemName>BringToFront</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub BringToFront(Extends Win As Window)</SourceLine>
+   <SourceLine>If Not Win.visible Then</SourceLine>
+   <SourceLine>Win.visible = True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#If TargetMacOS</SourceLine>
+   <SourceLine>Dim psn As UInt64</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function GetCurrentProcess Lib "Carbon" (ByRef psn As UInt64) As Integer</SourceLine>
+   <SourceLine>Declare Function SetFrontProcess Lib "Carbon" (ByRef psn As UInt64) As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Call GetCurrentProcess (psn)</SourceLine>
+   <SourceLine>Call SetFrontProcess (psn)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#ElseIf TargetWin32</SourceLine>
+   <SourceLine>Dim i, h As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Declare Function ShowWindow Lib "User32" (hWnd As Integer, nCmdShow As Integer) As Integer</SourceLine>
+   <SourceLine>Declare Function BringWindowToTop Lib "User32" (hWnd As Integer) As Integer</SourceLine>
+   <SourceLine>Declare Function SetForegroundWindow Lib "User32" (hWnd As Integer) As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' Get the Window Handle</SourceLine>
+   <SourceLine>h = Win.WinHWND</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' Activate the Window</SourceLine>
+   <SourceLine>i = ShowWindow(h, 1)</SourceLine>
+   <SourceLine>i = BringWindowToTop(h)</SourceLine>
+   <SourceLine>i = SetForegroundWindow(h)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends Win As Window</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Property>
   <ItemName>DataFolder</ItemName>
   <Compatibility></Compatibility>
@@ -1224,7 +1269,6 @@
    <PropertyGroup>ID</PropertyGroup>
    <PropertyValue>-2147483648</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Left</ObjName>
@@ -1232,21 +1276,18 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Name</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <ItemType>String</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Super</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <ItemType>String</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Top</ObjName>
@@ -1254,7 +1295,6 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>RepeatedSpaces</ObjName>
