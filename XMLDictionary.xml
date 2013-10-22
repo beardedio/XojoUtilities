@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2013r3" FormatVersion="2" MinIDEVersion="20070100">
+<block type="Module" ID="706158124">
+ <ObjName>XMLDictionary</ObjName>
+ <ObjContainerID>253927301</ObjContainerID>
+ <IsClass>0</IsClass>
+ <ItemFlags>1</ItemFlags>
+ <IsInterface>0</IsInterface>
+ <Compatibility></Compatibility>
+ <Method>
+  <ItemName>ClearStorage</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ClearStorage(storage As Variant)</SourceLine>
+   <SourceLine>If storage.Type = 9 Then</SourceLine>
+   <SourceLine>If storage.ObjectValue IsA Dictionary Then</SourceLine>
+   <SourceLine>Dictionary(storage).Clear</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>ElseIf storage.IsArray Then</SourceLine>
+   <SourceLine>dim a() as Variant = storage</SourceLine>
+   <SourceLine>redim a(-1)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>storage As Variant</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ExportXML</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ExportXML(Extends xmldict As Dictionary, plist As Boolean = False, indented as Boolean = true) As XmlDocument</SourceLine>
+   <SourceLine>Dim xdoc As XmlDocument</SourceLine>
+   <SourceLine>Dim root, dict As XmlElement</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xdoc = New XmlDocument</SourceLine>
+   <SourceLine>If plist Then</SourceLine>
+   <SourceLine>// Plist-compatible output</SourceLine>
+   <SourceLine>root = XmlElement(xdoc.AppendChild(xdoc.CreateElement("plist")))</SourceLine>
+   <SourceLine>root.SetAttribute("version", PlistVersion)</SourceLine>
+   <SourceLine>if xmldict.Count = 1 and xmldict.HasKey( "cfarray" ) then // It has array at its root</SourceLine>
+   <SourceLine>dict = root // The root is an array so we don't create a sub-element</SourceLine>
+   <SourceLine>else // The root is a dict</SourceLine>
+   <SourceLine>dict = XmlElement(root.AppendChild(xdoc.CreateElement("dict")))</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>ParseStorage xmldict, dict, True, indented</SourceLine>
+   <SourceLine>IndentNode root, 0, True</SourceLine>
+   <SourceLine>IndentNode dict, 0, True</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>root = XmlElement(xdoc.AppendChild(xdoc.CreateElement("xmldict")))</SourceLine>
+   <SourceLine>root.SetAttribute("version", CurrentVersion)</SourceLine>
+   <SourceLine>ParseStorage xmldict, root, False, indented</SourceLine>
+   <SourceLine>IndentNode root, 0, True</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>xdoc.AppendChild(xdoc.CreateTextNode(EndOfLine))</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return xdoc</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends xmldict As Dictionary, plist As Boolean = False, indented as Boolean = true</ItemParams>
+  <ItemResult>XmlDocument</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ExportXMLString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ExportXMLString(Extends xmldict As Dictionary, plist As Boolean = False, indented as Boolean = true) As String</SourceLine>
+   <SourceLine>// Since we can't add a DOCTYPE to the XmlDocument,</SourceLine>
+   <SourceLine>// lets hack this output to add it</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim s, DTD As String</SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
+   <SourceLine>s = xmldict.ExportXML(plist, indented).ToString</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Let's add the DTD</SourceLine>
+   <SourceLine>i = s.InStr(EndOfLine)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If plist Then</SourceLine>
+   <SourceLine>DTD = PlistDTD</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>DTD = XMLDictDTD</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>s = s.Mid(1, i + Len(EndOfLine) - 1) + DTD + EndOfLine + s.Mid(i + Len(EndOfLine))</SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends xmldict As Dictionary, plist As Boolean = False, indented as Boolean = true</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>IndentNode</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub IndentNode(node As XmlNode, level As Integer, indentCloseTag As Boolean = False)</SourceLine>
+   <SourceLine>if level &gt;= 0 then</SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
+   <SourceLine>Dim s As String</SourceLine>
+   <SourceLine>s = EndOfLine</SourceLine>
+   <SourceLine>For i = 1 To level</SourceLine>
+   <SourceLine>s = s + Chr(9) // Tab</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>node.Parent.Insert(node.OwnerDocument.CreateTextNode(s), node)</SourceLine>
+   <SourceLine>If indentCloseTag Then</SourceLine>
+   <SourceLine>node.AppendChild(node.OwnerDocument.CreateTextNode(s))</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>node As XmlNode, level As Integer, indentCloseTag As Boolean = False</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LoadXML</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LoadXML(Extends xmldict As Dictionary, XMLFile As FolderItem) As Boolean</SourceLine>
+   <SourceLine>Dim tos As TextInputStream</SourceLine>
+   <SourceLine>Dim s As String</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'tos = XMLFile.OpenAsTextFile()</SourceLine>
+   <SourceLine>tos = TextInputStream.Open( XMLFile )</SourceLine>
+   <SourceLine>If tos &lt;&gt; nil Then</SourceLine>
+   <SourceLine>s = tos.ReadAll</SourceLine>
+   <SourceLine>tos.Close</SourceLine>
+   <SourceLine>Return xmldict.LoadXML(s)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends xmldict As Dictionary, XMLFile As FolderItem</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LoadXML</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LoadXML(Extends xmldict As Dictionary, XMLData As String) As Boolean</SourceLine>
+   <SourceLine>Dim xdoc As XmlDocument</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xdoc = New XmlDocument()</SourceLine>
+   <SourceLine>xdoc.PreserveWhitespace = True</SourceLine>
+   <SourceLine>xdoc.LoadXml(XMLData)</SourceLine>
+   <SourceLine>Return xmldict.LoadXML(xdoc)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Exception err As XmlException</SourceLine>
+   <SourceLine>// Ugh, invalid XML</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends xmldict As Dictionary, XMLData As String</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>LoadXML</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function LoadXML(Extends xmldict As Dictionary, XMLDoc As XmlDocument) As Boolean</SourceLine>
+   <SourceLine>Dim node As XmlNode</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>XMLDoc.PreserveWhitespace = True</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Check to see if it's our xmldict or if it's a plist</SourceLine>
+   <SourceLine>If XMLDoc.DocumentElement.Name = "plist" Then</SourceLine>
+   <SourceLine>// Make sure it's a "dict" as the base type</SourceLine>
+   <SourceLine>node = XMLDoc.DocumentElement.FirstChild</SourceLine>
+   <SourceLine>While node.Type &lt;&gt; XmlNodeType.ELEMENT_NODE And node &lt;&gt; nil</SourceLine>
+   <SourceLine>node = node.NextSibling</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>If node = nil Or ( node.Name &lt;&gt; "dict" and node.Name &lt;&gt; "array" ) Then // Modified by Kem Tekinay: PLists can have any valid type at their root, but array and dict are the most common</SourceLine>
+   <SourceLine>// It's not valid</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>// Now check the version</SourceLine>
+   <SourceLine>If Val(XMLDoc.DocumentElement.GetAttribute("version")) &lt;= Val(PlistVersion) Then</SourceLine>
+   <SourceLine>ParseXML node, xmldict, true</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// First, make sure the version is at most what we expect</SourceLine>
+   <SourceLine>If Val(XMLDoc.DocumentElement.GetAttribute("version")) &lt;= Val(CurrentVersion) Then</SourceLine>
+   <SourceLine>ParseXML XMLDoc.DocumentElement, xmldict, true</SourceLine>
+   <SourceLine>Return True</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// We can't reliably parse a higher version, so lets not parse it at all</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Exception err As XmlException</SourceLine>
+   <SourceLine>// Ugh, invalid XML</SourceLine>
+   <SourceLine>Return False</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends xmldict As Dictionary, XMLDoc As XmlDocument</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>NodeContents</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function NodeContents(parent As XmlNode) As String</SourceLine>
+   <SourceLine>// Concatenates all the node children values and returns the result</SourceLine>
+   <SourceLine>// It's designed for the children to be all text nodes, but for anything</SourceLine>
+   <SourceLine>// else it'll just use .ToString</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim i, n As Integer</SourceLine>
+   <SourceLine>Dim node As XmlNode</SourceLine>
+   <SourceLine>Dim s As String</SourceLine>
+   <SourceLine>n = parent.ChildCount - 1</SourceLine>
+   <SourceLine>For i = 0 To n</SourceLine>
+   <SourceLine>node = parent.Child(i)</SourceLine>
+   <SourceLine>If node.Type = 3 Then // Text node</SourceLine>
+   <SourceLine>s = s + node.Value</SourceLine>
+   <SourceLine>Else // Other node - shouldn't happen, but we gotta deal with it if it does</SourceLine>
+   <SourceLine>s = s + node.ToString</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>Return s</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>parent As XmlNode</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseStorage</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseStorage(storage As Variant, parent As XmlNode, plist As Boolean, indented as Boolean)</SourceLine>
+   <SourceLine>dim level as Integer</SourceLine>
+   <SourceLine>if indented then</SourceLine>
+   <SourceLine>level = 1</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>level = -1000</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine>ParseStorage(storage, parent, new Dictionary, level, plist)</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>storage As Variant, parent As XmlNode, plist As Boolean, indented as Boolean</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseStorage</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseStorage(storage As Variant, parent As XmlNode, alreadySeen As Dictionary, indentLevel As Integer, plist As Boolean = False)</SourceLine>
+   <SourceLine>Dim key, value As Variant</SourceLine>
+   <SourceLine>Dim node, tempNode As XmlNode</SourceLine>
+   <SourceLine>Dim xdoc As XmlDocument</SourceLine>
+   <SourceLine>Dim s, data(-1) As String</SourceLine>
+   <SourceLine>Dim multilineTag As Boolean</SourceLine>
+   <SourceLine>Dim i, n As Integer</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// First, make sure we haven't already seen this dictionary</SourceLine>
+   <SourceLine>// This protects against circular dictionary references</SourceLine>
+   <SourceLine>If alreadySeen.HasKey(storage) Then</SourceLine>
+   <SourceLine>// We've seen this! Bail out</SourceLine>
+   <SourceLine>Return</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>// Ok, lets add our storage to the list</SourceLine>
+   <SourceLine>alreadySeen.Value(storage) = true</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>xdoc = parent.OwnerDocument</SourceLine>
+   <SourceLine>n = StorageCount(storage) - 1</SourceLine>
+   <SourceLine>For i = 0 To n</SourceLine>
+   <SourceLine>// Key</SourceLine>
+   <SourceLine>key = StorageKey(storage, i)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Modified by Kem Tekinay.</SourceLine>
+   <SourceLine>// Some plists will have array at the root. If such a plist is parsed by this module,</SourceLine>
+   <SourceLine>// there will only be one element in the dictionary and its key will be "cfarray".</SourceLine>
+   <SourceLine>// In that case, we ignore that first key.</SourceLine>
+   <SourceLine>If key &lt;&gt; nil and ( Dictionary( storage ).Count &lt;&gt; 1 or key &lt;&gt; "cfarray" ) Then // It's a keyed storage</SourceLine>
+   <SourceLine>node = parent.AppendChild(xdoc.CreateElement("key"))</SourceLine>
+   <SourceLine>node.AppendChild(xdoc.CreateTextNode(key.StringValue))</SourceLine>
+   <SourceLine>IndentNode node, indentLevel</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Value</SourceLine>
+   <SourceLine>node = nil</SourceLine>
+   <SourceLine>multilineTag = False</SourceLine>
+   <SourceLine>value = StorageValue(storage, i)</SourceLine>
+   <SourceLine>dim vType as Integer = value.Type</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if value.IsArray then</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("array")</SourceLine>
+   <SourceLine>ParseStorage value, node, alreadySeen, indentLevel+1, plist</SourceLine>
+   <SourceLine>multilineTag = True</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>Select Case vType</SourceLine>
+   <SourceLine>Case 0 // Null</SourceLine>
+   <SourceLine>// If it's a plist, we can't use null, so lets use false</SourceLine>
+   <SourceLine>If plist Then</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("false")</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("null")</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Case 2 // Integer</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("integer")</SourceLine>
+   <SourceLine>node.AppendChild(xdoc.CreateTextNode(Str(value.IntegerValue)))</SourceLine>
+   <SourceLine>case 3 // Long</SourceLine>
+   <SourceLine>node = xdoc.CreateElement( "integer" )</SourceLine>
+   <SourceLine>node.AppendChild( xdoc.CreateTextNode( str( value.Int64Value ) ) )</SourceLine>
+   <SourceLine>Case 5 // Double/Single</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("real")</SourceLine>
+   <SourceLine>node.AppendChild( xdoc.CreateTextNode( value.StringValue ) ) // Modified by Kem Tekinay. Replaced str with format to prevent truncation of the value</SourceLine>
+   <SourceLine>Case 7 // Date</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("date")</SourceLine>
+   <SourceLine>dim s2 as String = value.DateValue.SQLDateTime</SourceLine>
+   <SourceLine>if plist then</SourceLine>
+   <SourceLine>s2 = s2.Replace(" ","T")+"Z"</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine>node.AppendChild(xdoc.CreateTextNode(s2))</SourceLine>
+   <SourceLine>Case 8 // String</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("string")</SourceLine>
+   <SourceLine>s = ConvertEncoding(value.StringValue, Encodings.UTF8) // Convert to UTF8</SourceLine>
+   <SourceLine>If s.Encoding = nil Then s = DefineEncoding(s, Encodings.UTF8) // If encoding was undefined, convert fails. Simply define instead</SourceLine>
+   <SourceLine>node.AppendChild(xdoc.CreateTextNode(s))</SourceLine>
+   <SourceLine>Case 9 // Object</SourceLine>
+   <SourceLine>// Is this a dictionary, memoryblock or folderitem?</SourceLine>
+   <SourceLine>If value.ObjectValue IsA Dictionary Then</SourceLine>
+   <SourceLine>// We can parse this dictionary</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("dict")</SourceLine>
+   <SourceLine>ParseStorage Dictionary(value.ObjectValue), node, alreadySeen, indentLevel+1, plist</SourceLine>
+   <SourceLine>multilineTag = True</SourceLine>
+   <SourceLine>ElseIf value.ObjectValue IsA MemoryBlock Then</SourceLine>
+   <SourceLine>// We can parse this memoryblock</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("data")</SourceLine>
+   <SourceLine>data = Split(EncodeBase64(MemoryBlock(value.ObjectValue), 45), ChrB(13)+ChrB(10)) // 45 is what plists use</SourceLine>
+   <SourceLine>For Each s In data</SourceLine>
+   <SourceLine>tempNode = node.AppendChild(xdoc.CreateTextNode(DefineEncoding(s, Encodings.ASCII)))</SourceLine>
+   <SourceLine>IndentNode tempNode, indentLevel</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>multilineTag = True</SourceLine>
+   <SourceLine>ElseIf value.ObjectValue IsA FolderItem And Not plist Then // We can't output this if it's plist-compatible</SourceLine>
+   <SourceLine>// Do the same thing as a memoryblock, but with a different tag</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("file")</SourceLine>
+   <SourceLine>data = Split(EncodeBase64(FolderItem(value.ObjectValue).GetSaveInfo(Nil), 45), ChrB(13)+ChrB(10))</SourceLine>
+   <SourceLine>For Each s In Data</SourceLine>
+   <SourceLine>tempNode = node.AppendChild(xdoc.CreateTextNode(s))</SourceLine>
+   <SourceLine>IndentNode tempNode, indentLevel</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>multilineTag = True</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>// Arbitrary object?</SourceLine>
+   <SourceLine>break</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Case 11 // Boolean</SourceLine>
+   <SourceLine>If value.BooleanValue = True Then</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("true")</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("false")</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Case 16 // Color</SourceLine>
+   <SourceLine>If plist Then</SourceLine>
+   <SourceLine>// We can't output colors in plists</SourceLine>
+   <SourceLine>// Lets just add a False node</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("false")</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("color")</SourceLine>
+   <SourceLine>node.AppendChild(xdoc.CreateTextNode("#" + Hex(value.IntegerValue)))</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if node = nil then</SourceLine>
+   <SourceLine>// Buh? We should never reach this point, but just in case, lets add a null value</SourceLine>
+   <SourceLine>// However, if it's plist-compatible mode, we have to add a false value, since it doesn't support null</SourceLine>
+   <SourceLine>break</SourceLine>
+   <SourceLine>if plist Then</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("false")</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>node = xdoc.CreateElement("null")</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>parent.AppendChild node // workaround for AppendChild() as XmlNode bug</SourceLine>
+   <SourceLine>IndentNode node, indentLevel, multilineTag</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>storage As Variant, parent As XmlNode, alreadySeen As Dictionary, indentLevel As Integer, plist As Boolean = False</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ParseXML</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub ParseXML(parent As XmlNode, storage As Variant, firstIteration As Boolean = False)</SourceLine>
+   <SourceLine>// Modified by Kem Tekinay.</SourceLine>
+   <SourceLine>// Added firstIteration parameter.</SourceLine>
+   <SourceLine>// Because a plist can have at its root any valid type, the first iteration of this method</SourceLine>
+   <SourceLine>// has to check to see what it is. If it's anything other than "dict", it has create an initial key</SourceLine>
+   <SourceLine>// that is the right type.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Dim node As XmlNode</SourceLine>
+   <SourceLine>Dim key As Variant</SourceLine>
+   <SourceLine>Dim v As Variant</SourceLine>
+   <SourceLine>Dim d As Dictionary</SourceLine>
+   <SourceLine>Dim mb As MemoryBlock</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>//ClearStorage storage</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if firstIteration and parent.Name &lt;&gt; "dict" then</SourceLine>
+   <SourceLine>key = "cf" + parent.Name // Set the initial key since we aren't really starting with a dictionary.</SourceLine>
+   <SourceLine>node = parent</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>node = parent.FirstChild</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>While node &lt;&gt; nil</SourceLine>
+   <SourceLine>// We only want to deal with element nodes</SourceLine>
+   <SourceLine>// The only other type of node that *should* show up is</SourceLine>
+   <SourceLine>// a text node with only whitespace. However, even if</SourceLine>
+   <SourceLine>// other nodes show up, we should ignore them, since</SourceLine>
+   <SourceLine>// we're not a validator</SourceLine>
+   <SourceLine>If node.Type = XmlNodeType.ELEMENT_NODE Then // Element node</SourceLine>
+   <SourceLine>If key = nil And node.Name = "key" Then</SourceLine>
+   <SourceLine>key = NodeContents(node)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Select Case node.Name</SourceLine>
+   <SourceLine>Case "null"</SourceLine>
+   <SourceLine>StoreValue key, nil, storage</SourceLine>
+   <SourceLine>Case "integer"</SourceLine>
+   <SourceLine>StoreValue key, Val(NodeContents(node)) \ 1, storage</SourceLine>
+   <SourceLine>Case "real"</SourceLine>
+   <SourceLine>StoreValue key, Val(NodeContents(node)), storage</SourceLine>
+   <SourceLine>Case "date"</SourceLine>
+   <SourceLine>v = NodeContents(node)</SourceLine>
+   <SourceLine>if Strcomp(v.Right(1), "Z", 0) = 0 then</SourceLine>
+   <SourceLine>// plist format</SourceLine>
+   <SourceLine>v = v.StringValue.Left(v.StringValue.Len-1).Replace("T", " ")</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine>StoreValue key, v.DateValue, storage</SourceLine>
+   <SourceLine>Case "string"</SourceLine>
+   <SourceLine>StoreValue key, NodeContents(node), storage</SourceLine>
+   <SourceLine>Case "dict"</SourceLine>
+   <SourceLine>v = StorageByKey(storage, key)</SourceLine>
+   <SourceLine>If v.Type = 9 And v.ObjectValue IsA Dictionary Then</SourceLine>
+   <SourceLine>d = Dictionary(v.ObjectValue)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>d = New Dictionary</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>ParseXML node, d</SourceLine>
+   <SourceLine>StoreValue key, d, storage</SourceLine>
+   <SourceLine>Case "array"</SourceLine>
+   <SourceLine>dim col() as Variant</SourceLine>
+   <SourceLine>ParseXML node, col</SourceLine>
+   <SourceLine>StoreValue key, col, storage</SourceLine>
+   <SourceLine>Case "data"</SourceLine>
+   <SourceLine>// Lets parse our Base64-encoded data</SourceLine>
+   <SourceLine>mb = DecodeBase64(NodeContents(node))</SourceLine>
+   <SourceLine>StoreValue key, mb, storage</SourceLine>
+   <SourceLine>Case "file"</SourceLine>
+   <SourceLine>// Lets parse our Base64-encoded alias data</SourceLine>
+   <SourceLine>StoreValue key, GetFolderItem(DecodeBase64(NodeContents(node))), storage</SourceLine>
+   <SourceLine>Case "true"</SourceLine>
+   <SourceLine>StoreValue key, True, storage</SourceLine>
+   <SourceLine>Case "false"</SourceLine>
+   <SourceLine>StoreValue key, False, storage</SourceLine>
+   <SourceLine>Case "color"</SourceLine>
+   <SourceLine>v = "&amp;h" + NodeContents(node).Mid(1)</SourceLine>
+   <SourceLine>StoreValue key, v.ColorValue, storage</SourceLine>
+   <SourceLine>End Select</SourceLine>
+   <SourceLine>key = nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>node = node.NextSibling</SourceLine>
+   <SourceLine>Wend</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>parent As XmlNode, storage As Variant, firstIteration As Boolean = False</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SaveXML</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SaveXML(Extends xmldict As Dictionary, XMLFile As FolderItem, plist As Boolean = False, indented as Boolean = true) As Boolean</SourceLine>
+   <SourceLine>dim txt as String = xmldict.ExportXMLString(plist, indented)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>if txt &lt;&gt; "" then</SourceLine>
+   <SourceLine>'dim bs As BinaryStream = XMLFile.CreateBinaryFile("")</SourceLine>
+   <SourceLine>dim bs as BinaryStream = BinaryStream.Create( XMLFile, true )</SourceLine>
+   <SourceLine>if bs &lt;&gt; nil then</SourceLine>
+   <SourceLine>bs.Write txt</SourceLine>
+   <SourceLine>bs.Close</SourceLine>
+   <SourceLine>return true</SourceLine>
+   <SourceLine>end</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends xmldict As Dictionary, XMLFile As FolderItem, plist As Boolean = False, indented as Boolean = true</ItemParams>
+  <ItemResult>Boolean</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StorageByKey</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StorageByKey(storage As Variant, key As Variant) As Variant</SourceLine>
+   <SourceLine>// This is only valid for dictionaries</SourceLine>
+   <SourceLine>// The only purpose is to make Jarvis Badgley's request work, i.e. preserve existing dictionaries</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If storage.Type = 9 Then</SourceLine>
+   <SourceLine>If storage.ObjectValue IsA Dictionary And Dictionary(storage.ObjectValue).HasKey(key) Then</SourceLine>
+   <SourceLine>Return Dictionary(storage.ObjectValue).Value(key)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return nil</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>storage As Variant, key As Variant</ItemParams>
+  <ItemResult>Variant</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StorageCount</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StorageCount(storage As Variant) As Integer</SourceLine>
+   <SourceLine>If storage.Type = 9 Then</SourceLine>
+   <SourceLine>If storage.ObjectValue IsA Dictionary Then</SourceLine>
+   <SourceLine>Return Dictionary(storage.ObjectValue).Count</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>ElseIf storage.IsArray Then</SourceLine>
+   <SourceLine>dim a() as Variant = storage</SourceLine>
+   <SourceLine>return a.Ubound+1</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>storage As Variant</ItemParams>
+  <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StorageKey</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StorageKey(storage As Variant, index As Integer) As Variant</SourceLine>
+   <SourceLine>If storage.Type = 9 And storage.ObjectValue IsA Dictionary Then</SourceLine>
+   <SourceLine>Return Dictionary(storage.ObjectValue).Key(index)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Return nil</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>storage As Variant, index As Integer</ItemParams>
+  <ItemResult>Variant</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StorageValue</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function StorageValue(storage As Variant, index As Integer) As Variant</SourceLine>
+   <SourceLine>If storage.Type = 9 Then</SourceLine>
+   <SourceLine>If storage.ObjectValue IsA Dictionary Then</SourceLine>
+   <SourceLine>dim key as Variant = Dictionary(storage.ObjectValue).Key(index)</SourceLine>
+   <SourceLine>Return Dictionary(storage.ObjectValue).Value(key)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>ElseIf storage.IsArray Then</SourceLine>
+   <SourceLine>dim a() as Variant = storage</SourceLine>
+   <SourceLine>return a(index)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>storage As Variant, index As Integer</ItemParams>
+  <ItemResult>Variant</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>StoreValue</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub StoreValue(key As Variant, value As Variant, storage As Variant)</SourceLine>
+   <SourceLine>If storage.IsArray Then</SourceLine>
+   <SourceLine>dim a() as Variant = storage</SourceLine>
+   <SourceLine>a.Append value</SourceLine>
+   <SourceLine>ElseIf storage.Type = 9 Then</SourceLine>
+   <SourceLine>If storage.ObjectValue IsA Dictionary And key &lt;&gt; nil Then</SourceLine>
+   <SourceLine>Dictionary(storage.ObjectValue).Value(key) = value</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>key As Variant, value As Variant, storage As Variant</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>VariantValueAsString</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function VariantValueAsString(v As Variant) As String</SourceLine>
+   <SourceLine>// Added by Kem Tekinay.</SourceLine>
+   <SourceLine>// Gets the true value of a double/single as a string.</SourceLine>
+   <SourceLine>// Can't use str without truncating and can't use format without truncating or adding junk.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>dim isDouble as boolean</SourceLine>
+   <SourceLine>select case v.Type</SourceLine>
+   <SourceLine>case Variant.TypeDouble</SourceLine>
+   <SourceLine>isDouble = true</SourceLine>
+   <SourceLine>case Variant.TypeSingle</SourceLine>
+   <SourceLine>// isDouble = false</SourceLine>
+   <SourceLine>else // Not a single or double</SourceLine>
+   <SourceLine>if v.Type = Variant.TypeObject then</SourceLine>
+   <SourceLine>return ""</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>return v.StringValue</SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>end select</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return v.StringValue</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// The code below is an exercise in making the value of a double "pretty", i.e., keep it</SourceLine>
+   <SourceLine>// from returning scientific notation. After much experimentation, we found that</SourceLine>
+   <SourceLine>// these attempts can lose precision in some cases so it was safer to use StringValue.</SourceLine>
+   <SourceLine>// In the end, this method isn't being used anywhere, but has been left here</SourceLine>
+   <SourceLine>// for later examination.</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>'const kBunchOfHash = "####################################################################################"</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'dim dv as double = v.DoubleValue</SourceLine>
+   <SourceLine>'dim sv as single = v.SingleValue</SourceLine>
+   <SourceLine>'dim s as string = v.StringValue</SourceLine>
+   <SourceLine>'dim parts() as string = s.SplitB( "e" )</SourceLine>
+   <SourceLine>'if parts.Ubound = 0 then return s // Not scientific notation</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'dim valAsStr as string</SourceLine>
+   <SourceLine>'if isDouble then</SourceLine>
+   <SourceLine>'valAsStr = str( dv )</SourceLine>
+   <SourceLine>'else</SourceLine>
+   <SourceLine>'valAsStr = str( sv )</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'dim numStr as string = parts( 0 )</SourceLine>
+   <SourceLine>'dim decimalPlaces as integer = val( parts( 1 ) )</SourceLine>
+   <SourceLine>'dim numParts() as string = numStr.SplitB( "." ) // Get the decimal part</SourceLine>
+   <SourceLine>'if numParts.Ubound = 1 then decimalPlaces = decimalPlaces - len( numParts( 1 ) ) // Complete decimal places</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'if decimalPlaces &lt; -20 or decimalPlaces &gt; 20 then return valAsStr // Really large or really small number</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'if decimalPlaces &gt; 0 then</SourceLine>
+   <SourceLine>'dim formatStr as string = kBunchOfHash.Left( decimalPlaces ) + ".########"</SourceLine>
+   <SourceLine>'if dv &lt; 0. then formatStr = "-" + formatStr</SourceLine>
+   <SourceLine>'return str( dv, formatStr )</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'else</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'decimalPlaces = 0 - decimalPlaces // Make it positive</SourceLine>
+   <SourceLine>'if decimalPlaces &gt; 19 then</SourceLine>
+   <SourceLine>'return s</SourceLine>
+   <SourceLine>'else</SourceLine>
+   <SourceLine>'dim formatStr as string = "0." + kBunchOfHash.Left( decimalPlaces )</SourceLine>
+   <SourceLine>'if dv &lt; 0. then formatStr = "-" + formatStr</SourceLine>
+   <SourceLine>'dim r as string = str( dv, formatStr )</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'// This is a bit of a hack to compensate for rounding errors</SourceLine>
+   <SourceLine>'if decimalPlaces = 17 then</SourceLine>
+   <SourceLine>'if valAsStr.InStrB( "e" ) = 0 then // str does not give us scientific notation so it's possible to use it</SourceLine>
+   <SourceLine>'dim lastSix as string = r.RightB( 6 )</SourceLine>
+   <SourceLine>'if StrComp( lastSix, "000001", 0 ) = 0 or StrComp( lastSix, "999999", 0) = 0 then r = valAsStr</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'return r</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'end if</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>33</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>v As Variant</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Note>
+  <ItemName>About</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>About</NoteLine>
+   <NoteLine>This is now part of the open source "MacOSLib"</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>Original sources are located here:  https://github.com/macoslib/macoslib</NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <Note>
+  <ItemName>Version History</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <NoteLine>Version History</NoteLine>
+   <NoteLine>Kevin Ballard</NoteLine>
+   <NoteLine>kevin@sb.org</NoteLine>
+   <NoteLine>http://www.tildesoft.com/</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2.8:</NoteLine>
+   <NoteLine>- (by Thomas Tempelmann, tempelmann@gmail.com): Got rid of Collection in favor of using real arrays</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2.7:</NoteLine>
+   <NoteLine>- (by Thomas Tempelmann, tempelmann@gmail.com): Fixed the Date format for plists</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2.6:</NoteLine>
+   <NoteLine>- Approximately tripled the speed of loading an XML file. Unfortunately, I can't do the same for saving because</NoteLine>
+   <NoteLine>  the Dictionary class lacks an appropriate iterator-style access so my Ishmale the Painter's algorithm is required</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2.5:</NoteLine>
+   <NoteLine>- As per Jarvis Badgley's request, made it now respect existing dictionaries.</NoteLine>
+   <NoteLine>  This means that if you create a set of nested dictionaries that corresponds to the plist structure,</NoteLine>
+   <NoteLine>  when parsing the plist it will use the existing dictionaries rather than overwriting with its own. Of course,</NoteLine>
+   <NoteLine>  this is not valid when parsing an array in the plist.</NoteLine>
+   <NoteLine>  The main purpose of this is to set up default values before parsing the plist.</NoteLine>
+   <NoteLine>&#32;&#32;</NoteLine>
+   <NoteLine>  Note: This means I no longer clear the dictionary when I parse the XML file. If you want to keep the old</NoteLine>
+   <NoteLine>           behaviour, do a Dictionary.clear before parsing the XML file</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2.4:</NoteLine>
+   <NoteLine>- Made line endings use EndOfLine instead of linefeed</NoteLine>
+   <NoteLine>- Removed some commented-out code left over from the 5.5.1fc1 hack</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2.3:</NoteLine>
+   <NoteLine>- Removed said hack, due to fix in 5.5.1fc4. If you're using 5.5.1fc1-fc3, upgrade</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2.2:</NoteLine>
+   <NoteLine>- Added a hack to work around the XmlDocument.AppendChild() As XmlNode bug present in 5.5.1fc1</NoteLine>
+   <NoteLine>- If you pass a variant of an unknown type (something that should never happen), it now outputs "false"</NoteLine>
+   <NoteLine>  instead of "null" in plist-compatible mode</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2.1:</NoteLine>
+   <NoteLine>- Fixed bug where plist-compatible mode wasn't preserved in nested dictionaries/collections</NoteLine>
+   <NoteLine>- Fixed plist-compatible mode so that colors are now output as False instead (since plist doesn't support the color type)</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.2:</NoteLine>
+   <NoteLine>- Fixed double output to use Format() instead of Str()</NoteLine>
+   <NoteLine>- SaveXML now sets file type/creator to "" instead of using the text filetype</NoteLine>
+   <NoteLine>- Can now parse plist files</NoteLine>
+   <NoteLine>- Can now save as plist files with an option boolean to all the export/save methods</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.1:</NoteLine>
+   <NoteLine>- Added support for Collections as a replacement for lack of array support</NoteLine>
+   <NoteLine>     Note that keys in Collections are not preserved</NoteLine>
+   <NoteLine>- Ugraded version attribute of resulting document to "1.1" - previous versions of XMLDictionary won't read new documents</NoteLine>
+   <NoteLine>- When adding a string value to a document, it now converts it to UTF-8. If conversion failed (because no encoding was present originally),</NoteLine>
+   <NoteLine>     it simply defines the encoding as UTF-8</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.0.1:</NoteLine>
+   <NoteLine>- Added support for 5.5b6 changes</NoteLine>
+   <NoteLine></NoteLine>
+   <NoteLine>v1.0:</NoteLine>
+   <NoteLine>- Initial release</NoteLine>
+  </ItemSource>
+  <ItemFlags>0</ItemFlags>
+ </Note>
+ <ViewBehavior>
+  <ViewProperty>
+   <ObjName>Index</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <PropertyValue>-2147483648</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Left</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Name</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Super</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>ID</PropertyGroup>
+   <ItemType>String</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>Top</ObjName>
+   <Visible>1</Visible>
+   <PropertyGroup>Position</PropertyGroup>
+   <PropertyValue>0</PropertyValue>
+   <ItemType>Integer</ItemType>
+  </ViewProperty>
+ </ViewBehavior>
+ <Constant>
+  <ItemName>CurrentVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>CurrentVersion</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>1.1</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>PlistDTD</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>PlistDTD</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>&lt;!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>PlistVersion</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>PlistVersion</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>1.0</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+ <Constant>
+  <ItemName>XMLDictDTD</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <TextEncoding>134217984</TextEncoding>
+  <ItemName>XMLDictDTD</ItemName>
+  <ItemType>0</ItemType>
+  <ItemDef>&lt;!DOCTYPE xmldict PUBLIC "-//Tildesoft//DTD XMLDICT 1.1//EN" "http://www.tildesoft.com/DTDs/XMLDictionary-1.1.dtd"&gt;</ItemDef>
+  <ItemFlags>33</ItemFlags>
+ </Constant>
+</block>
+</RBProject>
