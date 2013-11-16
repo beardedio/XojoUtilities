@@ -1,6 +1,9 @@
 Xojo-Utilities
 ===========
 
+If you like my work and want to support it you can do so here
+https://www.gittip.com/bskrtich/
+
 A set of utility classes for Xojo / RealBasic licensed under MIT License.
 
 The original code for the Xojo-Utilities where written by Joe Strout and can be found here [http://www.strout.net/info/coding/rb/]
