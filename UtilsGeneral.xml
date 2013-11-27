@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2013r3" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2013r4" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
  <ObjContainerID>1865486656</ObjContainerID>
@@ -1194,6 +1194,28 @@
   <IsShared>0</IsShared>
   <ItemParams>Extends Win As Window</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ScalingFactor</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ScalingFactor(Extends w As Window) As Double</SourceLine>
+   <SourceLine>#If TargetCocoa Then</SourceLine>
+   <SourceLine>Declare Function BackingScaleFactor Lib "AppKit" Selector "backingScaleFactor" (target As WindowPtr) As Double</SourceLine>
+   <SourceLine>Return BackingScaleFactor(w)</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>Return 1</SourceLine>
+   <SourceLine>#Endif</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends w As Window</ItemParams>
+  <ItemResult>Double</ItemResult>
  </Method>
  <Property>
   <ItemName>DataFolder</ItemName>
