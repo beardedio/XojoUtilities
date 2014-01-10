@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<RBProject version="2013r2" FormatVersion="2" MinIDEVersion="20070100">
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2013r4.1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1567812713">
  <ObjName>UtilsGraphic</ObjName>
  <ObjContainerID>1865486656</ObjContainerID>
@@ -2063,9 +2063,9 @@
    <SourceLine>Dim Transparency As Double</SourceLine>
    <SourceLine>Dim Aspect As Double</SourceLine>
    <SourceLine>'Mode</SourceLine>
-   <SourceLine>'0 - Fill Screen (Keep AR)</SourceLine>
-   <SourceLine>'1 - Fit To Screen (Keep AR)</SourceLine>
-   <SourceLine>'2 - Strech to Screen</SourceLine>
+   <SourceLine>'0 - Scale to Fill (Keep AR)</SourceLine>
+   <SourceLine>'1 - Scale to Fit (Keep AR)</SourceLine>
+   <SourceLine>'2 - Stretch to Screen</SourceLine>
    <SourceLine>'3 - Center (Keep AR)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If p = Nil Then Exit Sub</SourceLine>
@@ -2486,7 +2486,6 @@
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <ItemType>String</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Index</ObjName>
@@ -2494,14 +2493,12 @@
    <PropertyGroup>ID</PropertyGroup>
    <PropertyValue>-2147483648</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Super</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <ItemType>String</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Left</ObjName>
@@ -2509,7 +2506,6 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Top</ObjName>
@@ -2517,7 +2513,6 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
  </ViewBehavior>
 </block>
