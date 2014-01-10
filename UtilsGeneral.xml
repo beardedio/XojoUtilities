@@ -2,7 +2,7 @@
 <RBProject version="2013r4" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
- <ObjContainerID>1865486656</ObjContainerID>
+ <ObjContainerID>1414474552</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -572,19 +572,28 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Init0_DataFolderSetup()</SourceLine>
+   <SourceLine>Sub Init0_DataFolderSetup(sharedLibrary As Boolean = false)</SourceLine>
    <SourceLine>Dim tmpfolder As FolderItem</SourceLine>
    <SourceLine>Dim logfile As FolderItem</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>' TapeCalc(v1.0.0_Build_4)[RB_Ver2011.01]: &lt;Notice&gt; ### App Started ###</SourceLine>
    <SourceLine>DebugLogPrefix = App.PropName</SourceLine>
-   <SourceLine>DebugLogPrefix = DebugLogPrefix + "(v"+Str(App.MajorVersion)+"."+Str(App.MinorVersion)+"."+Str(App.BugVersion)+"."+str(App.NonReleaseVersion)+")"</SourceLine>
+   <SourceLine>DebugLogPrefix = DebugLogPrefix + "(v"+Str(App.MajorVersion)+"."+Str(App.MinorVersion)+"."+Str(App.BugVersion)+"."+Str(App.NonReleaseVersion)+")"</SourceLine>
    <SourceLine>DebugLogPrefix = DebugLogPrefix + "[RB"+Right(Str(RBVersion), Len(Str(RBVersion))-2)+"]: "</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// Data Folders</SourceLine>
+   <SourceLine>If sharedLibrary Then</SourceLine>
+   <SourceLine>tmpfolder = SpecialFolder.SharedApplicationData.Child(App.PropCompanyName)</SourceLine>
+   <SourceLine>Else</SourceLine>
    <SourceLine>tmpfolder = SpecialFolder.ApplicationData.Child(App.PropCompanyName)</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>If Not tmpfolder.Exists Then</SourceLine>
+   <SourceLine>If tmpfolder.IsWriteable Then</SourceLine>
    <SourceLine>tmpfolder.CreateAsFolder</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>MsgBox("Please Run Setup Script first then run BrightDisplay again.")</SourceLine>
+   <SourceLine>Quit</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>DataFolder = tmpfolder.Child(App.PropName)</SourceLine>
@@ -611,7 +620,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams></ItemParams>
+  <ItemParams>sharedLibrary As Boolean = false</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -1196,26 +1205,35 @@
   <ItemResult></ItemResult>
  </Method>
  <Method>
-  <ItemName>ScalingFactor</ItemName>
+  <ItemName>ScreenFromXY</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function ScalingFactor(Extends w As Window) As Double</SourceLine>
-   <SourceLine>#If TargetCocoa Then</SourceLine>
-   <SourceLine>Declare Function BackingScaleFactor Lib "AppKit" Selector "backingScaleFactor" (target As WindowPtr) As Double</SourceLine>
-   <SourceLine>Return BackingScaleFactor(w)</SourceLine>
-   <SourceLine>#Else</SourceLine>
-   <SourceLine>Return 1</SourceLine>
-   <SourceLine>#Endif</SourceLine>
+   <SourceLine>Function ScreenFromXY(X As Integer, Y As Integer) As Integer</SourceLine>
+   <SourceLine>Dim rect As New REALbasic.Rect</SourceLine>
+   <SourceLine>Dim pt As New REALbasic.Point</SourceLine>
+   <SourceLine>pt.X = X</SourceLine>
+   <SourceLine>pt.Y = Y</SourceLine>
+   <SourceLine>For i As Integer = 0 To ScreenCount - 1</SourceLine>
+   <SourceLine>rect.Top = Screen(i).Top</SourceLine>
+   <SourceLine>rect.Left = Screen(i).Left</SourceLine>
+   <SourceLine>rect.Width = Screen(i).Width</SourceLine>
+   <SourceLine>rect.Height = Screen(i).Height</SourceLine>
+   <SourceLine>If rect.Contains(pt) Then</SourceLine>
+   <SourceLine>Return i</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return -1</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>Extends w As Window</ItemParams>
-  <ItemResult>Double</ItemResult>
+  <ItemParams>X As Integer, Y As Integer</ItemParams>
+  <ItemResult>Integer</ItemResult>
  </Method>
  <Property>
   <ItemName>DataFolder</ItemName>
