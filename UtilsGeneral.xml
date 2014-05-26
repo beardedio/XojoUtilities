@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2014r1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2014r1.1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
- <ObjContainerID>1865486656</ObjContainerID>
+ <ObjContainerID>1471210957</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -616,10 +616,10 @@
    <SourceLine>DataFolder.Permissions = &amp;o777</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>// Setup Logfile if needed</SourceLine>
+   <SourceLine>If App.StageCode = 3 Then</SourceLine>
    <SourceLine>logfile = DataFolder.Child("debug.log")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>// Setup Logfile if needed</SourceLine>
-   <SourceLine>If App.StageCode &lt; 3 Or DebugBuild Then</SourceLine>
    <SourceLine>Try</SourceLine>
    <SourceLine>If logfile &lt;&gt; Nil And logfile.Exists Then</SourceLine>
    <SourceLine>DebugLogFile = BinaryStream.Open(logfile, True)</SourceLine>
