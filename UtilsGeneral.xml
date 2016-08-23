@@ -2,7 +2,7 @@
 <RBProject version="2014r1.1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
- <ObjContainerID>1471210957</ObjContainerID>
+ <ObjContainerID>1865486656</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -29,7 +29,7 @@
    <SourceLine></SourceLine>
    <SourceLine>i = 0</SourceLine>
    <SourceLine>Do</SourceLine>
-   <SourceLine>b = bs.ReadByte</SourceLine>
+   <SourceLine>b = bs.ReadUInt8</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>cleanint = Bitwise.BitAnd(b, clean)</SourceLine>
    <SourceLine></SourceLine>
@@ -109,7 +109,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function FormatTime(d As date, Pad As Boolean = False) As String</SourceLine>
+   <SourceLine>Function FormatTime(d As date, Pad As Boolean = False, Zero As Boolean = True) As String</SourceLine>
    <SourceLine>Dim S As String</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If d.Hour &lt;= 12 Then</SourceLine>
@@ -124,9 +124,9 @@
    <SourceLine>S = S + Format(d.Minute, "00")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If d.Hour &lt;&gt; 12 Then</SourceLine>
-   <SourceLine>S = S + "A"</SourceLine>
+   <SourceLine>S = S + " AM"</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>S = S + "P"</SourceLine>
+   <SourceLine>S = S + " PM"</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>If Pad And d.Hour &lt; 22 Then</SourceLine>
@@ -137,11 +137,13 @@
    <SourceLine></SourceLine>
    <SourceLine>S = S + Format(d.Minute, "00")</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>S = S + "P"</SourceLine>
+   <SourceLine>S = S + " PM"</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>' Dependig on the font you only need to do this if you dont want a line though the zero</SourceLine>
+   <SourceLine>If Zero Then</SourceLine>
    <SourceLine>S = ReplaceAll(S, "0", "O")</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return S</SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -150,7 +152,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>d As date, Pad As Boolean = False</ItemParams>
+  <ItemParams>d As date, Pad As Boolean = False, Zero As Boolean = True</ItemParams>
   <ItemResult>String</ItemResult>
  </Method>
  <Method>
@@ -500,27 +502,29 @@
    <SourceLine>Dim d As New Date</SourceLine>
    <SourceLine>Dim i As Integer</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#if RepeatedMsgReduction Then</SourceLine>
+   <SourceLine>#If RepeatedMsgReduction Then</SourceLine>
    <SourceLine>If s = LastLogString Then</SourceLine>
    <SourceLine>LastLogCount = LastLogCount + 1</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>LastLogString = s</SourceLine>
    <SourceLine>LastLogCount = 0</SourceLine>
-   <SourceLine>End if</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if LastLogCount &gt; 0 Then</SourceLine>
-   <SourceLine>s = "Last Message Repeated "+str(LastLogCount)+" Times"</SourceLine>
-   <SourceLine>if LastLogCount MOD 2 = 1 Then s = s + " "</SourceLine>
+   <SourceLine>If LastLogCount &gt; 0 Then</SourceLine>
+   <SourceLine>s = "Last Message Repeated "+Str(LastLogCount)+" Times"</SourceLine>
+   <SourceLine>If LastLogCount Mod 2 = 1 Then s = s + " "</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if LastLogCount &gt; 1 Then</SourceLine>
-   <SourceLine>i = len(DebugLogPrefix+"Last Message Repeated "+str(LastLogCount-1)+" Times"+EndOfLine)+32+((LastLogCount-1) MOD 2)</SourceLine>
+   <SourceLine>If LastLogCount &gt; 1 Then</SourceLine>
+   <SourceLine>i = Len(DebugLogPrefix+"Last Message Repeated "+Str(LastLogCount-1)+" Times"+EndOfLine)+32+((LastLogCount-1) Mod 2)</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>If DebugLogFile &lt;&gt; Nil Then</SourceLine>
    <SourceLine>DebugLogFile.Length = DebugLogFile.Length - i</SourceLine>
    <SourceLine>DebugLogFile.Position = DebugLogFile.Length</SourceLine>
    <SourceLine>DebugLogFile.Flush</SourceLine>
-   <SourceLine>End if</SourceLine>
-   <SourceLine>End if</SourceLine>
-   <SourceLine>#endif</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Select Case Type</SourceLine>
    <SourceLine>' Only Show on Development Build</SourceLine>
@@ -549,14 +553,14 @@
    <SourceLine></SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>if s &lt;&gt; "" Then</SourceLine>
+   <SourceLine>If s &lt;&gt; "" Then</SourceLine>
    <SourceLine>If DebugLogFile &lt;&gt; Nil Then</SourceLine>
    <SourceLine>DebugLogFile.Write(EndOfLine+s)</SourceLine>
    <SourceLine>DebugLogFile.Flush</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>System.DebugLog(s)</SourceLine>
-   <SourceLine>End if</SourceLine>
-   <SourceLine>End if</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
