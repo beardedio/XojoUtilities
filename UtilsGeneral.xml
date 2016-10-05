@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2014r1.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2016r3" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
  <ObjContainerID>1865486656</ObjContainerID>
@@ -587,28 +587,16 @@
    <SourceLine></SourceLine>
    <SourceLine>// Data Folders</SourceLine>
    <SourceLine>If sharedLibrary Then</SourceLine>
-   <SourceLine>tmpfolder = SpecialFolder.SharedApplicationData.Child(App.PropCompanyName)</SourceLine>
+   <SourceLine>tmpfolder = SpecialFolder.SharedApplicationData</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>tmpfolder = SpecialFolder.ApplicationData.Child(App.PropCompanyName)</SourceLine>
+   <SourceLine>tmpfolder = SpecialFolder.ApplicationData</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>If Not tmpfolder.Exists Then</SourceLine>
    <SourceLine>If tmpfolder.IsWriteable Then</SourceLine>
    <SourceLine>tmpfolder.CreateAsFolder</SourceLine>
    <SourceLine>tmpfolder.Permissions = &amp;o777</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>'#If TargetMacOS Then</SourceLine>
-   <SourceLine>'Dim apppath, datapath As String</SourceLine>
-   <SourceLine>'apppath = app.ExecutableFile.Parent.Parent.Parent.NativePath.ReplaceAll(" ", "\ ")</SourceLine>
-   <SourceLine>'datapath = ReplaceAll(tmpfolder.NativePath+"/"+App.PropName, " ", "\ ")</SourceLine>
-   <SourceLine>'#If DebugBuild Then</SourceLine>
-   <SourceLine>'MsgBox(DataFolderSetup(apppath, datapath))</SourceLine>
-   <SourceLine>'#Else</SourceLine>
-   <SourceLine>'DataFolderSetup(apppath, datapath)</SourceLine>
-   <SourceLine>'#EndIf</SourceLine>
-   <SourceLine>'</SourceLine>
-   <SourceLine>'#EndIf</SourceLine>
-   <SourceLine>'DelayMBS(5)</SourceLine>
-   <SourceLine>'MsgBox("First Time Setup Complete. Rerun application.")</SourceLine>
    <SourceLine>MsgBox("Unable to create Data folder. Closing App.")</SourceLine>
    <SourceLine>Quit</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -1388,7 +1376,6 @@
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>PIE</ItemName>
   <ItemType>2</ItemType>
   <ItemDef>3.14159265358979323846264338327950</ItemDef>
   <ItemFlags>0</ItemFlags>
@@ -1398,7 +1385,6 @@
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>LogType0_Debug</ItemName>
   <ItemType>2</ItemType>
   <ItemDef>0</ItemDef>
   <ItemFlags>0</ItemFlags>
@@ -1408,7 +1394,6 @@
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>LogType1_Notice</ItemName>
   <ItemType>2</ItemType>
   <ItemDef>1</ItemDef>
   <ItemFlags>0</ItemFlags>
@@ -1418,7 +1403,6 @@
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>LogType2_Error</ItemName>
   <ItemType>2</ItemType>
   <ItemDef>2</ItemDef>
   <ItemFlags>0</ItemFlags>
@@ -1428,7 +1412,6 @@
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>LogType3_RunTime</ItemName>
   <ItemType>2</ItemType>
   <ItemDef>3</ItemDef>
   <ItemFlags>0</ItemFlags>
@@ -1438,7 +1421,6 @@
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>RepeatedMsgReduction</ItemName>
   <ItemType>3</ItemType>
   <ItemDef>True</ItemDef>
   <ItemFlags>33</ItemFlags>
