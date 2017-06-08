@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2014r1.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2017r1.1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="1567812713">
  <ObjName>UtilsGraphic</ObjName>
- <ObjContainerID>1865486656</ObjContainerID>
+ <ObjContainerID>1471210957</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -188,7 +188,7 @@
    <SourceLine></SourceLine>
    <SourceLine>Dim hasMask As Boolean = p.HasMask</SourceLine>
    <SourceLine>If hasMask Then</SourceLine>
-   <SourceLine>mask = NewPicture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
+   <SourceLine>mask = New Picture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
    <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)      // copy the mask</SourceLine>
    <SourceLine>gOriginalMask = p.Mask.Graphics      // get direct graphics object for speed</SourceLine>
    <SourceLine>gOriginalMask.ForeColor = &amp;c000000          // clear with black</SourceLine>
@@ -197,9 +197,9 @@
    <SourceLine></SourceLine>
    <SourceLine>// now we create the new picture copy object and draw 'p'</SourceLine>
    <SourceLine>If force32Bit Then</SourceLine>
-   <SourceLine>copy = NewPicture(p.Width, p.Height, 32)</SourceLine>
+   <SourceLine>copy = New Picture(p.Width, p.Height, 32)</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>copy = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>copy = New Picture(p.Width, p.Height, p.Depth)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>copy.Graphics.DrawPicture(p, 0, 0)</SourceLine>
@@ -251,7 +251,7 @@
    <SourceLine>Static trans As Picture</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If (trans Is Nil) Then</SourceLine>
-   <SourceLine>trans = NewPicture(1, 1, 32)</SourceLine>
+   <SourceLine>trans = New Picture(1, 1, 32)</SourceLine>
    <SourceLine>trans.Graphics.Pixel(0, 0) = &amp;c000000</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
@@ -296,7 +296,7 @@
    <SourceLine>Static trans As Picture</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If (trans Is Nil) Then</SourceLine>
-   <SourceLine>trans = NewPicture(1, 1, 32)</SourceLine>
+   <SourceLine>trans = New Picture(1, 1, 32)</SourceLine>
    <SourceLine>trans.Graphics.Pixel(0, 0) = &amp;cFFFFFF</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
@@ -855,17 +855,17 @@
    <SourceLine>If (p Is Nil) Then Return Nil      // there is nothing to do, so return</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If p.HasMask Then</SourceLine>
-   <SourceLine>mask = NewPicture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
+   <SourceLine>mask = New Picture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
    <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)      // copy the mask</SourceLine>
    <SourceLine>gOriginalMask = p.Mask.Graphics      // get direct graphics object for speed</SourceLine>
    <SourceLine>gOriginalMask.ForeColor = &amp;c000000          // clear with black</SourceLine>
    <SourceLine>gOriginalMask.FillRect(0, 0, gOriginalMask.Width, gOriginalMask.Height)</SourceLine>
-   <SourceLine>copy = NewPicture(w, h, 32)                         // create new picture size of "w" and "h"</SourceLine>
+   <SourceLine>copy = New Picture(w, h, 32)                         // create new picture size of "w" and "h"</SourceLine>
    <SourceLine>copy.Graphics.DrawPicture(p, 0, 0, w, h, 0, 0, p.Width, p.Height)</SourceLine>
    <SourceLine>copy.Mask.Graphics.DrawPicture(mask, 0, 0, w, h, 0, 0, p.Width, p.Height)</SourceLine>
    <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0)      // restore the original mask to 'p'</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>copy = NewPicture(w, h, 32)                         // create new picture size of "w" and "h"</SourceLine>
+   <SourceLine>copy = New Picture(w, h, 32)                         // create new picture size of "w" and "h"</SourceLine>
    <SourceLine>copy.Graphics.DrawPicture(p, 0, 0, w, h, 0, 0, p.Width, p.Height)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
@@ -916,17 +916,17 @@
    <SourceLine>hFit = p.Height * ratio</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If p.HasMask Then</SourceLine>
-   <SourceLine>mask = NewPicture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
+   <SourceLine>mask = New Picture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
    <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)      // copy the mask</SourceLine>
    <SourceLine>gOriginalMask = p.Mask.Graphics              // get direct graphics object for speed</SourceLine>
    <SourceLine>gOriginalMask.ForeColor = &amp;c000000          // clear with black</SourceLine>
    <SourceLine>gOriginalMask.FillRect(0, 0, gOriginalMask.Width, gOriginalMask.Height)</SourceLine>
-   <SourceLine>copy = NewPicture(wFit, hFit, 32)                 // create new picture size of "wFit" and "hFit"</SourceLine>
+   <SourceLine>copy = New Picture(wFit, hFit, 32)                 // create new picture size of "wFit" and "hFit"</SourceLine>
    <SourceLine>copy.Graphics.DrawPicture(p, 0, 0, wFit, hFit, 0, 0, p.Width, p.Height)</SourceLine>
    <SourceLine>copy.Mask.Graphics.DrawPicture(mask, 0, 0, wFit, hFit, 0, 0, p.Width, p.Height)</SourceLine>
    <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0)      // restore the original mask to 'p'</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>copy = NewPicture(wFit, hFit, 32)                // create new picture size of "w" and "h"</SourceLine>
+   <SourceLine>copy = New Picture(wFit, hFit, 32)                // create new picture size of "w" and "h"</SourceLine>
    <SourceLine>copy.Graphics.DrawPicture(p, 0, 0, wFit, hFit, 0, 0, p.Width, p.Height)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
@@ -964,13 +964,13 @@
    <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim hasMask As Boolean = p.HasMask      // cache result</SourceLine>
-   <SourceLine>Dim copy As Picture = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>Dim copy As Picture = New Picture(p.Width, p.Height, p.Depth)</SourceLine>
    <SourceLine>Dim g, gOriginalMask As Graphics</SourceLine>
    <SourceLine>Dim mask As Picture</SourceLine>
    <SourceLine>Dim x, xMax As Integer</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If hasMask Then</SourceLine>
-   <SourceLine>mask = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>mask = New Picture(p.Width, p.Height, p.Depth)</SourceLine>
    <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)</SourceLine>
    <SourceLine>gOriginalMask = p.Mask.Graphics</SourceLine>
    <SourceLine>gOriginalMask.ForeColor = &amp;c000000</SourceLine>
@@ -1029,13 +1029,13 @@
    <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim hasMask As Boolean = p.HasMask      // cache result</SourceLine>
-   <SourceLine>Dim copy As Picture = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>Dim copy As Picture = New Picture(p.Width, p.Height, p.Depth)</SourceLine>
    <SourceLine>Dim g, gOriginalMask As Graphics</SourceLine>
    <SourceLine>Dim mask As Picture</SourceLine>
    <SourceLine>Dim y, yMax As Integer</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If hasMask Then</SourceLine>
-   <SourceLine>mask = NewPicture(p.Width, p.Height, p.Depth)</SourceLine>
+   <SourceLine>mask = New Picture(p.Width, p.Height, p.Depth)</SourceLine>
    <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)</SourceLine>
    <SourceLine>gOriginalMask = p.Mask.Graphics</SourceLine>
    <SourceLine>gOriginalMask.ForeColor = &amp;c000000</SourceLine>
@@ -1316,7 +1316,7 @@
    <SourceLine>Dim x, y, j As Integer</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If (noisy Is Nil) Then</SourceLine>
-   <SourceLine>noisy = NewPicture(128, 128, 32)</SourceLine>
+   <SourceLine>noisy = New Picture(128, 128, 32)</SourceLine>
    <SourceLine>r = noisy.RGBSurface</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
@@ -1366,7 +1366,7 @@
    <SourceLine>'</SourceLine>
    <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim tiled As Picture = NewPicture(w, h, 32)</SourceLine>
+   <SourceLine>Dim tiled As Picture = New Picture(w, h, 32)</SourceLine>
    <SourceLine>Dim g As Graphics = tiled.Graphics</SourceLine>
    <SourceLine>Dim x, xMax, y, yMax As Integer</SourceLine>
    <SourceLine></SourceLine>
@@ -1485,7 +1485,7 @@
    <SourceLine></SourceLine>
    <SourceLine>If (p Is Nil) Then Return Nil</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Dim copy As Picture = NewPicture(p.Height, p.Width, p.Depth)</SourceLine>
+   <SourceLine>Dim copy As Picture = New Picture(p.Height, p.Width, p.Depth)</SourceLine>
    <SourceLine>Dim x, xMax, y, yMax As Integer</SourceLine>
    <SourceLine>Dim gs, gd As Graphics</SourceLine>
    <SourceLine>Dim rs, rd As RGBSurface</SourceLine>
