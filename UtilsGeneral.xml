@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2016r3" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2017r2.1" FormatVersion="2" MinIDEVersion="20070100">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
- <ObjContainerID>1865486656</ObjContainerID>
+ <ObjContainerID>1471210957</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -365,13 +365,13 @@
    <SourceLine>#else</SourceLine>
    <SourceLine>s = s + "Carbon "</SourceLine>
    <SourceLine>#endif</SourceLine>
-   <SourceLine>#elseif TargetWin32 Then</SourceLine>
+   <SourceLine>#elseif TargetWindows Then</SourceLine>
    <SourceLine>s = s + "Windows "</SourceLine>
    <SourceLine>#elseif TargetLinux Then</SourceLine>
    <SourceLine>s = s + "Linux "</SourceLine>
    <SourceLine>#endif</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#if TargetX86 Then</SourceLine>
+   <SourceLine>#if Target32Bit Then</SourceLine>
    <SourceLine>s = s + "32bit"</SourceLine>
    <SourceLine>#Else</SourceLine>
    <SourceLine>s = s + "64bit"</SourceLine>
@@ -1308,7 +1308,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>LastLogCount As UInt64</SourceLine>
+   <SourceLine>LastLogCount As UInt64 = 0</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -1322,7 +1322,7 @@
   <Visible>1</Visible>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>RepeatedSpaces As Integer</SourceLine>
+   <SourceLine>RepeatedSpaces As Integer = 0</SourceLine>
    <SourceLine></SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
