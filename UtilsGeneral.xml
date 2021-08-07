@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2017r2.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2021r2" FormatVersion="2" MinIDEVersion="20150400">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -11,6 +11,7 @@
   <ItemName>Read7BitEncodedInt</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>526835711</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Read7BitEncodedInt(Extends bs As BinaryStream) As Int64</SourceLine>
@@ -53,6 +54,7 @@
   <ItemName>ReadVBnetString</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>139360255</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ReadVBnetString(Extends bs As BinaryStream, Encoding as TextEncoding) As String</SourceLine>
@@ -70,6 +72,7 @@
   <ItemName>Color2Str</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1576464383</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Color2Str(c As color, Alpha As Boolean = False) As string</SourceLine>
@@ -107,6 +110,7 @@
   <ItemName>FormatTime</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>483411967</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function FormatTime(d As date, Pad As Boolean = False, Zero As Boolean = True) As String</SourceLine>
@@ -159,6 +163,7 @@
   <ItemName>PictureToString</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1440290815</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function PictureToString(p as picture) As string</SourceLine>
@@ -200,6 +205,7 @@
   <ItemName>SplitFilePath</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>47179775</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SplitFilePath(path As String, type As Integer = 0) As String</SourceLine>
@@ -234,6 +240,7 @@
   <ItemName>Str2Color</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>509356031</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Str2Color(s as string) As color</SourceLine>
@@ -266,6 +273,7 @@
   <ItemName>StringToPicture</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1977460735</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function StringToPicture(data as string) As picture</SourceLine>
@@ -306,6 +314,7 @@
   <ItemName>VBInt2Color</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>808669183</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function VBInt2Color(i As Integer) As color</SourceLine>
@@ -335,6 +344,7 @@
   <ItemName>VersionInfoStringRB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1240580095</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function VersionInfoStringRB(MultiLine As Boolean = False) As String</SourceLine>
@@ -391,6 +401,7 @@
   <ItemName>Str2Bool</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>100278271</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Str2Bool(s As String) As Boolean</SourceLine>
@@ -413,6 +424,7 @@
   <ItemName>UniqueHardwareID</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1463244799</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function UniqueHardwareID() As String</SourceLine>
@@ -432,6 +444,7 @@
   <ItemName>VersionInfoStringApp</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>556406783</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function VersionInfoStringApp(MultiLine As Boolean = False) As String</SourceLine>
@@ -458,6 +471,7 @@
   <ItemName>VersionInfoStringTitle</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>963762175</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function VersionInfoStringTitle() As String</SourceLine>
@@ -496,6 +510,7 @@
   <ItemName>LogMsg</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>821151743</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub LogMsg(Type As Integer, s As String)</SourceLine>
@@ -574,6 +589,7 @@
   <ItemName>Init0_DataFolderSetup</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1537353727</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Init0_DataFolderSetup(sharedLibrary As Boolean = false)</SourceLine>
@@ -634,6 +650,7 @@
   <ItemName>VersionInterger</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1923989503</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function VersionInterger(v As Integer = 4) As Integer</SourceLine>
@@ -680,6 +697,7 @@
   <ItemName>Bool2Int</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>682006527</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Bool2Int(b As Boolean) As Integer</SourceLine>
@@ -701,6 +719,7 @@
   <ItemName>ToPrettyString</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>782225407</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ToPrettyString(Extends xml as XMLDocument) As String</SourceLine>
@@ -728,6 +747,7 @@
   <ItemName>PrimaryMACAddress</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1079543807</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function PrimaryMACAddress() As String</SourceLine>
@@ -770,6 +790,7 @@
   <ItemName>AlwaysOnTop</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>452724735</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub AlwaysOnTop(Extends Win As Window, Set As Boolean)</SourceLine>
@@ -842,6 +863,7 @@
   <ItemName>LogMsg</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>239499263</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub LogMsg(Type As Integer, err As RuntimeException, s As String)</SourceLine>
@@ -861,6 +883,7 @@
   <ItemName>POSIXPath</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>19836927</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function POSIXPath(extends f as FolderItem) As String</SourceLine>
@@ -923,39 +946,40 @@
   <ItemResult>String</ItemResult>
  </Method>
  <Method>
-  <ItemName>NewFSRef</ItemName>
+  <ItemName>NewFSRefOLD</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1001218047</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function NewFSRef(f as FolderItem) As MemoryBlock</SourceLine>
-   <SourceLine>If f Is Nil Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Const sizeOfFSRef = 80</SourceLine>
-   <SourceLine>Dim theFSRef As New MemoryBlock(sizeOfFSRef)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim OSErr As Integer</SourceLine>
-   <SourceLine>If f.Parent &lt;&gt; Nil Then</SourceLine>
-   <SourceLine>Soft Declare Function FSMakeFSRefUnicode Lib "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon"_</SourceLine>
-   <SourceLine>(parentPtr As Ptr, nameLength As Integer, name As CString, enc As Integer, outRef As Ptr) As Short</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Dim parentFSRef As MemoryBlock = NewFSRef(f.Parent)</SourceLine>
-   <SourceLine>Dim itemName As String = ConvertEncoding(f.Name, Encodings.UTF16)</SourceLine>
-   <SourceLine>Const kTextEncodingUnknown = &amp;hffff</SourceLine>
-   <SourceLine>OSErr = FSMakeFSRefUnicode(parentFSRef, Len(itemName), itemName, kTextEncodingUnknown, theFSRef)</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>Soft Declare Function FSGetVolumeInfo Lib "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon"_</SourceLine>
-   <SourceLine>(Volume As Short, volumeIndex As Integer, actualVolume As Ptr, whichInfo As Integer, info As Ptr, volumeName As Ptr, rootDirectory As Ptr) As Short</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Const kFSVolInfoNone = &amp;h0000</SourceLine>
-   <SourceLine>OSErr = FSGetVolumeInfo(f.MacVRefNum, 0, Nil, kFSVolInfoNone, Nil, Nil, theFSRef)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>If OSErr &lt;&gt; 0 Then</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>Return theFSRef</SourceLine>
+   <SourceLine>Function NewFSRefOLD(f as FolderItem) As MemoryBlock</SourceLine>
+   <SourceLine>'If f Is Nil Then</SourceLine>
+   <SourceLine>'Return Nil</SourceLine>
+   <SourceLine>'End If</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Const sizeOfFSRef = 80</SourceLine>
+   <SourceLine>'Dim theFSRef As New MemoryBlock(sizeOfFSRef)</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Dim OSErr As Integer</SourceLine>
+   <SourceLine>'If f.Parent &lt;&gt; Nil Then</SourceLine>
+   <SourceLine>'Soft Declare Function FSMakeFSRefUnicode Lib "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon"_</SourceLine>
+   <SourceLine>'(parentPtr As Ptr, nameLength As Integer, name As CString, enc As Integer, outRef As Ptr) As Short</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Dim parentFSRef As MemoryBlock = NewFSRef(f.Parent)</SourceLine>
+   <SourceLine>'Dim itemName As String = ConvertEncoding(f.Name, Encodings.UTF16)</SourceLine>
+   <SourceLine>'Const kTextEncodingUnknown = &amp;hffff</SourceLine>
+   <SourceLine>'OSErr = FSMakeFSRefUnicode(parentFSRef, Len(itemName), itemName, kTextEncodingUnknown, theFSRef)</SourceLine>
+   <SourceLine>'Else</SourceLine>
+   <SourceLine>'Soft Declare Function FSGetVolumeInfo Lib "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon"_</SourceLine>
+   <SourceLine>'(Volume As Short, volumeIndex As Integer, actualVolume As Ptr, whichInfo As Integer, info As Ptr, volumeName As Ptr, rootDirectory As Ptr) As Short</SourceLine>
+   <SourceLine>'</SourceLine>
+   <SourceLine>'Const kFSVolInfoNone = &amp;h0000</SourceLine>
+   <SourceLine>'OSErr = FSGetVolumeInfo(f.MacVRefNum, 0, Nil, kFSVolInfoNone, Nil, Nil, theFSRef)</SourceLine>
+   <SourceLine>'End If</SourceLine>
+   <SourceLine>'If OSErr &lt;&gt; 0 Then</SourceLine>
+   <SourceLine>'Return Nil</SourceLine>
+   <SourceLine>'End If</SourceLine>
+   <SourceLine>'Return theFSRef</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -969,6 +993,7 @@
   <ItemName>IP2Int</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1507805183</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function IP2Int(s As String) As Int64</SourceLine>
@@ -995,6 +1020,7 @@
   <ItemName>Int2IP</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>332681215</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Int2IP(num As Int64) As String</SourceLine>
@@ -1022,6 +1048,7 @@
   <ItemName>SQLQuery</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>574988287</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SQLQuery(Extends db As Database, sql As String) As RecordSet</SourceLine>
@@ -1049,6 +1076,7 @@
   <ItemName>SQLQuery</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1899001855</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub SQLQuery(Extends db As Database, sql As String)</SourceLine>
@@ -1071,6 +1099,7 @@
   <ItemName>SQLEsc</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1306066943</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SQLEsc(Extends db As Database, sql As String) As String</SourceLine>
@@ -1094,6 +1123,7 @@
   <ItemName>SQLEscape</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>159897599</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SQLEscape(Extends db As Database, sql As String) As String</SourceLine>
@@ -1111,6 +1141,7 @@
   <ItemName>PopUpCellChoices</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1479360511</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function PopUpCellChoices(extends lb As Listbox, row As Integer, column As Integer, choices() As String, celltags() As String) As Boolean</SourceLine>
@@ -1147,6 +1178,7 @@
   <ItemName>FontAvailable</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1778687999</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function FontAvailable(FontName As String) As Boolean</SourceLine>
@@ -1174,6 +1206,7 @@
   <ItemName>BringToFront</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1864812543</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub BringToFront(Extends Win As Window)</SourceLine>
@@ -1219,6 +1252,7 @@
   <ItemName>ScreenFromXY</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1109516287</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ScreenFromXY(X As Integer, Y As Integer) As Integer</SourceLine>
@@ -1250,6 +1284,7 @@
   <ItemName>DataFolder</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>2015606783</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>DataFolder As FolderItem</SourceLine>
@@ -1264,6 +1299,7 @@
   <ItemName>DebugLogFile</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>658464767</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>DebugLogFile As BinaryStream</SourceLine>
@@ -1278,6 +1314,7 @@
   <ItemName>DebugLogPrefix</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1372469247</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>DebugLogPrefix As String</SourceLine>
@@ -1292,6 +1329,7 @@
   <ItemName>LastLogString</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1643321343</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>LastLogString As String</SourceLine>
@@ -1306,6 +1344,7 @@
   <ItemName>LastLogCount</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>371400703</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>LastLogCount As UInt64 = 0</SourceLine>
@@ -1320,6 +1359,7 @@
   <ItemName>RepeatedSpaces</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1274101759</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>RepeatedSpaces As Integer = 0</SourceLine>
@@ -1375,6 +1415,7 @@
   <ItemName>PIE</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>9289727</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>2</ItemType>
   <ItemDef>3.14159265358979323846264338327950</ItemDef>
@@ -1384,6 +1425,7 @@
   <ItemName>LogType0_Debug</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>214038527</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>2</ItemType>
   <ItemDef>0</ItemDef>
@@ -1393,6 +1435,7 @@
   <ItemName>LogType1_Notice</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1217009663</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>2</ItemType>
   <ItemDef>1</ItemDef>
@@ -1402,6 +1445,7 @@
   <ItemName>LogType2_Error</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1813766143</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>2</ItemType>
   <ItemDef>2</ItemDef>
@@ -1411,6 +1455,7 @@
   <ItemName>LogType3_RunTime</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>420833279</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>2</ItemType>
   <ItemDef>3</ItemDef>
@@ -1420,6 +1465,7 @@
   <ItemName>RepeatedMsgReduction</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1284319231</PartID>
   <TextEncoding>134217984</TextEncoding>
   <ItemType>3</ItemType>
   <ItemDef>True</ItemDef>

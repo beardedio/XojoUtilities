@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
-<RBProject version="2013r2" FormatVersion="2" MinIDEVersion="20070100">
+<?xml version="1.0" encoding="UTF-8"?>
+<RBProject version="2021r2" FormatVersion="2" MinIDEVersion="20150400">
 <block type="Module" ID="-1122482829">
  <ObjName>UtilsString</ObjName>
- <ObjContainerID>1865486656</ObjContainerID>
+ <ObjContainerID>1471210957</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -11,6 +11,7 @@
   <ItemName>Repeat</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1842329599</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Repeat(s as String, repeatCount as Integer) As String</SourceLine>
@@ -55,6 +56,7 @@
   <ItemName>EditDistance</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>69826559</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function EditDistance(s1 As String, s2 As String) As Integer</SourceLine>
@@ -137,6 +139,7 @@
   <ItemName>Soundex</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1762910207</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Soundex(s As String, stripPrefix As Boolean = true) As String</SourceLine>
@@ -203,6 +206,7 @@
   <ItemName>Hash</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>393484287</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Hash(s As String) As Integer</SourceLine>
@@ -226,6 +230,7 @@
   <ItemName>Count</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1705293823</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Count(source As String, substr As String) As Integer</SourceLine>
@@ -260,6 +265,7 @@
   <ItemName>CountB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1221400575</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function CountB(source As String, substr As String) As Integer</SourceLine>
@@ -294,6 +300,7 @@
   <ItemName>PadBoth</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1758281727</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function PadBoth(s as String, width as Integer, padding as String = " ") As String</SourceLine>
@@ -329,6 +336,7 @@
   <ItemName>PadLeft</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>989394943</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function PadLeft(s as String, width as Integer, padding as String = " ") As String</SourceLine>
@@ -356,6 +364,7 @@
   <ItemName>PadRight</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1101498367</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function PadRight(s as String, width as Integer, padding as String = " ") As String</SourceLine>
@@ -383,6 +392,7 @@
   <ItemName>CountFieldsQuoted</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>743761919</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function CountFieldsQuoted(src as string, sep as string) As integer</SourceLine>
@@ -427,6 +437,7 @@
   <ItemName>NthFieldQuoted</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>923162623</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function NthFieldQuoted(src as string, sep as string, index as integer) As string</SourceLine>
@@ -522,6 +533,7 @@
   <ItemName>Contains</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>894994431</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Contains(extends s As String, what As String) As Boolean</SourceLine>
@@ -545,6 +557,7 @@
   <ItemName>CountRegEx</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>159397887</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function CountRegEx(s As String, pattern As String) As Integer</SourceLine>
@@ -577,6 +590,7 @@
   <ItemName>StartsWith</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1570088959</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function StartsWith(extends s As String, withWhat As String) As Boolean</SourceLine>
@@ -598,6 +612,7 @@
   <ItemName>ContainsB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>2084845567</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ContainsB(extends s As String, what As String) As Boolean</SourceLine>
@@ -621,6 +636,7 @@
   <ItemName>StartsWithB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>324382719</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function StartsWithB(extends s As String, withWhat As String) As Boolean</SourceLine>
@@ -642,6 +658,7 @@
   <ItemName>IsEmpty</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>707282943</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function IsEmpty(extends s As String) As Boolean</SourceLine>
@@ -662,6 +679,7 @@
   <ItemName>InStrReverse</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>200093695</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function InStrReverse(startPos As Integer=-1, source As String, substr As String) As Integer</SourceLine>
@@ -695,6 +713,7 @@
   <ItemName>InStrReverseB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>529625087</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function InStrReverseB(startPosB As Integer=-1, source As String, substr As String) As Integer</SourceLine>
@@ -730,6 +749,7 @@
   <ItemName>SplitToInt</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>644790271</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SplitToInt(source As String, delimiter As String=" ") As Integer()</SourceLine>
@@ -762,6 +782,7 @@
   <ItemName>SplitToVal</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1604034559</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SplitToVal(source As String, delimiter As String=" ") As Double()</SourceLine>
@@ -796,6 +817,7 @@
   <ItemName>SplitToCDbl</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1351878655</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SplitToCDbl(source As String, delimiter As String=" ") As Double()</SourceLine>
@@ -829,6 +851,7 @@
   <ItemName>SplitByRegEx</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>13723647</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SplitByRegEx(source As String, delimPattern As String) As String()</SourceLine>
@@ -868,6 +891,7 @@
   <ItemName>SQLify</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>484188159</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SQLify(s As String) As String</SourceLine>
@@ -891,6 +915,7 @@
   <ItemName>Chop</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1479270399</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Chop(s As String, charsToCut As Integer) As String</SourceLine>
@@ -913,6 +938,7 @@
   <ItemName>ChopB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1257226239</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ChopB(s As String, bytesToCut As Integer) As String</SourceLine>
@@ -934,6 +960,7 @@
   <ItemName>Squeeze</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1687306239</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Squeeze(s As String, charSet As String=" ") As String</SourceLine>
@@ -974,6 +1001,7 @@
   <ItemName>Remove</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>385994751</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Remove(s As String, charSet As String=" ") As String</SourceLine>
@@ -1015,6 +1043,7 @@
   <ItemName>ReplaceRange</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>630853631</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ReplaceRange(s As String, start As Integer, length As Integer, newText As String) As String</SourceLine>
@@ -1035,6 +1064,7 @@
   <ItemName>ReplaceRangeB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1963071487</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ReplaceRangeB(s As String, startB As Integer, lengthB As Integer, newText As String) As String</SourceLine>
@@ -1056,6 +1086,7 @@
   <ItemName>Metaphone</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>958959615</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub Metaphone(source As String, ByRef outPrimary As String, ByRef outAlternate As String)</SourceLine>
@@ -1818,6 +1849,7 @@
   <ItemName>MIsVowel</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>159715327</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function MIsVowel(source As String, atPos As Integer) As Boolean</SourceLine>
@@ -1838,6 +1870,7 @@
   <ItemName>MStringAt</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1294614527</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function MStringAt(source As String, start As Integer, length As Integer,  paramArray args As String) As Boolean</SourceLine>
@@ -1865,6 +1898,7 @@
   <ItemName>ReverseB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1251864575</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ReverseB(s As String) As String</SourceLine>
@@ -1908,30 +1942,10 @@
   <ItemResult>String</ItemResult>
  </Method>
  <Method>
-  <ItemName>EndsWith</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function EndsWith(extends s As String, withWhat As String) As Boolean</SourceLine>
-   <SourceLine>// Return true if 's' ends with the string 'withWhat',</SourceLine>
-   <SourceLine>// doing a standard string comparison.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Return Right(s, withWhat.Len) = withWhat</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>extends s As String, withWhat As String</ItemParams>
-  <ItemResult>Boolean</ItemResult>
- </Method>
- <Method>
   <ItemName>EndsWithB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>541749247</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function EndsWithB(extends s As String, withWhat As String) As Boolean</SourceLine>
@@ -1953,6 +1967,7 @@
   <ItemName>Sprintf</ItemName>
   <Compatibility>TargetHasGUI</Compatibility>
   <Visible>1</Visible>
+  <PartID>939614207</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Sprintf(src as string, ParamArray data as Variant) As string</SourceLine>
@@ -2100,6 +2115,7 @@
   <ItemName>ThousandsSeparator</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1404137471</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ThousandsSeparator() As String</SourceLine>
@@ -2124,6 +2140,7 @@
   <ItemName>DecimalSeparator</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1469169663</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function DecimalSeparator() As String</SourceLine>
@@ -2148,6 +2165,7 @@
   <ItemName>SplitByLength</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>930576383</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SplitByLength(s As String, fieldWidth As Integer) As String()</SourceLine>
@@ -2186,6 +2204,7 @@
   <ItemName>Trim</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>2077315071</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Trim(source As String, charsToTrim As String) As String</SourceLine>
@@ -2221,6 +2240,7 @@
   <ItemName>SplitByLengthB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>243638271</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SplitByLengthB(s As String, fieldWidth As Integer) As String()</SourceLine>
@@ -2259,6 +2279,7 @@
   <ItemName>ControlCharacters</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1654274047</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ControlCharacters() As String</SourceLine>
@@ -2286,6 +2307,7 @@
   <ItemName>LTrim</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1912496127</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function LTrim(source As String, charsToTrim As String) As String</SourceLine>
@@ -2315,6 +2337,7 @@
   <ItemName>RTrim</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1146300415</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function RTrim(source As String, charsToTrim As String) As String</SourceLine>
@@ -2343,6 +2366,7 @@
   <ItemName>HexB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1969709055</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function HexB(s As String) As String</SourceLine>
@@ -2397,6 +2421,7 @@
   <ItemName>MatchCase</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1340272639</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function MatchCase(textToChange As String, sampleText As String) As String</SourceLine>
@@ -2448,6 +2473,7 @@
   <ItemName>Random</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1468467199</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Random(length As Integer = 8, charset As String = "0123456789ABCDEFGHJKLMNPQRSTUVWXYZ") As String</SourceLine>
@@ -2495,6 +2521,7 @@
   <ItemName>SplitQuoted</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1770807295</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SplitQuoted(source As String, delimiter As String, removeQuotes as Boolean) As String()</SourceLine>
@@ -2555,6 +2582,7 @@
   <ItemName>JoinQuoted</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1408264191</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function JoinQuoted(fields() as String, delimiter as String) As String</SourceLine>
@@ -2594,6 +2622,7 @@
   <ItemName>EncodeCase</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>462630911</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function EncodeCase(s As String) As String</SourceLine>
@@ -2666,6 +2695,7 @@
   <ItemName>DecodeCase</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1416069119</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function DecodeCase(s As String) As String</SourceLine>
@@ -2695,6 +2725,7 @@
   <ItemName>Reverse</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>84969471</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Reverse(s As String) As String</SourceLine>
@@ -2728,6 +2759,7 @@
   <ItemName>LineEnding</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>60147711</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function LineEnding(s As String) As String</SourceLine>
@@ -2769,6 +2801,7 @@
   <ItemName>InStrQuoted</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1983934463</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function InStrQuoted(start As Integer = 1, source As String, find As String) As Integer</SourceLine>
@@ -2806,6 +2839,7 @@
   <ItemName>Chop</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1632802815</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Chop(s As String, stringToCut As String) As String</SourceLine>
@@ -2831,6 +2865,7 @@
   <ItemName>ChopB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1970345983</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ChopB(s As String, stringToCut As String) As String</SourceLine>
@@ -2856,6 +2891,7 @@
   <ItemName>SqueezeB</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>174395391</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SqueezeB(s As String, charSet As String=" ") As String</SourceLine>
@@ -2896,6 +2932,7 @@
   <ItemName>WrapLines</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1316329471</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub WrapLines(lines() As String, charsPerLine As Integer = 72, paragraphFill As Boolean = true)</SourceLine>
@@ -2957,6 +2994,7 @@
   <ItemName>GuessEncoding</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>944060415</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function GuessEncoding(s As String) As TextEncoding</SourceLine>
@@ -2982,6 +3020,7 @@
   <ItemName>GuessEncoding</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>962291711</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function GuessEncoding(s As String, ByRef outWrongOrder As Boolean) As TextEncoding</SourceLine>
@@ -3146,6 +3185,7 @@
   <ItemName>SwapBytePairs</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1465876479</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SwapBytePairs(s As String) As String</SourceLine>
@@ -3176,6 +3216,7 @@
   <ItemName>SwapByteQuads</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1967855615</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function SwapByteQuads(s As String) As String</SourceLine>
@@ -3206,6 +3247,7 @@
   <ItemName>URLDecode</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>537237503</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function URLDecode(s as String) As String</SourceLine>
@@ -3242,6 +3284,7 @@
   <ItemName>URLEncode</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1885130751</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function URLEncode(s as String) As String</SourceLine>
@@ -3275,6 +3318,7 @@
   <ItemName>TrimNull</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1079566335</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function TrimNull(s As String) As String</SourceLine>
@@ -3292,6 +3336,7 @@
   <ItemName>BaseConvert</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>871063551</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function BaseConvert(num As String, FromBase As UInt8, ToBase As UInt8) As String</SourceLine>
@@ -3357,6 +3402,7 @@
   <ItemName>Contributors</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1603047423</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <NoteLine>Contributors</NoteLine>
@@ -3383,6 +3429,7 @@
   <ItemName>Home Page</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1882562559</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <NoteLine>Home Page</NoteLine>
@@ -3401,6 +3448,7 @@
   <ItemName>Version History</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>174131199</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <NoteLine>Version History</NoteLine>
@@ -3489,6 +3537,7 @@
   <ItemName>License</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>937553919</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <NoteLine>License</NoteLine>
@@ -3507,6 +3556,7 @@
   <ItemName>Most Wanted</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>860991487</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <NoteLine>Most Wanted</NoteLine>
@@ -3521,6 +3571,7 @@
   <ItemName>mThousandsSeparator</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1300250623</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>mThousandsSeparator As String</SourceLine>
@@ -3535,6 +3586,7 @@
   <ItemName>mDecimalSeparator</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>233469951</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>mDecimalSeparator As String</SourceLine>
@@ -3549,6 +3601,7 @@
   <ItemName>mControlChars</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1444179967</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>mControlChars As String</SourceLine>
@@ -3565,7 +3618,6 @@
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <ItemType>String</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Index</ObjName>
@@ -3573,14 +3625,12 @@
    <PropertyGroup>ID</PropertyGroup>
    <PropertyValue>-2147483648</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Super</ObjName>
    <Visible>1</Visible>
    <PropertyGroup>ID</PropertyGroup>
    <ItemType>String</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Left</ObjName>
@@ -3588,7 +3638,6 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
   <ViewProperty>
    <ObjName>Top</ObjName>
@@ -3596,15 +3645,14 @@
    <PropertyGroup>Position</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
-   <InheritsFrom>Object</InheritsFrom>
   </ViewProperty>
  </ViewBehavior>
  <Constant>
   <ItemName>ModifierKey</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1125459967</PartID>
   <TextEncoding>134217984</TextEncoding>
-  <ItemName>ModifierKey</ItemName>
   <ItemType>0</ItemType>
   <ItemDef>Cmd</ItemDef>
   <ItemFlags>0</ItemFlags>

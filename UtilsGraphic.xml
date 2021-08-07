@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2017r1.1" FormatVersion="2" MinIDEVersion="20070100">
+<RBProject version="2021r2" FormatVersion="2" MinIDEVersion="20150400">
 <block type="Module" ID="1567812713">
  <ObjName>UtilsGraphic</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -11,6 +11,7 @@
   <ItemName>Gray</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>752052223</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Gray(x As Integer = 128) As Color</SourceLine>
@@ -40,6 +41,7 @@
   <ItemName>IsGray</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1805172735</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function IsGray(Extends c As Color, tolerance As Double = 0.0) As Boolean</SourceLine>
@@ -68,6 +70,7 @@
   <ItemName>IsGray</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>889450495</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function IsGray(p As Picture, tolerance As Double = 0.0) As Boolean</SourceLine>
@@ -130,6 +133,7 @@
   <ItemName>HexValue</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1436925951</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function HexValue(Extends c As Color) As String</SourceLine>
@@ -159,6 +163,7 @@
   <ItemName>Copy</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1849694207</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Copy(Extends p As Picture, force32Bit As Boolean = False) As Picture</SourceLine>
@@ -230,6 +235,7 @@
   <ItemName>Darken</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1612857343</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Darken(p As Picture, opacity As Double) As Picture</SourceLine>
@@ -275,6 +281,7 @@
   <ItemName>Lighten</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1955340287</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Lighten(p As Picture, opacity As Double) As Picture</SourceLine>
@@ -319,6 +326,7 @@
   <ItemName>Blend</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1376733183</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Blend(top As Color, base As Color, opacity As Double) As Color</SourceLine>
@@ -356,6 +364,7 @@
   <ItemName>Multiply</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>732207103</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Multiply(top As Color, base As Color, opacity As Double = 1.0) As Color</SourceLine>
@@ -402,6 +411,7 @@
   <ItemName>Screen</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1273354239</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Screen(top As Color, base As Color, opacity As Double = 1.0) As Color</SourceLine>
@@ -448,6 +458,7 @@
   <ItemName>Gradiant</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>473325567</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Gradiant(front As Color, back As Color, elements As Integer) As Color()</SourceLine>
@@ -501,6 +512,7 @@
   <ItemName>Desaturate</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>814682111</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Desaturate(Extends c As Color) As Color</SourceLine>
@@ -529,6 +541,7 @@
   <ItemName>YUV</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1055240191</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function YUV(Y As Integer, U As Integer, V As Integer) As Color</SourceLine>
@@ -567,6 +580,7 @@
   <ItemName>ChromaU</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>557436927</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ChromaU(Extends c As Color) As Integer</SourceLine>
@@ -591,6 +605,7 @@
   <ItemName>ChromaV</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1539325951</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ChromaV(Extends c As Color) As Integer</SourceLine>
@@ -614,6 +629,7 @@
   <ItemName>Luminance</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1839837183</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Luminance(Extends c As Color) As Integer</SourceLine>
@@ -638,6 +654,7 @@
   <ItemName>Desaturate</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>668981247</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Desaturate(p As Picture) As Picture</SourceLine>
@@ -707,6 +724,7 @@
   <ItemName>Invert</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>912121855</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Invert(p As Picture) As Picture</SourceLine>
@@ -748,6 +766,7 @@
   <ItemName>HasMask</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>874084351</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function HasMask(Extends p As Picture) As Boolean</SourceLine>
@@ -766,6 +785,7 @@
   <ItemName>InvertMask</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>105254911</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function InvertMask(p As Picture) As Picture</SourceLine>
@@ -807,6 +827,7 @@
   <ItemName>ContrastBW</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>617664511</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ContrastBW(Extends c As Color) As Color</SourceLine>
@@ -836,6 +857,7 @@
   <ItemName>Scale</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>120016895</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Scale(p As Picture, w As Integer, h As Integer) As Picture</SourceLine>
@@ -890,6 +912,7 @@
   <ItemName>ScaleWithin</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>607277055</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ScaleWithin(p As Picture, w As Integer, h As Integer) As Picture</SourceLine>
@@ -951,6 +974,7 @@
   <ItemName>FlipHorizontal</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1414469631</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function FlipHorizontal(p As Picture) As Picture</SourceLine>
@@ -1016,6 +1040,7 @@
   <ItemName>FlipVertical</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1114771455</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function FlipVertical(p As Picture) As Picture</SourceLine>
@@ -1081,6 +1106,7 @@
   <ItemName>Rotate180</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>367026175</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Rotate180(p As Picture) As Picture</SourceLine>
@@ -1231,6 +1257,7 @@
   <ItemName>PixelCount</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>948267007</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function PixelCount(p As Picture) As Integer</SourceLine>
@@ -1259,6 +1286,7 @@
   <ItemName>Noise</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>239384575</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Noise(p As Picture, amount As Double, grayNoise As Boolean = False) As Picture</SourceLine>
@@ -1306,6 +1334,7 @@
   <ItemName>NoiseTile</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>936155135</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function NoiseTile(opacity As Double, isGrayNoise As Boolean = False) As Picture</SourceLine>
@@ -1356,6 +1385,7 @@
   <ItemName>Tile</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>2081335295</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Tile(p As Picture, w As Integer, h As Integer) As Picture</SourceLine>
@@ -1398,6 +1428,7 @@
   <ItemName>HueShift</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1634306047</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function HueShift(p As Picture, value As Double) As Picture</SourceLine>
@@ -1470,6 +1501,7 @@
   <ItemName>Rotate90</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1287839743</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Rotate90(p As Picture, counterClockwise As Boolean = False) As Picture</SourceLine>
@@ -1616,6 +1648,7 @@
   <ItemName>BlackAndWhite</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>942868479</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function BlackAndWhite(p As Picture) As Picture</SourceLine>
@@ -1665,6 +1698,7 @@
   <ItemName>Histogram</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>298932223</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Histogram(p As Picture, accurate As Boolean = True) As Double()</SourceLine>
@@ -1832,6 +1866,7 @@
   <ItemName>DrawArrow</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>455190527</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawArrow(Extends g As Graphics, Dir As Integer, x As Integer, y As Integer, Width As Integer, Height As Integer)</SourceLine>
@@ -1955,6 +1990,7 @@
   <ItemName>DrawDiagonalText</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1106890751</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawDiagonalText(Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer, Height As Integer)</SourceLine>
@@ -1985,6 +2021,7 @@
   <ItemName>DrawFade</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>662818815</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawFade(Extends g as graphics, ColorStart As Color, ColorEnd As Color, FadeDir As integer = 0, x As Integer = - 1, y As Integer = - 1, Width As integer = - 1, Height As Integer = - 1)</SourceLine>
@@ -2056,6 +2093,7 @@
   <ItemName>DrawImg</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>697411583</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawImg(Extends g As Graphics, p As Picture, mode As Integer, x As Integer, y As Integer, w As Integer, h As Integer, Vert As Integer = 1, Horz As Integer = 1)</SourceLine>
@@ -2149,6 +2187,7 @@
   <ItemName>DrawText</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1342724095</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawText(Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer = - 1, Height As Integer = - 1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False)</SourceLine>
@@ -2388,6 +2427,7 @@
   <ItemName>GetMaxFontSize</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1966000127</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function GetMaxFontSize(Extends g As Graphics, text As String, Width As Integer, Height As Integer) As Integer</SourceLine>
@@ -2423,6 +2463,7 @@
   <ItemName>DrawImageWell</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>608520191</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawImageWell(Extends g as graphics, x As Integer, y As Integer, Width As Integer, Height As Integer)</SourceLine>
@@ -2460,6 +2501,7 @@
   <ItemName>ModernizePicture</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>330381311</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function ModernizePicture(input As Picture) As Picture</SourceLine>
@@ -2484,6 +2526,7 @@
   <ItemName>DrawTextAsc</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
+  <PartID>1411860479</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Sub DrawTextAsc(Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer = - 1, Height As Integer = - 1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False)</SourceLine>
