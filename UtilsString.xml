@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2021r2" FormatVersion="2" MinIDEVersion="20150400">
+<RBProject version="2023r4" FormatVersion="2" MinIDEVersion="20150400">
 <block type="Module" ID="-1122482829">
  <ObjName>UtilsString</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -548,7 +548,7 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
+  <ItemFlags>1</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>extends s As String, what As String</ItemParams>
   <ItemResult>Boolean</ItemResult>

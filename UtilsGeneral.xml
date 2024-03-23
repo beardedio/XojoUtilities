@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2021r2" FormatVersion="2" MinIDEVersion="20150400">
+<RBProject version="2023r4" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -451,7 +451,7 @@
    <SourceLine>Dim s As String</SourceLine>
    <SourceLine>s = "App: " + App.PropName</SourceLine>
    <SourceLine>'s = s + " v"+Str(app.MajorVersion)+"."+Str(app.MinorVersion)+"."+Str(app.BugVersion)+" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
-   <SourceLine>s = s + " v"+App.ShortVersion+" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
+   <SourceLine>s = s + " v"+App.Version+" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
    <SourceLine>If MultiLine Then</SourceLine>
    <SourceLine>s = s + EndOfLine</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -483,8 +483,7 @@
    <SourceLine>s = s + " DEBUG"</SourceLine>
    <SourceLine>#EndIf</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>'s = s + " v"+Str(app.MajorVersion)+"."+Str(app.MinorVersion)+"."+Str(app.BugVersion)</SourceLine>
-   <SourceLine>s = s + " v"+App.ShortVersion</SourceLine>
+   <SourceLine>s = s + " v"+App.Version</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>#If DebugBuild Then</SourceLine>
    <SourceLine>s = s +" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
@@ -662,14 +661,14 @@
    <SourceLine></SourceLine>
    <SourceLine>Dim v1, v2, v3, v4 As Integer</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>v1 = Val(NthField(app.ShortVersion, ".", 1))</SourceLine>
+   <SourceLine>v1 = Val(NthField(app.Version, ".", 1))</SourceLine>
    <SourceLine>If v &gt;= 2 Then</SourceLine>
-   <SourceLine>v2 = Val(NthField(app.ShortVersion, ".", 2))</SourceLine>
+   <SourceLine>v2 = Val(NthField(app.Version, ".", 2))</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>v2 = 0</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>If v &gt;= 3 Then</SourceLine>
-   <SourceLine>v3 = Val(NthField(app.ShortVersion, ".", 3))</SourceLine>
+   <SourceLine>v3 = Val(NthField(app.Version, ".", 3))</SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>v3 = 0</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -793,7 +792,7 @@
   <PartID>452724735</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub AlwaysOnTop(Extends Win As Window, Set As Boolean)</SourceLine>
+   <SourceLine>Sub AlwaysOnTop(Extends Win As DesktopWindow, Set As Boolean)</SourceLine>
    <SourceLine>#If TargetWin32 Then</SourceLine>
    <SourceLine>Const SWP_NOSIZE = &amp;H1</SourceLine>
    <SourceLine>Const SWP_NOMOVE = &amp;H2</SourceLine>
@@ -842,11 +841,11 @@
    <SourceLine>Const NSPopUpMenuWindowLevel = 101</SourceLine>
    <SourceLine>Const NSScreenSaverWindowLevel = 1001</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Soft Declare Sub NSWindowSetLevel Lib "Cocoa" selector "setLevel:" (windowRef As WindowPtr, level As Integer)</SourceLine>
+   <SourceLine>Soft Declare Sub NSWindowSetLevel Lib "Cocoa" selector "setLevel:" (windowRef As Ptr, level As Integer)</SourceLine>
    <SourceLine>If set Then</SourceLine>
-   <SourceLine>NSWindowSetLevel(Win, NSFloatingWindowLevel)</SourceLine>
+   <SourceLine>NSWindowSetLevel(Win.Handle, NSFloatingWindowLevel)</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>NSWindowSetLevel(Win, NSNormalWindowLevel)</SourceLine>
+   <SourceLine>NSWindowSetLevel(Win.Handle, NSNormalWindowLevel)</SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>#EndIf</SourceLine>
@@ -856,7 +855,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>Extends Win As Window, Set As Boolean</ItemParams>
+  <ItemParams>Extends Win As DesktopWindow, Set As Boolean</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -1144,7 +1143,7 @@
   <PartID>1479360511</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function PopUpCellChoices(extends lb As Listbox, row As Integer, column As Integer, choices() As String, celltags() As String) As Boolean</SourceLine>
+   <SourceLine>Function PopUpCellChoices(extends lb As DesktopListBox, row As Integer, column As Integer, choices() As String, celltags() As String) As Boolean</SourceLine>
    <SourceLine>// Pop up the menu of choices for this cell.  If the user picks one,</SourceLine>
    <SourceLine>// store it in that cell and return True.  Otherwise, return False.</SourceLine>
    <SourceLine></SourceLine>
@@ -1155,15 +1154,15 @@
    <SourceLine>Else</SourceLine>
    <SourceLine>Dim item As New MenuItem(choice)</SourceLine>
    <SourceLine>menu.Append item</SourceLine>
-   <SourceLine>If choice = lb.Cell(row, column) Then item.Checked = True</SourceLine>
+   <SourceLine>If choice = lb.CellTextAt(row, column) Then item.Checked = True</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim choice As MenuItem = menu.PopUp</SourceLine>
    <SourceLine>If choice Is Nil Then Return False</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>lb.Cell(row, column) = choice.Text</SourceLine>
-   <SourceLine>lb.CellTag(row, column) = celltags(choices.IndexOf(choice.Text))</SourceLine>
+   <SourceLine>lb.CellTextAt(row, column) = choice.Text</SourceLine>
+   <SourceLine>lb.CellTagAt(row, column) = celltags(choices.IndexOf(choice.Text))</SourceLine>
    <SourceLine>Return True</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
@@ -1171,7 +1170,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>extends lb As Listbox, row As Integer, column As Integer, choices() As String, celltags() As String</ItemParams>
+  <ItemParams>extends lb As DesktopListBox, row As Integer, column As Integer, choices() As String, celltags() As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
  <Method>
@@ -1209,7 +1208,7 @@
   <PartID>1864812543</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub BringToFront(Extends Win As Window)</SourceLine>
+   <SourceLine>Sub BringToFront(Extends Win As DesktopWindow)</SourceLine>
    <SourceLine>If Not Win.visible Then</SourceLine>
    <SourceLine>Win.visible = True</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -1245,7 +1244,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>Extends Win As Window</ItemParams>
+  <ItemParams>Extends Win As DesktopWindow</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
