@@ -455,7 +455,7 @@
    <SourceLine>If MultiLine Then</SourceLine>
    <SourceLine>s = s + EndOfLine</SourceLine>
    <SourceLine>End If</SourceLine>
-   <SourceLine>s = s + " Build Date: "+app.BuildDate.ShortDate+" "+App.BuildDate.ShortTime</SourceLine>
+   <SourceLine>s = s + " Build Date: "+app.BuildDate.SQLDateTime</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return S</SourceLine>
    <SourceLine>End Function</SourceLine>
@@ -799,15 +799,21 @@
    <SourceLine>Const HWND_TOPMOST = -1</SourceLine>
    <SourceLine>Const HWND_NOTOPMOST = -2</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Declare Function SetWindowPos Lib "user32" (hwnd As WindowPtr, hWndInstertAfter As Integer, _</SourceLine>
-   <SourceLine>x As Integer, y As Integer, cx As Integer, cy As Integer, flags As Integer) As Integer</SourceLine>
+   <SourceLine>Declare Function SetWindowPos Lib "User32.dll" Alias "SetWindowPos" ( _</SourceLine>
+   <SourceLine>hWnd As Ptr, _</SourceLine>
+   <SourceLine>hWndInsertAfter As Integer, _</SourceLine>
+   <SourceLine>X As Int32, _</SourceLine>
+   <SourceLine>Y As Int32, _</SourceLine>
+   <SourceLine>cx As Int32, _</SourceLine>
+   <SourceLine>cy As Int32, _</SourceLine>
+   <SourceLine>uFlags As UInt32 _</SourceLine>
+   <SourceLine>) As Int32</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If set Then</SourceLine>
-   <SourceLine>Call SetWindowPos(Win, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE + SWP_NOSIZE)</SourceLine>
+   <SourceLine>Call SetWindowPos(Win.Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE + SWP_NOSIZE)</SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>Call SetWindowPos(Win, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE + SWP_NOSIZE)</SourceLine>
+   <SourceLine>Call SetWindowPos(Win.Handle, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE + SWP_NOSIZE)</SourceLine>
    <SourceLine>End</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>#ElseIf TargetCarbon</SourceLine>
    <SourceLine>Const kAlertWindowClass = 1</SourceLine>
@@ -823,7 +829,7 @@
    <SourceLine>Const kPlainWindowClass = 13</SourceLine>
    <SourceLine>Const kOverlayWindowClass = 14</SourceLine>
    <SourceLine>Const kSheetAlertWindowClass = 15</SourceLine>
-   <SourceLine>Const kAltPlainWindowClass =16</SourceLine>
+   <SourceLine>Const kAltPlainWindowClass = 16</SourceLine>
    <SourceLine>Const kDrawerWindowClass = 20</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>'Declare Function SetWindowClass Lib "Carbon" (WindowHandle as Integer, inWindowClass as Integer) as Integer</SourceLine>
@@ -1000,7 +1006,7 @@
    <SourceLine>Dim num As Int64 = 0</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>While i &lt;= 4</SourceLine>
-   <SourceLine>num = num + (Val(NthField(s, ".", i))*(256^(4-i)))</SourceLine>
+   <SourceLine>num = num + (Val(s.NthField(".", i))*(256^(4-i)))</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
@@ -1181,11 +1187,11 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function FontAvailable(FontName As String) As Boolean</SourceLine>
-   <SourceLine>Dim i, n as Integer</SourceLine>
+   <SourceLine>Dim i, n As Integer</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>n = FontCount-1</SourceLine>
+   <SourceLine>n = System.FontCount - 1</SourceLine>
    <SourceLine>For i = 0 to n</SourceLine>
-   <SourceLine>If Font(i) = FontName Then</SourceLine>
+   <SourceLine>If System.FontAt(i) = FontName Then</SourceLine>
    <SourceLine>Return True</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
@@ -1223,14 +1229,15 @@
    <SourceLine>Call SetFrontProcess (psn)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>#ElseIf TargetWin32</SourceLine>
-   <SourceLine>Dim i, h As Integer</SourceLine>
+   <SourceLine>Dim h As Ptr</SourceLine>
+   <SourceLine>Dim i As Integer</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Declare Function ShowWindow Lib "User32" (hWnd As Integer, nCmdShow As Integer) As Integer</SourceLine>
-   <SourceLine>Declare Function BringWindowToTop Lib "User32" (hWnd As Integer) As Integer</SourceLine>
-   <SourceLine>Declare Function SetForegroundWindow Lib "User32" (hWnd As Integer) As Integer</SourceLine>
+   <SourceLine>Declare Function ShowWindow Lib "User32" (hWnd As Ptr, nCmdShow As Integer) As Integer</SourceLine>
+   <SourceLine>Declare Function BringWindowToTop Lib "User32" (hWnd As Ptr) As Integer</SourceLine>
+   <SourceLine>Declare Function SetForegroundWindow Lib "User32" (hWnd As Ptr) As Integer</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>' Get the Window Handle</SourceLine>
-   <SourceLine>h = Win.WinHWND</SourceLine>
+   <SourceLine>h = Win.Handle</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>' Activate the Window</SourceLine>
    <SourceLine>i = ShowWindow(h, 1)</SourceLine>
@@ -1278,6 +1285,78 @@
   <IsShared>0</IsShared>
   <ItemParams>X As Integer, Y As Integer</ItemParams>
   <ItemResult>Integer</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToInt32</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1608359935</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToInt32(Extends i As Int64) As Int32</SourceLine>
+   <SourceLine>Return CType(i, Int32)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends i As Int64</ItemParams>
+  <ItemResult>Int32</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToInt32</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1719359487</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToInt32(Extends i As Int32) As Int32</SourceLine>
+   <SourceLine>return i</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends i As Int32</ItemParams>
+  <ItemResult>Int32</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToInt32</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>20811775</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToInt32(Extends i As Double) As int32</SourceLine>
+   <SourceLine>Return CType(i, Int32)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends i As Double</ItemParams>
+  <ItemResult>int32</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ToUInt64</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2037768191</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ToUInt64(Extends i As Int64) As UInt64</SourceLine>
+   <SourceLine>Return CType(i, UInt64)</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends i As Int64</ItemParams>
+  <ItemResult>UInt64</ItemResult>
  </Method>
  <Property>
   <ItemName>DataFolder</ItemName>

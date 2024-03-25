@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2021r2" FormatVersion="2" MinIDEVersion="20150400">
+<RBProject version="2021r3.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1567812713">
  <ObjName>UtilsGraphic</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -461,7 +461,7 @@
   <PartID>473325567</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function Gradiant(front As Color, back As Color, elements As Integer) As Color()</SourceLine>
+   <SourceLine>Function Gradiant(front As Color, back As Color, elements As Double) As Color()</SourceLine>
    <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
    <SourceLine>'</SourceLine>
    <SourceLine>'    This function returns an array of colors (size of elements) smoothly blended from two </SourceLine>
@@ -505,7 +505,7 @@
   <AliasName></AliasName>
   <ItemFlags>1</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>front As Color, back As Color, elements As Integer</ItemParams>
+  <ItemParams>front As Color, back As Color, elements As Double</ItemParams>
   <ItemResult>Color()</ItemResult>
  </Method>
  <Method>
@@ -804,10 +804,10 @@
    <SourceLine>Dim k, cmap(255) As Integer</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If (p.Depth &lt; 16) Then copy = p.Copy(True) Else copy = p.Copy</SourceLine>
-   <SourceLine>r = copy.Mask.RGBSurface</SourceLine>
+   <SourceLine>r = copy.CopyMask.RGBSurface</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>For k = 0 To 255</SourceLine>
-   <SourceLine>cmap(k) = BitwiseXor(k, &amp;hFF)</SourceLine>
+   <SourceLine>cmap(k.ToInt32) = BitwiseXor(k.ToUInt64, &amp;hFF)</SourceLine>
    <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Not (r Is Nil) Then r.Transform(cmap)</SourceLine>
@@ -2024,14 +2024,15 @@
   <PartID>662818815</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub DrawFade(Extends g as graphics, ColorStart As Color, ColorEnd As Color, FadeDir As integer = 0, x As Integer = - 1, y As Integer = - 1, Width As integer = - 1, Height As Integer = - 1)</SourceLine>
-   <SourceLine>Dim i, j, w As Integer</SourceLine>
+   <SourceLine>Sub DrawFade(Extends g As graphics, ColorStart As Color, ColorEnd As Color, FadeDir As integer = 0, x As Double = -1, y As Double = -1, Width As Double = -1, Height As Double = -1)</SourceLine>
+   <SourceLine>Dim j As Int32</SourceLine>
+   <SourceLine>Dim w As Double</SourceLine>
    <SourceLine>Dim pct As Double</SourceLine>
-   <SourceLine>Dim colorset() As color</SourceLine>
+   <SourceLine>Dim colorset() As Color</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If x = -1 Or y = -1 Or Width = -1 Or Height = -1 Then</SourceLine>
-   <SourceLine>x = 0</SourceLine>
-   <SourceLine>y = 0</SourceLine>
+   <SourceLine>If x &lt;= 0.0 Or y &lt;= 0.0 Or Width &lt;= 0.0 Or Height &lt;= 0.0 Then</SourceLine>
+   <SourceLine>x = 0.0</SourceLine>
+   <SourceLine>y = 0.0</SourceLine>
    <SourceLine>Width = g.Width</SourceLine>
    <SourceLine>Height = g.Height</SourceLine>
    <SourceLine></SourceLine>
@@ -2067,16 +2068,16 @@
    <SourceLine></SourceLine>
    <SourceLine>colorset = Gradiant(ColorEnd, ColorStart, w)</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>For j = 0 To w</SourceLine>
+   <SourceLine>For j = 0 To CType(w, Int32)</SourceLine>
    <SourceLine>pct = j / w</SourceLine>
-   <SourceLine>g.forecolor = colorset(j)</SourceLine>
+   <SourceLine>g.DrawingColor = colorset(j)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Select Case FadeDir</SourceLine>
    <SourceLine>Case 0, 2 // Vertical</SourceLine>
-   <SourceLine>g.drawline(0, j, Width, j)</SourceLine>
+   <SourceLine>g.DrawLine(0.0, j, Width, j)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Case 1, 3</SourceLine>
-   <SourceLine>g.drawline(j, 0, j, Height)</SourceLine>
+   <SourceLine>g.DrawLine(j, 0.0, j, Height)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End</SourceLine>
    <SourceLine>Next</SourceLine>
@@ -2086,7 +2087,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>Extends g as graphics, ColorStart As Color, ColorEnd As Color, FadeDir As integer = 0, x As Integer = - 1, y As Integer = - 1, Width As integer = - 1, Height As Integer = - 1</ItemParams>
+  <ItemParams>Extends g As graphics, ColorStart As Color, ColorEnd As Color, FadeDir As integer = 0, x As Double = -1, y As Double = -1, Width As Double = -1, Height As Double = -1</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -2223,7 +2224,7 @@
    <SourceLine>Dim subx, suby As Integer</SourceLine>
    <SourceLine>Dim yOffset As Integer</SourceLine>
    <SourceLine>Dim tParts(0) As String</SourceLine>
-   <SourceLine>Dim Words_Space(), Words() As String</SourceLine>
+   <SourceLine>Dim Words() As String</SourceLine>
    <SourceLine>Dim clipy As Boolean</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Clipy = True</SourceLine>
@@ -2529,7 +2530,7 @@
   <PartID>1411860479</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub DrawTextAsc(Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer = - 1, Height As Integer = - 1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False)</SourceLine>
+   <SourceLine>Sub DrawTextAsc(Extends g As Graphics, txt As String, x As Double, y As Double, Width As Double = -1, Height As Double = -1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False)</SourceLine>
    <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
    <SourceLine>'</SourceLine>
    <SourceLine>'    Draws text to the screen as the size you want and in the orientation you want.</SourceLine>
@@ -2538,7 +2539,7 @@
    <SourceLine>'</SourceLine>
    <SourceLine>'    Variables</SourceLine>
    <SourceLine>'        g        - The Graphics Object</SourceLine>
-   <SourceLine>'        Text     - The text to be drawn</SourceLine>
+   <SourceLine>'        txt      - The text to be drawn</SourceLine>
    <SourceLine>'        x        - The x coordinate for the arrow</SourceLine>
    <SourceLine>'        y        - The y coordinate for the arrow</SourceLine>
    <SourceLine>'        Width    - The width of the arrow</SourceLine>
@@ -2559,27 +2560,27 @@
    <SourceLine>//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim i, t, M, id As Integer</SourceLine>
-   <SourceLine>Dim subx, suby As Integer</SourceLine>
-   <SourceLine>Dim yOffset As Integer</SourceLine>
+   <SourceLine>Dim subx, suby As Double</SourceLine>
+   <SourceLine>Dim yOffset As Double</SourceLine>
    <SourceLine>Dim tParts(0) As String</SourceLine>
-   <SourceLine>Dim Words_Space(), Words() As String</SourceLine>
+   <SourceLine>Dim Words() As String</SourceLine>
    <SourceLine>Dim clipy As Boolean</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Clipy = True</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Trim(Text) = "" Then</SourceLine>
+   <SourceLine>If txt.Trim = "" Then</SourceLine>
    <SourceLine>Exit Sub</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Width = 0 Or Height = 0 Then</SourceLine>
+   <SourceLine>If Width &lt;= 0.0 Or Height &lt;= 0.0 Then</SourceLine>
    <SourceLine>Exit Sub</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Text = Trim(ReplaceLineEndings(Text, EndOfLine))</SourceLine>
+   <SourceLine>txt = txt.ReplaceLineEndings(EndOfLine).Trim</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Width = -1 Or Height = -1 Then</SourceLine>
+   <SourceLine>If Width &lt;= 0.0 Or Height &lt;= 0.0 Then</SourceLine>
    <SourceLine>Horz = 0</SourceLine>
    <SourceLine>Vert = 0</SourceLine>
    <SourceLine>WordWrap = False</SourceLine>
@@ -2589,38 +2590,38 @@
    <SourceLine>Else</SourceLine>
    <SourceLine>If Clipy Then</SourceLine>
    <SourceLine>g = g.Clip(x, y, Width, Height)</SourceLine>
-   <SourceLine>x = 0</SourceLine>
-   <SourceLine>y = 0</SourceLine>
+   <SourceLine>x = 0.0</SourceLine>
+   <SourceLine>y = 0.0</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Max = True Then</SourceLine>
-   <SourceLine>g.TextSize = 1</SourceLine>
+   <SourceLine>g.FontSize = 1.0</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If InStr(Text, " ") = 0 OR InStr(Text, EndOfLine) &gt; 0  Then</SourceLine>
+   <SourceLine>If txt.IndexOf(" ") = 0 Or txt.IndexOf(EndOfLine) &gt; 0  Then</SourceLine>
    <SourceLine>WordWrap = False</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If WordWrap = True Then</SourceLine>
-   <SourceLine>Text = ReplaceLineEndings(Text, " ") // This is a fix for new lines with word wrap. They dont seem to be compatable.</SourceLine>
+   <SourceLine>txt = txt.ReplaceLineEndings(" ") // This is a fix for new lines with word wrap. They dont seem to be compatable.</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Words = Split(Text, " ")</SourceLine>
+   <SourceLine>Words = txt.Split(" ")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Max = True Then</SourceLine>
    <SourceLine>Do</SourceLine>
    <SourceLine>i = 0</SourceLine>
    <SourceLine>t = 0</SourceLine>
-   <SourceLine>M = UBound(Words)</SourceLine>
+   <SourceLine>M = Words.LastIndex</SourceLine>
    <SourceLine>Redim tParts(0)</SourceLine>
-   <SourceLine>tParts(0) = Trim(Words(0))</SourceLine>
+   <SourceLine>tParts(0) = Words(0).Trim</SourceLine>
    <SourceLine>While i &lt; M</SourceLine>
-   <SourceLine>If g.StringWidth(tParts(t) + " " + Trim(Words(i+1))) &lt; Width Then</SourceLine>
-   <SourceLine>tParts(t) = tParts(t) + " " + Trim(Words(i+1))</SourceLine>
+   <SourceLine>If g.StringWidth(tParts(t) + " " + Words(i+1).Trim) &lt; Width Then</SourceLine>
+   <SourceLine>tParts(t) = tParts(t) + " " + Words(i+1).Trim</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
    <SourceLine>t = t + 1</SourceLine>
@@ -2633,10 +2634,10 @@
    <SourceLine>Wend</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If (UBound(tParts)+1)*(g.TextAscent) &lt; Height Then</SourceLine>
-   <SourceLine>g.TextSize = g.TextSize + 1</SourceLine>
+   <SourceLine>g.FontSize = g.FontSize + 1.0</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>g.TextSize = g.TextSize - 1</SourceLine>
+   <SourceLine>g.FontSize = g.FontSize - 1.0</SourceLine>
    <SourceLine>Exit Do</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
@@ -2647,9 +2648,9 @@
    <SourceLine></SourceLine>
    <SourceLine>i = 0</SourceLine>
    <SourceLine>t = 0</SourceLine>
-   <SourceLine>M = UBound(Words)</SourceLine>
+   <SourceLine>M = Words.LastIndex</SourceLine>
    <SourceLine>Redim tParts(0)</SourceLine>
-   <SourceLine>tParts(0) = Trim(Words(0))</SourceLine>
+   <SourceLine>tParts(0) = Words(0).Trim</SourceLine>
    <SourceLine>While i &lt; M</SourceLine>
    <SourceLine>If g.StringWidth(tParts(t) + " " + Trim(Words(i+1))) &lt; Width Then</SourceLine>
    <SourceLine>tParts(t) = tParts(t) + " " + Trim(Words(i+1))</SourceLine>
@@ -2666,10 +2667,10 @@
    <SourceLine></SourceLine>
    <SourceLine>If UBound(tParts) = UBound(Words) Then</SourceLine>
    <SourceLine>i = 0</SourceLine>
-   <SourceLine>M = UBound(Words)+1</SourceLine>
+   <SourceLine>M = Words.LastIndex + 1</SourceLine>
    <SourceLine>While i &lt; M</SourceLine>
    <SourceLine>While g.StringWidth(Words(i)) &gt; Width AND g.TextSize &gt; 1</SourceLine>
-   <SourceLine>g.TextSize = g.TextSize - 1</SourceLine>
+   <SourceLine>g.FontSize = g.FontSize - 1</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Wend</SourceLine>
    <SourceLine>i = i + 1</SourceLine>
@@ -2679,28 +2680,28 @@
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Else</SourceLine>
-   <SourceLine>If InStr(Trim(Text), EndOfLine) &gt; 0 Then</SourceLine>
-   <SourceLine>Redim tParts(CountFields(Text, EndOfLine)-1)</SourceLine>
+   <SourceLine>If InStr(Trim(txt), EndOfLine) &gt; 0 Then</SourceLine>
+   <SourceLine>Redim tParts(CountFields(txt, EndOfLine)-1)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If Max = True Then</SourceLine>
-   <SourceLine>While g.StringWidth(Text) &lt; Width And g.TextAscent*(UBound(tParts)+1) &lt; Height</SourceLine>
-   <SourceLine>g.TextSize = g.TextSize + 1</SourceLine>
+   <SourceLine>While g.StringWidth(txt) &lt; Width And g.TextAscent*(UBound(tParts)+1) &lt; Height</SourceLine>
+   <SourceLine>g.FontSize = g.FontSize + 1.0</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Wend</SourceLine>
-   <SourceLine>g.TextSize = g.TextSize - 1</SourceLine>
+   <SourceLine>g.FontSize = g.FontSize - 1.0</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>tparts = Split(Text, EndOfLine)</SourceLine>
+   <SourceLine>tparts = txt.Split(EndOfLine)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If Max = False And Width &gt; 0 And Height &gt; 0 Then</SourceLine>
-   <SourceLine>If g.StringWidth(tparts(0)) &gt; Width Or (((UBound(tParts)+1)*g.TextAscent) &gt; Height And UBound(tParts) &gt; 0) Then</SourceLine>
-   <SourceLine>If ((UBound(tParts)+1)*g.TextAscent) &gt; Height And UBound(tParts) &gt; 0 Then</SourceLine>
+   <SourceLine>If Max = False And Width &gt; 0.0 And Height &gt; 0.0 Then</SourceLine>
+   <SourceLine>If g.StringWidth(tparts(0)) &gt; Width Or (((UBound(tParts)+1)*g.FontAscent) &gt; Height And tParts.LastIndex &gt; 0) Then</SourceLine>
+   <SourceLine>If ((tParts.LastIndex+1)*g.FontAscent) &gt; Height And tParts.LastIndex &gt; 0 Then</SourceLine>
    <SourceLine>Dim size As Integer</SourceLine>
-   <SourceLine>size = Floor(Height/g.TextAscent)-1</SourceLine>
+   <SourceLine>size = Floor(Height/g.FontAscent)-1</SourceLine>
    <SourceLine>If size &lt; 0 Then</SourceLine>
    <SourceLine>size = 0</SourceLine>
    <SourceLine></SourceLine>
@@ -2730,26 +2731,26 @@
    <SourceLine>Case 0</SourceLine>
    <SourceLine>yOffset = 0</SourceLine>
    <SourceLine>Case 1</SourceLine>
-   <SourceLine>yOffset = Height - (Height + ((UBound(tParts)+1)*g.TextAscent))/2</SourceLine>
+   <SourceLine>yOffset = Height - (Height + ((UBound(tParts)+1)*g.FontAscent))/2</SourceLine>
    <SourceLine>Case 2</SourceLine>
-   <SourceLine>yOffset = Height - ((UBound(tParts)+1)*g.TextAscent)</SourceLine>
+   <SourceLine>yOffset = Height - ((UBound(tParts)+1)*g.FontAscent)</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>i = 0</SourceLine>
-   <SourceLine>M = UBound(tparts) + 1</SourceLine>
+   <SourceLine>M = tparts.LastIndex + 1</SourceLine>
    <SourceLine>While i &lt; M</SourceLine>
    <SourceLine>Select Case Horz</SourceLine>
    <SourceLine>Case 0</SourceLine>
-   <SourceLine>subx = 0</SourceLine>
+   <SourceLine>subx = 0.0</SourceLine>
    <SourceLine>Case 1</SourceLine>
-   <SourceLine>subx = (width - g.StringWidth(tparts(i)))/2</SourceLine>
+   <SourceLine>subx = (width - g.TextWidth(tparts(i)))/2</SourceLine>
    <SourceLine>Case 2</SourceLine>
-   <SourceLine>subx = width-g.StringWidth(tparts(i))</SourceLine>
+   <SourceLine>subx = width-g.TextWidth(tparts(i))</SourceLine>
    <SourceLine>End Select</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>suby = (g.TextAscent * i) + yOffset</SourceLine>
+   <SourceLine>suby = (g.FontAscent * i) + yOffset</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>g.DrawString(tparts(i), x+subx, y+suby+g.TextAscent)</SourceLine>
+   <SourceLine>g.DrawText(tparts(i), x+subx, y+suby+g.FontAscent)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>i = i + 1</SourceLine>
    <SourceLine>Wend</SourceLine>
@@ -2759,7 +2760,7 @@
   <AliasName></AliasName>
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
-  <ItemParams>Extends g As Graphics, Text As String, x As Integer, y As Integer, Width As Integer = - 1, Height As Integer = - 1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False</ItemParams>
+  <ItemParams>Extends g As Graphics, txt As String, x As Double, y As Double, Width As Double = -1, Height As Double = -1, Vert As Integer = 1, Horz As Integer = 1, WordWrap As Boolean = False, Max As Boolean = False</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <ViewBehavior>

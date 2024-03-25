@@ -74,37 +74,40 @@
    <SourceLine>// though we're using only a 1D array since the 2D array is wasteful.</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>#pragma DisableBackgroundTasks</SourceLine>
-   <SourceLine>#pragma DisableBoundsChecking</SourceLine>
-   <SourceLine>#pragma DisableAutoWaitCursor</SourceLine>
+   <SourceLine>#Pragma DisableBoundsChecking</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim n, m As Integer</SourceLine>
-   <SourceLine>n = s1.Len</SourceLine>
-   <SourceLine>m = s2.Len</SourceLine>
-   <SourceLine>if n = 0 then return m</SourceLine>
-   <SourceLine>if m = 0 then return n</SourceLine>
+   <SourceLine>n = s1.Length</SourceLine>
+   <SourceLine>m = s2.Length</SourceLine>
+   <SourceLine>If n = 0 Then Return m</SourceLine>
+   <SourceLine>If m = 0 Then Return n</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim i, j, cost As Integer</SourceLine>
    <SourceLine>Dim d(-1) As Integer</SourceLine>
    <SourceLine>Redim d(m)</SourceLine>
    <SourceLine>for j = 1 to m</SourceLine>
    <SourceLine>d(j) = j</SourceLine>
-   <SourceLine>next</SourceLine>
+   <SourceLine>Next</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim s1chars(-1), s2chars(-1) As String</SourceLine>
-   <SourceLine>s1chars = Split( s1, "" )</SourceLine>
-   <SourceLine>s2chars = Split( s2, "" )</SourceLine>
+   <SourceLine>s1chars = s1.Split("")</SourceLine>
+   <SourceLine>s2chars = s2.Split("")</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim s1char As String</SourceLine>
    <SourceLine>Dim lastCost, nextCost As Integer</SourceLine>
    <SourceLine>Dim a, b, c As Integer</SourceLine>
    <SourceLine>Dim jMinus1 As Integer</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>for i = 1 to n</SourceLine>
+   <SourceLine>For i = 1 To n</SourceLine>
    <SourceLine>s1char = s1chars(i-1)</SourceLine>
    <SourceLine>lastCost = i</SourceLine>
    <SourceLine>jMinus1 = 0</SourceLine>
-   <SourceLine>for j = 1 to m</SourceLine>
-   <SourceLine>if StrComp(s1char, s2chars(jMinus1),0) = 0 then cost = 0 else cost = 1</SourceLine>
+   <SourceLine>For j = 1 To m</SourceLine>
+   <SourceLine>If s1char.Compare(s2chars(jMinus1), ComparisonOptions.CaseSensitive) = 0 Then</SourceLine>
+   <SourceLine>cost = 0</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>cost = 1</SourceLine>
+   <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// set nextCost to the minimum of the following three possibilities:</SourceLine>
    <SourceLine>a = d(j) + 1</SourceLine>
@@ -112,8 +115,8 @@
    <SourceLine>c = cost + d(jMinus1)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>if a &lt; b then</SourceLine>
-   <SourceLine>if c &lt; a then nextCost = c else nextCost = a</SourceLine>
-   <SourceLine>else</SourceLine>
+   <SourceLine>If c &lt; a Then nextCost = c Else nextCost = a</SourceLine>
+   <SourceLine>Else</SourceLine>
    <SourceLine>if c &lt; b then nextCost = c else nextCost = b</SourceLine>
    <SourceLine>end if</SourceLine>
    <SourceLine></SourceLine>
@@ -606,30 +609,6 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>extends s As String, withWhat As String</ItemParams>
-  <ItemResult>Boolean</ItemResult>
- </Method>
- <Method>
-  <ItemName>ContainsB</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>2084845567</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function ContainsB(extends s As String, what As String) As Boolean</SourceLine>
-   <SourceLine>// Return true if 's' contains the substring 'what'.</SourceLine>
-   <SourceLine>// By "contains" we mean binary containment</SourceLine>
-   <SourceLine>// as with InStrB.</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>if what = "" then return true</SourceLine>
-   <SourceLine>return InStrB( s, what ) &gt; 0</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>extends s As String, what As String</ItemParams>
   <ItemResult>Boolean</ItemResult>
  </Method>
  <Method>
