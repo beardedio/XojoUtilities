@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2021r3.1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r1.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="1567812713">
  <ObjName>UtilsGraphic</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -189,14 +189,14 @@
    <SourceLine>Dim gOriginalMask As Graphics</SourceLine>
    <SourceLine>Dim copy As Picture</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>If (p Is Nil) Then Return Nil      // there is nothing to do, so return</SourceLine>
+   <SourceLine>If (p Is Nil) Then Return Nil // there is nothing to do, so return</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Dim hasMask As Boolean = p.HasMask</SourceLine>
    <SourceLine>If hasMask Then</SourceLine>
-   <SourceLine>mask = New Picture(p.Width, p.Height, 32)     // create temp mask picture</SourceLine>
-   <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)      // copy the mask</SourceLine>
-   <SourceLine>gOriginalMask = p.Mask.Graphics      // get direct graphics object for speed</SourceLine>
-   <SourceLine>gOriginalMask.ForeColor = &amp;c000000          // clear with black</SourceLine>
+   <SourceLine>mask = New Picture(p.Width, p.Height, 32) // create temp mask picture</SourceLine>
+   <SourceLine>mask.Graphics.DrawPicture(p.Mask, 0, 0)   // copy the mask</SourceLine>
+   <SourceLine>gOriginalMask = p.Mask.Graphics           // get direct graphics object for speed</SourceLine>
+   <SourceLine>gOriginalMask.ForeColor = Color.Black     // clear with black</SourceLine>
    <SourceLine>gOriginalMask.FillRect(0, 0, gOriginalMask.Width, gOriginalMask.Height)</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
@@ -211,7 +211,7 @@
    <SourceLine></SourceLine>
    <SourceLine>If hasMask Then    // draw the mask</SourceLine>
    <SourceLine>copy.Mask.Graphics.DrawPicture(mask, 0, 0)</SourceLine>
-   <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0)      // restore the original mask to 'p'</SourceLine>
+   <SourceLine>gOriginalMask.DrawPicture(mask, 0, 0) // restore the original mask to 'p'</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// now copy other variables of "p"</SourceLine>
