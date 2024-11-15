@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2023r4" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r2.1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -358,33 +358,39 @@
    <SourceLine></SourceLine>
    <SourceLine>if MultiLine Then</SourceLine>
    <SourceLine>s = s + EndOfLine</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine>s = s + " "</SourceLine>
    <SourceLine>End if</SourceLine>
-   <SourceLine>s = s + " Built for: "</SourceLine>
+   <SourceLine>s = s + "Built for: "</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>#if TargetMacOS Then</SourceLine>
-   <SourceLine>s = s + "Mac "</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>#if TargetPowerPC then</SourceLine>
-   <SourceLine>s = s + "PowerPC "</SourceLine>
-   <SourceLine>#else</SourceLine>
-   <SourceLine>s = s + "Intel "</SourceLine>
-   <SourceLine>#endif</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>#if TargetCocoa then</SourceLine>
-   <SourceLine>s = s + "Cocoa "</SourceLine>
-   <SourceLine>#else</SourceLine>
-   <SourceLine>s = s + "Carbon "</SourceLine>
-   <SourceLine>#endif</SourceLine>
+   <SourceLine>s = s + "Mac"</SourceLine>
    <SourceLine>#elseif TargetWindows Then</SourceLine>
-   <SourceLine>s = s + "Windows "</SourceLine>
+   <SourceLine>s = s + "Windows"</SourceLine>
    <SourceLine>#elseif TargetLinux Then</SourceLine>
-   <SourceLine>s = s + "Linux "</SourceLine>
+   <SourceLine>s = s + "Linux"</SourceLine>
+   <SourceLine>#elseif TargetiOS Then</SourceLine>
+   <SourceLine>s = s + "iOS"</SourceLine>
+   <SourceLine>#elseif TargetAndroid Then</SourceLine>
+   <SourceLine>s = s + "Android"</SourceLine>
+   <SourceLine>#elseif TargetXojoCloud Then</SourceLine>
+   <SourceLine>s = s + "XojoCloud"</SourceLine>
    <SourceLine>#endif</SourceLine>
+   <SourceLine>s = s + " "</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>#if Target32Bit Then</SourceLine>
-   <SourceLine>s = s + "32bit"</SourceLine>
-   <SourceLine>#Else</SourceLine>
+   <SourceLine>#if TargetARM Then</SourceLine>
+   <SourceLine>s = s + "ARM"</SourceLine>
+   <SourceLine>#Elseif TargetX86</SourceLine>
+   <SourceLine>s = s + "x86"</SourceLine>
+   <SourceLine>#elseif TargetPowerPC then</SourceLine>
+   <SourceLine>s = s + "PowerPC"</SourceLine>
+   <SourceLine>#endif</SourceLine>
+   <SourceLine>s = s + " "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#if Target64Bit Then</SourceLine>
    <SourceLine>s = s + "64bit"</SourceLine>
+   <SourceLine>#Elseif Target32Bit Then</SourceLine>
+   <SourceLine>s = s + "32bit"</SourceLine>
    <SourceLine>#Endif</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Return S</SourceLine>
@@ -406,11 +412,11 @@
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function Str2Bool(s As String) As Boolean</SourceLine>
    <SourceLine>s = Lowercase(s)</SourceLine>
-   <SourceLine>If s = "false" Or s = "f" Or s = "0" Then</SourceLine>
-   <SourceLine>Return False</SourceLine>
-   <SourceLine>Else</SourceLine>
+   <SourceLine>If s = "true" Or s = "1" Then</SourceLine>
    <SourceLine>Return True</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return False</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -450,8 +456,8 @@
    <SourceLine>Function VersionInfoStringApp(MultiLine As Boolean = False) As String</SourceLine>
    <SourceLine>Dim s As String</SourceLine>
    <SourceLine>s = "App: " + App.PropName</SourceLine>
-   <SourceLine>'s = s + " v"+Str(app.MajorVersion)+"."+Str(app.MinorVersion)+"."+Str(app.BugVersion)+" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
    <SourceLine>s = s + " v"+App.Version+" ("+Str(app.NonReleaseVersion)+")"</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>If MultiLine Then</SourceLine>
    <SourceLine>s = s + EndOfLine</SourceLine>
    <SourceLine>End If</SourceLine>
@@ -571,9 +577,9 @@
    <SourceLine>If DebugLogFile &lt;&gt; Nil Then</SourceLine>
    <SourceLine>DebugLogFile.Write(EndOfLine+s)</SourceLine>
    <SourceLine>DebugLogFile.Flush</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>System.DebugLog(s)</SourceLine>
    <SourceLine>End If</SourceLine>
+   <SourceLine>System.DebugLog(s)</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End Sub</SourceLine>
   </ItemSource>
