@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2024r2.1" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r4" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -174,6 +174,8 @@
    <SourceLine>Dim bs As binaryStream</SourceLine>
    <SourceLine>Dim data As String</SourceLine>
    <SourceLine></SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>// save picture to a temporary file</SourceLine>
    <SourceLine>f = GetTemporaryFolderItem</SourceLine>
    <SourceLine>f.saveAsPicture(p)</SourceLine>
@@ -188,10 +190,13 @@
    <SourceLine>f.delete</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>// return the binary data</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>Return data</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>Exception// an exception occurred preventing the conversion</SourceLine>
    <SourceLine>Return ""</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End</SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -427,16 +432,31 @@
   <ItemResult>Boolean</ItemResult>
  </Method>
  <Method>
-  <ItemName>UniqueHardwareID</ItemName>
+  <ItemName>HardwareUUID</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
   <PartID>1463244799</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function UniqueHardwareID() As String</SourceLine>
-   <SourceLine>Dim u As New UUIDMBS</SourceLine>
+   <SourceLine>Function HardwareUUID() As String</SourceLine>
+   <SourceLine>Var sh As New Shell</SourceLine>
+   <SourceLine>Var command As String</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>Return u.ValueFormattedString</SourceLine>
+   <SourceLine>#If TargetMacOS Then</SourceLine>
+   <SourceLine>command = "ioreg -d2 -c IOPlatformExpertDevice | awk -F\"" '/IOPlatformUUID/{print $(NF-1)}'"</SourceLine>
+   <SourceLine>sh.Execute(command)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return sh.Result</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>#ElseIf TargetWindows Then</SourceLine>
+   <SourceLine>command = "wmic csproduct get UUID"</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>sh.Execute(command)</SourceLine>
+   <SourceLine>Return sh.Result</SourceLine>
+   <SourceLine>#Else</SourceLine>
+   <SourceLine>Return "-1"</SourceLine>
+   <SourceLine>#EndIf</SourceLine>
+   <SourceLine></SourceLine>
    <SourceLine>End Function</SourceLine>
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
@@ -588,67 +608,6 @@
   <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
   <ItemParams>Type As Integer, s As String</ItemParams>
-  <ItemResult></ItemResult>
- </Method>
- <Method>
-  <ItemName>Init0_DataFolderSetup</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
-  <PartID>1537353727</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Sub Init0_DataFolderSetup(sharedLibrary As Boolean = false)</SourceLine>
-   <SourceLine>Dim tmpfolder As FolderItem</SourceLine>
-   <SourceLine>Dim logfile As FolderItem</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>' TapeCalc(v1.0.0_Build_4)[RB_Ver2011.01]: &lt;Notice&gt; ### App Started ###</SourceLine>
-   <SourceLine>DebugLogPrefix = App.PropName</SourceLine>
-   <SourceLine>DebugLogPrefix = DebugLogPrefix + "(v"+Str(App.MajorVersion)+"."+Str(App.MinorVersion)+"."+Str(App.BugVersion)+"."+Str(App.NonReleaseVersion)+")"</SourceLine>
-   <SourceLine>DebugLogPrefix = DebugLogPrefix + "[RB"+Right(Str(RBVersion), Len(Str(RBVersion))-2)+"]: "</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Data Folders</SourceLine>
-   <SourceLine>If sharedLibrary Then</SourceLine>
-   <SourceLine>tmpfolder = SpecialFolder.SharedApplicationData</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>tmpfolder = SpecialFolder.ApplicationData</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If Not tmpfolder.Exists Then</SourceLine>
-   <SourceLine>If tmpfolder.IsWriteable Then</SourceLine>
-   <SourceLine>tmpfolder.CreateAsFolder</SourceLine>
-   <SourceLine>tmpfolder.Permissions = &amp;o777</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>MsgBox("Unable to create Data folder. Closing App.")</SourceLine>
-   <SourceLine>Quit</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>DataFolder = tmpfolder.Child(App.PropName)</SourceLine>
-   <SourceLine>If Not DataFolder.Exists Then</SourceLine>
-   <SourceLine>DataFolder.CreateAsFolder</SourceLine>
-   <SourceLine>DataFolder.Permissions = &amp;o777</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>// Setup Logfile if needed</SourceLine>
-   <SourceLine>If App.StageCode = 3 Then</SourceLine>
-   <SourceLine>logfile = DataFolder.Child("debug.log")</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>Try</SourceLine>
-   <SourceLine>If logfile &lt;&gt; Nil And logfile.Exists Then</SourceLine>
-   <SourceLine>DebugLogFile = BinaryStream.Open(logfile, True)</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>DebugLogFile = BinaryStream.Create(logfile, True)</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>DebugLogFile.Position = DebugLogFile.Length</SourceLine>
-   <SourceLine>End Try</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>End Sub</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>sharedLibrary As Boolean = false</ItemParams>
   <ItemResult></ItemResult>
  </Method>
  <Method>
@@ -1364,6 +1323,67 @@
   <ItemParams>Extends i As Int64</ItemParams>
   <ItemResult>UInt64</ItemResult>
  </Method>
+ <Method>
+  <ItemName>Init0_DataFolderSetup</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1418229759</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub Init0_DataFolderSetup(sharedLibrary As Boolean = false)</SourceLine>
+   <SourceLine>Dim tmpfolder As FolderItem</SourceLine>
+   <SourceLine>Dim logfile As FolderItem</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>' TapeCalc(v1.0.0_Build_4)[RB_Ver2011.01]: &lt;Notice&gt; ### App Started ###</SourceLine>
+   <SourceLine>DebugLogPrefix = App.PropName</SourceLine>
+   <SourceLine>DebugLogPrefix = DebugLogPrefix + "(v"+Str(App.MajorVersion)+"."+Str(App.MinorVersion)+"."+Str(App.BugVersion)+"."+Str(App.NonReleaseVersion)+")"</SourceLine>
+   <SourceLine>DebugLogPrefix = DebugLogPrefix + "[Xojo"+Right(Str(RBVersion), Len(Str(RBVersion))-2)+"]: "</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Data Folders</SourceLine>
+   <SourceLine>If sharedLibrary Then</SourceLine>
+   <SourceLine>tmpfolder = SpecialFolder.SharedApplicationData</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>tmpfolder = SpecialFolder.ApplicationData</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not tmpfolder.Exists Then</SourceLine>
+   <SourceLine>If tmpfolder.IsWriteable Then</SourceLine>
+   <SourceLine>tmpfolder.CreateAsFolder</SourceLine>
+   <SourceLine>tmpfolder.Permissions = &amp;o777</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>MsgBox("Unable to create Data folder. Closing App.")</SourceLine>
+   <SourceLine>Quit</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>DataFolder = tmpfolder.Child(App.PropName)</SourceLine>
+   <SourceLine>If Not DataFolder.Exists Then</SourceLine>
+   <SourceLine>DataFolder.CreateAsFolder</SourceLine>
+   <SourceLine>DataFolder.Permissions = &amp;o777</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>// Setup Logfile if needed</SourceLine>
+   <SourceLine>If App.StageCode = 3 Then</SourceLine>
+   <SourceLine>logfile = DataFolder.Child("debug.log")</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Try</SourceLine>
+   <SourceLine>If logfile &lt;&gt; Nil And logfile.Exists Then</SourceLine>
+   <SourceLine>DebugLogFile = BinaryStream.Open(logfile, True)</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>DebugLogFile = BinaryStream.Create(logfile, True)</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>DebugLogFile.Position = DebugLogFile.Length</SourceLine>
+   <SourceLine>End Try</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>sharedLibrary As Boolean = false</ItemParams>
+  <ItemResult></ItemResult>
+ </Method>
  <Property>
   <ItemName>DataFolder</ItemName>
   <Compatibility></Compatibility>
@@ -1391,7 +1411,7 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>DebugLogFile As BinaryStream</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
+  <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <Property>
@@ -1406,7 +1426,7 @@
   </ItemSource>
   <TextEncoding>134217984</TextEncoding>
   <ItemDeclaration>DebugLogPrefix As String</ItemDeclaration>
-  <ItemFlags>33</ItemFlags>
+  <ItemFlags>0</ItemFlags>
   <IsShared>0</IsShared>
  </Property>
  <Property>
@@ -1493,6 +1513,12 @@
    <PropertyGroup>Behavior</PropertyGroup>
    <PropertyValue>0</PropertyValue>
    <ItemType>Integer</ItemType>
+  </ViewProperty>
+  <ViewProperty>
+   <ObjName>DebugLogPrefix</ObjName>
+   <PropertyGroup>Behavior</PropertyGroup>
+   <ItemType>String</ItemType>
+   <EditorType>MultiLineEditor</EditorType>
   </ViewProperty>
  </ViewBehavior>
  <Constant>
