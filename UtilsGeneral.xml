@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2024r4" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2024r4.2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
- <ObjContainerID>1471210957</ObjContainerID>
+ <ObjContainerID>1053954047</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -1383,6 +1383,51 @@
   <IsShared>0</IsShared>
   <ItemParams>sharedLibrary As Boolean = false</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>YMDHMS</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1950283775</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function YMDHMS(Extends dt as Datetime) As String</SourceLine>
+   <SourceLine>return dt.ToString("yyyyMMddhhmmss")</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends dt as Datetime</ItemParams>
+  <ItemResult>String</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>FromStringYMDHMS</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1302253567</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function FromStringYMDHMS(Extends dt As Datetime, strdate As String) As Datetime</SourceLine>
+   <SourceLine>Dim returndt As Datetime</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>return New DateTime(_</SourceLine>
+   <SourceLine>strdate.middle(0, 4).ToInteger, _  'Year</SourceLine>
+   <SourceLine>strdate.middle(4, 2).ToInteger, _  'Month</SourceLine>
+   <SourceLine>strdate.middle(6, 2).ToInteger, _  'Day</SourceLine>
+   <SourceLine>strdate.middle(8, 2).ToInteger, _  'Hour</SourceLine>
+   <SourceLine>strdate.middle(10, 2).ToInteger, _ 'Minute</SourceLine>
+   <SourceLine>strdate.middle(12, 2).ToInteger)   'Second</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends dt As Datetime, strdate As String</ItemParams>
+  <ItemResult>Datetime</ItemResult>
  </Method>
  <Property>
   <ItemName>DataFolder</ItemName>
