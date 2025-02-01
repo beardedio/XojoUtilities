@@ -2,7 +2,7 @@
 <RBProject version="2024r4.2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
- <ObjContainerID>1053954047</ObjContainerID>
+ <ObjContainerID>1115883519</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -1018,34 +1018,6 @@
   <ItemName>SQLQuery</ItemName>
   <Compatibility></Compatibility>
   <Visible>1</Visible>
-  <PartID>574988287</PartID>
-  <ItemSource>
-   <TextEncoding>134217984</TextEncoding>
-   <SourceLine>Function SQLQuery(Extends db As Database, sql As String) As RecordSet</SourceLine>
-   <SourceLine>Dim rs As RecordSet</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>rs = db.SQLSelect(sql)</SourceLine>
-   <SourceLine></SourceLine>
-   <SourceLine>If Not db.Error Then</SourceLine>
-   <SourceLine>Return rs</SourceLine>
-   <SourceLine>Else</SourceLine>
-   <SourceLine>LogMsg(LogType2_Error, "DB Error ("+Str(db.ErrorCode)+"): "+db.ErrorMessage+" in sql query ["+sql+"]")</SourceLine>
-   <SourceLine>Break</SourceLine>
-   <SourceLine>Return Nil</SourceLine>
-   <SourceLine>End If</SourceLine>
-   <SourceLine>End Function</SourceLine>
-  </ItemSource>
-  <TextEncoding>134217984</TextEncoding>
-  <AliasName></AliasName>
-  <ItemFlags>0</ItemFlags>
-  <IsShared>0</IsShared>
-  <ItemParams>Extends db As Database, sql As String</ItemParams>
-  <ItemResult>RecordSet</ItemResult>
- </Method>
- <Method>
-  <ItemName>SQLQuery</ItemName>
-  <Compatibility></Compatibility>
-  <Visible>1</Visible>
   <PartID>1899001855</PartID>
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
@@ -1053,7 +1025,9 @@
    <SourceLine>db.SQLExecute(sql)</SourceLine>
    <SourceLine></SourceLine>
    <SourceLine>If db.Error Then</SourceLine>
-   <SourceLine>LogMsg(LogType2_Error ,"DB Error ("+Str(db.ErrorCode)+"): "+db.ErrorMessage+" in sql query ["+sql+"]")</SourceLine>
+   <SourceLine>Dim errormsg As String</SourceLine>
+   <SourceLine>errormsg = "DB Error ("+Str(db.ErrorCode)+"): "+db.ErrorMessage+" in sql query ["+sql+"]"</SourceLine>
+   <SourceLine>LogMsg(LogType2_Error, errormsg)</SourceLine>
    <SourceLine>Break</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine>End Sub</SourceLine>
@@ -1428,6 +1402,91 @@
   <IsShared>0</IsShared>
   <ItemParams>Extends dt As Datetime, strdate As String</ItemParams>
   <ItemResult>Datetime</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>QuerySQL</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>123111423</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function QuerySQL(Extends db As Database, sql As String) As RowSet</SourceLine>
+   <SourceLine>Dim rs As RowSet</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rs = db.SelectSQL(sql)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not db.Error Then</SourceLine>
+   <SourceLine>Return rs</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Dim errormsg As String</SourceLine>
+   <SourceLine>errormsg = "DB Error ("+Str(db.ErrorCode)+"): "+db.ErrorMessage+" in sql query ["+sql+"]"</SourceLine>
+   <SourceLine>LogMsg(LogType2_Error, errormsg)</SourceLine>
+   <SourceLine>Break</SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends db As Database, sql As String</ItemParams>
+  <ItemResult>RowSet</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>SQLQuery</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>2091577343</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function SQLQuery(Extends db As Database, sql As String) As RecordSet</SourceLine>
+   <SourceLine>Dim rs As RecordSet</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>rs = db.SQLSelect(sql)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If Not db.Error Then</SourceLine>
+   <SourceLine>Return rs</SourceLine>
+   <SourceLine>Else</SourceLine>
+   <SourceLine>Dim errormsg As String</SourceLine>
+   <SourceLine>errormsg = "DB Error ("+Str(db.ErrorCode)+"): "+db.ErrorMessage+" in sql query ["+sql+"]"</SourceLine>
+   <SourceLine>LogMsg(LogType2_Error, errormsg)</SourceLine>
+   <SourceLine>Break</SourceLine>
+   <SourceLine>Return Nil</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends db As Database, sql As String</ItemParams>
+  <ItemResult>RecordSet</ItemResult>
+ </Method>
+ <Method>
+  <ItemName>QuerySQL</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>1375420415</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Sub QuerySQL(Extends db As Database, sql As String)</SourceLine>
+   <SourceLine>db.ExecuteSQL(sql)</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>If db.Error Then</SourceLine>
+   <SourceLine>Dim errormsg As String</SourceLine>
+   <SourceLine>errormsg = "DB Error ("+Str(db.ErrorCode)+"): "+db.ErrorMessage+" in sql query ["+sql+"]"</SourceLine>
+   <SourceLine>LogMsg(LogType2_Error, errormsg)</SourceLine>
+   <SourceLine>Break</SourceLine>
+   <SourceLine>End If</SourceLine>
+   <SourceLine>End Sub</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>Extends db As Database, sql As String</ItemParams>
+  <ItemResult></ItemResult>
  </Method>
  <Property>
   <ItemName>DataFolder</ItemName>
