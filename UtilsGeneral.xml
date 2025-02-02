@@ -2,7 +2,7 @@
 <RBProject version="2024r4.2" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
- <ObjContainerID>1115883519</ObjContainerID>
+ <ObjContainerID>1471210957</ObjContainerID>
  <IsClass>0</IsClass>
  <ItemFlags>1</ItemFlags>
  <IsInterface>0</IsInterface>
@@ -1384,8 +1384,6 @@
   <ItemSource>
    <TextEncoding>134217984</TextEncoding>
    <SourceLine>Function FromStringYMDHMS(Extends dt As Datetime, strdate As String) As Datetime</SourceLine>
-   <SourceLine>Dim returndt As Datetime</SourceLine>
-   <SourceLine></SourceLine>
    <SourceLine>return New DateTime(_</SourceLine>
    <SourceLine>strdate.middle(0, 4).ToInteger, _  'Year</SourceLine>
    <SourceLine>strdate.middle(4, 2).ToInteger, _  'Month</SourceLine>
