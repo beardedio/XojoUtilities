@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RBProject version="2024r4.2" FormatVersion="2" MinIDEVersion="20210300">
+<RBProject version="2025r1" FormatVersion="2" MinIDEVersion="20210300">
 <block type="Module" ID="580764307">
  <ObjName>UtilsGeneral</ObjName>
  <ObjContainerID>1471210957</ObjContainerID>
@@ -1308,7 +1308,7 @@
    <SourceLine>Dim tmpfolder As FolderItem</SourceLine>
    <SourceLine>Dim logfile As FolderItem</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>' TapeCalc(v1.0.0_Build_4)[RB_Ver2011.01]: &lt;Notice&gt; ### App Started ###</SourceLine>
+   <SourceLine>' TapeCalc(v1.0.0.2999)[Xojo2011.01]: &lt;Notice&gt; ### App Started ###</SourceLine>
    <SourceLine>DebugLogPrefix = App.PropName</SourceLine>
    <SourceLine>DebugLogPrefix = DebugLogPrefix + "(v"+Str(App.MajorVersion)+"."+Str(App.MinorVersion)+"."+Str(App.BugVersion)+"."+Str(App.NonReleaseVersion)+")"</SourceLine>
    <SourceLine>DebugLogPrefix = DebugLogPrefix + "[Xojo"+Right(Str(RBVersion), Len(Str(RBVersion))-2)+"]: "</SourceLine>
@@ -1330,7 +1330,7 @@
    <SourceLine>End If</SourceLine>
    <SourceLine>End If</SourceLine>
    <SourceLine></SourceLine>
-   <SourceLine>DataFolder = tmpfolder.Child(App.PropName)</SourceLine>
+   <SourceLine>DataFolder = tmpfolder.Child(App.BundleIdentifier)</SourceLine>
    <SourceLine>If Not DataFolder.Exists Then</SourceLine>
    <SourceLine>DataFolder.CreateAsFolder</SourceLine>
    <SourceLine>DataFolder.Permissions = &amp;o777</SourceLine>
@@ -1485,6 +1485,39 @@
   <IsShared>0</IsShared>
   <ItemParams>Extends db As Database, sql As String</ItemParams>
   <ItemResult></ItemResult>
+ </Method>
+ <Method>
+  <ItemName>ChildControls</ItemName>
+  <Compatibility></Compatibility>
+  <Visible>1</Visible>
+  <PartID>307042303</PartID>
+  <ItemSource>
+   <TextEncoding>134217984</TextEncoding>
+   <SourceLine>Function ChildControls(con As DesktopUIControl) As DesktopUIControl()</SourceLine>
+   <SourceLine>Var win As DesktopWindow</SourceLine>
+   <SourceLine>Var conList() As DesktopUIControl</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>win = con.Window</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>For Each c As Object In win.Controls</SourceLine>
+   <SourceLine>if c isa DesktopUIControl then</SourceLine>
+   <SourceLine>If DesktopUIControl(c).Parent = con Then</SourceLine>
+   <SourceLine>conList.add(DesktopUIControl(c))</SourceLine>
+   <SourceLine>End</SourceLine>
+   <SourceLine>else</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>end if</SourceLine>
+   <SourceLine>Next</SourceLine>
+   <SourceLine></SourceLine>
+   <SourceLine>Return conList</SourceLine>
+   <SourceLine>End Function</SourceLine>
+  </ItemSource>
+  <TextEncoding>134217984</TextEncoding>
+  <AliasName></AliasName>
+  <ItemFlags>0</ItemFlags>
+  <IsShared>0</IsShared>
+  <ItemParams>con As DesktopUIControl</ItemParams>
+  <ItemResult>DesktopUIControl()</ItemResult>
  </Method>
  <Property>
   <ItemName>DataFolder</ItemName>
